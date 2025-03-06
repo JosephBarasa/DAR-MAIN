@@ -1,0 +1,26 @@
+{% extends 'users/users-base.html' %}
+{% block content %}
+
+<div class="register">
+    <form method="POST" action="{% url 'sign_in' %}">
+      {% csrf_token %}
+      <div class="row mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required><br>
+
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required><br><br>
+
+          <button type="submit" class="btn btn-dark">Sign In</button> <br><br>
+
+          <div>
+            {% for message in messages %}
+                <h2>{{message}}</h2>
+            {% endfor %}
+          </div>
+      </div>
+    </form>
+  </div> <br><br>
+
+{% endblock %}
+
