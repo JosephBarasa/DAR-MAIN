@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'Galleries.apps.GalleriesConfig',
     'Artworks.apps.ArtworksConfig',
     'Store.apps.StoreConfig',
+    'EventTickets.apps.EventTicketsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
