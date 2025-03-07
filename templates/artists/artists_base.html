@@ -67,77 +67,20 @@
 
 <!-- END PAGE TRANSITION -->
 
-<!-- SEARCH -->
-
-<div class="smooth-scroll">
-  <div class="section-wrapper" data-scroll-section>
-    <div class="search-box">
-      <div class="container">
-        <div class="form">
-          <h3>SEARCH</h3>
-          <!--  search form-->
-          <input type="search" placeholder="What are you looking for ?">
-          <input type="submit" value="SEARCH">
-        </div>
-        <!-- end form -->
-
-        <!-- search-events-->
-
-        <div class="search-events">
-          <ul>
-            <li>
-              <h5><a href="#">OUR MOST RECENT EVENTS & EXHIBITIONS</a></h5>
-              <small>28TH DECEMBER 2024</small> </li>
-            <li>
-              <h5><a href="#">JOSEPH BARASA</a></h5>
-              <small>Artist & Developer</small> </li>
-            <li>
-              <h5><a href="#">GALLERIES</a></h5>
-              <small>In Nairobi and all over Kenya</small> </li>
-          </ul>
-        </div>
-
-        <!-- end search-events -->
-
-      </div>
-    </div>
-
-    <!-- END SEARCH -->
-
     <!-- NAVBAR -->
 
     <nav class="navbar">
       <div> <small>'0</small><strong>2</strong> </div>
-
-      <!-- site-menu -->
-      <div class="site-menu">
-        <ul>
-          <li><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'artists' %}">Artists</a></li>
-          <li><a href="{% url 'galleries' %}">Galleries</a></li>
-          <li><a href="{% url 'exhibitions' %}">Events & Exhibitions</a></li>
-          <!-- <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'contact' %}">Contact</a></li> -->
-        </ul>
-      </div>
-      <!-- end site-menu -->
-
-      <!-- search button -->
-      <div class="search-button"> <i class="far fa-search"></i> </div>
-      <!-- end search-button -->
 
       {% if user.is_authenticated %}
       <div class="profie-icon">
         <a href="{% url 'artist_profile_display' %}">Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'sign_out' %}">Sign Out</a></div>
-      {% else %}
-      <!-- sign up-button -->
-      <div class="navbar-button"><a href="{% url 'register' %}">Sign Up</a></div>
-      <!-- end sign up-button -->
 
+      {% else %}
       <!-- sign in-button -->
-      <div class="navbar-button"><a href="{% url 'sign_in' %}">Sign In</a></div>
+      <div class="navbar-button"><a href="{% url 'artist_sign_in' %}">Sign In</a></div>
       <!-- end sign in-button -->
        {% endif %}
 

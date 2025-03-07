@@ -27,9 +27,6 @@
 <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<!-- Bootstrap CSS -->
-<link href="{% static 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' %}" rel="stylesheet">
-
 </head>
 
 <body>
@@ -80,25 +77,6 @@
           <input type="submit" value="SEARCH">
         </div>
         <!-- end form -->
-
-        <!-- search-events-->
-
-        <div class="search-events">
-          <ul>
-            <li>
-              <h5><a href="#">OUR MOST RECENT EVENTS & EXHIBITIONS</a></h5>
-              <small>28TH DECEMBER 2024</small> </li>
-            <li>
-              <h5><a href="#">JOSEPH BARASA</a></h5>
-              <small>Artist & Developer</small> </li>
-            <li>
-              <h5><a href="#">GALLERIES</a></h5>
-              <small>In Nairobi and all over Kenya</small> </li>
-          </ul>
-        </div>
-
-        <!-- end search-events -->
-
       </div>
     </div>
 
@@ -116,8 +94,8 @@
           <li><a href="{% url 'artists' %}">Artists</a></li>
           <li><a href="{% url 'galleries' %}">Galleries</a></li>
           <li><a href="{% url 'exhibitions' %}">Events & Exhibitions</a></li>
-          <!-- <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'contact' %}">Contact</a></li> -->
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
       </div>
       <!-- end site-menu -->
@@ -126,32 +104,38 @@
       <div class="search-button"> <i class="far fa-search"></i> </div>
       <!-- end search-button -->
 
+      <!-- when to display accounts buttons -->
+
       {% if user.is_authenticated %}
       <div class="profie-icon">
         <a href="{% url 'artist_profile_display' %}">Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'sign_out' %}">Sign Out</a></div>
       {% else %}
-      <!-- sign up-button -->
+
       <div class="navbar-button"><a href="{% url 'register' %}">Sign Up</a></div>
-      <!-- end sign up-button -->
 
-      <!-- sign in-button -->
       <div class="navbar-button"><a href="{% url 'sign_in' %}">Sign In</a></div>
-      <!-- end sign in-button -->
        {% endif %}
-
     </nav>
 
     <!-- END NAVBAR -->
 
+
 <!-- HOME -->
+	  <header class="page-header" data-background="images/page-header.jpg">
+	  	<div class="inner">
+        {% if user.is_authenticated %}
+        <h1>Art Repository</h1>
+        {% else %}
+        <h1>Art Repository</h1>
+        {% endif %}
+		  </div>
+		  <!-- end inner -->
+	  </header>
 
-    <main>
-        {% block content %}
 
-        {% endblock %}
-    </main>
+<!-- FOOTER -->
 
     <footer class="footer">
       <div class="footer-bottom">
@@ -161,11 +145,13 @@
       <!-- end footer-bottom -->
     </footer>
     <!-- end footer -->
+    <!-- end footer -->
+  </div>
+</div>
 
 <!-- JS FILES -->
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/gsap.min.js' %}"></script>
 <script src="{% static 'js/locomotive-scroll.min.js' %}"></script>
 <script src="{% static 'js/ScrollTrigger.min.js' %}"></script>

@@ -1,5 +1,4 @@
-
-{% extends 'users/users-base.html' %}
+{% extends 'artists/artists_base.html' %}
 {% block content %}
 
 <style>
@@ -36,7 +35,7 @@
     .btn-register {
         width: 100%;
         padding: 0.75rem;
-        background-color: #98FFBB;
+        background-color:  #465B4B;
         color: #333;
         border: none;
         border-radius: 0.375rem;
@@ -47,7 +46,7 @@
     }
 
     .btn-register:hover {
-        background-color: #7DF5A5;
+        background-color: #465B4B;
     }
 
     /* Messages styling */
@@ -100,7 +99,7 @@
             
             <label for="confirm_password" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <button type="submit" class="btn-register">Register</button>
+            <div class="btn-register"><a href="{% url 'artist_sign_in' %}">Register</a></div>
 
             <div class="messages">
                 {% for message in messages %}
