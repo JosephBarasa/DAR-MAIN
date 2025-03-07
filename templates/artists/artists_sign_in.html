@@ -45,6 +45,10 @@
         transition: background-color 0.2s;
     }
 
+    .btn-dark a {
+        color: white;
+    }
+
     .btn-dark:hover {
         background-color: #384B3D;
     }
@@ -84,7 +88,7 @@
 </style>
 
 <div class="register">
-    <div class="form-title">Sign In</div>
+    <div class="form-title">Artist Sign In</div>
     <form method="POST" action="{% url 'sign_in' %}">
         {% csrf_token %}
         <div class="row mb-3">
@@ -94,7 +98,7 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
 
-            <div type="submit" class="btn btn-dark"><a href="{% url 'artist_dashboard' %}">Sign In</a></div>
+            <div type="submit" class="btn btn-dark"><a href="{% url 'artist_index' %}">Sign In</a></div>
 
             <div class="messages">
                 {% for message in messages %}

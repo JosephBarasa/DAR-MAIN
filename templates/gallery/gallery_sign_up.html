@@ -89,7 +89,7 @@
 </style>
 
 <div class="register">
-    <div class="form-title">Artist Sign Up</div>
+    <div class="form-title">Gallery Sign Up</div>
     <form method="POST" action="{% url 'register' %}">
         {% csrf_token %}
         <div class="row mb-3">
@@ -104,7 +104,7 @@
             
             <label for="confirm_password" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <div class="btn-register"><a href="{% url 'artist_sign_in' %}">Register</a></div>
+            <div class="btn-register"><a href="{% url 'gallery_sign_in' %}">Register</a></div>
 
             <div class="messages">
                 {% for message in messages %}

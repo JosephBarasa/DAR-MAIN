@@ -32,10 +32,10 @@
         border-color: #465B4B;
     }
 
-    .btn-register {
+    .btn-dark {
         width: 100%;
         padding: 0.75rem;
-        background-color:  #465B4B;
+        background-color: #465B4B;
         color: white;
         border: none;
         border-radius: 0.375rem;
@@ -45,13 +45,12 @@
         transition: background-color 0.2s;
     }
 
-    .btn-register a{
-        margin-left:9rem;
+    .btn-dark a {
         color: white;
-      }
+    }
 
-    .btn-register:hover {
-        background-color: #465B4B;
+    .btn-dark:hover {
+        background-color: #384B3D;
     }
 
     /* Messages styling */
@@ -89,22 +88,17 @@
 </style>
 
 <div class="register">
-    <div class="form-title">Artist Sign Up</div>
-    <form method="POST" action="{% url 'register' %}">
+    <div class="form-title">Gallery Sign In</div>
+    <form method="POST" action="{% url 'sign_in' %}">
         {% csrf_token %}
         <div class="row mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>
-            
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
 
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
-            
-            <label for="confirm_password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <div class="btn-register"><a href="{% url 'artist_sign_in' %}">Register</a></div>
+
+            <div type="submit" class="btn btn-dark"><a href="{% url 'gallery_index' %}">Sign In</a></div>
 
             <div class="messages">
                 {% for message in messages %}

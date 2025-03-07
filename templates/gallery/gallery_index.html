@@ -106,17 +106,10 @@
 
       <!-- when to display accounts buttons -->
 
-      {% if user.is_authenticated %}
       <div class="profie-icon">
-        <a href="{% url 'artist_profile_display' %}">Profile</a>
+        <a href="{% url 'artist_dashboard' %}">Create Your Gallery Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'sign_out' %}">Sign Out</a></div>
-      {% else %}
-
-      <div class="navbar-button"><a href="{% url 'register' %}">Sign Up</a></div>
-
-      <div class="navbar-button"><a href="{% url 'sign_in' %}">Sign In</a></div>
-       {% endif %}
     </nav>
 
     <!-- END NAVBAR -->
@@ -125,19 +118,7 @@
 <!-- HOME -->
 	  <header class="page-header" data-background="images/page-header.jpg">
 	  	<div class="inner">
-        {% if user.is_authenticated %}
-        <h1>Art Repository</h1>
-        {% else %}
-        <h1>Art Repository</h1>
-        {% endif %}
-		  </div>
-
-      <div class="art-button-container">
-        <!-- <button class="art-button"><a href="{% url 'artist_sign_up' %}"></a>Sign Up As Artist</button> -->
-        <div class="art-button"><a href="{% url 'artist_sign_up' %}">Sign Up As Artist</a></div>
-        <div class="art-button"><a href="{% url 'gallery_sign_up' %}">Sign Up As Gallery</a></div>
-      </div>
-
+        <h1>Manage Your Digital Gallery</h1>
 		  <!-- end inner -->
 	  </header>
 
