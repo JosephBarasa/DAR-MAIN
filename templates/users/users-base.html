@@ -128,16 +128,16 @@
 
       {% if user.is_authenticated %}
       <div class="profie-icon">
-        <a href="{% url 'artist_profile_display' %}">Profile</a>
+        <a href="{% url 'user_profile_display' %}">Create Your User Profile</a>
       </div>
-      <div class="navbar-button"><a href="{% url 'sign_out' %}">Sign Out</a></div>
+      <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
       {% else %}
       <!-- sign up-button -->
-      <div class="navbar-button"><a href="{% url 'register' %}">Sign Up</a></div>
+      <div class="navbar-button"><a href="{% url 'user_sign_up' %}">Sign Up</a></div>
       <!-- end sign up-button -->
 
       <!-- sign in-button -->
-      <div class="navbar-button"><a href="{% url 'sign_in' %}">Sign In</a></div>
+      <div class="navbar-button"><a href="{% url 'user_sign_in' %}">Sign In</a></div>
       <!-- end sign in-button -->
        {% endif %}
 

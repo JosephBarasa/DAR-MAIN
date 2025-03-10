@@ -106,7 +106,7 @@
 
 <div class="register">
     <div class="form-title">Gallery Sign In</div>
-    <form method="POST" action="{% url 'sign_in' %}">
+    <form method="POST" action="{% url 'gallery_index' %}">
         {% csrf_token %}
         <div class="row mb-3">
             <label for="username" class="form-label">Username</label>
@@ -115,7 +115,8 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
 
-            <div type="submit" class="btn btn-dark"><a href="{% url 'gallery_index' %}">Sign In</a></div>
+            <button type="submit" class="btn-register">Sign In</button>
+
             <p class="no-account">Don't have an account? <a href="{% url 'gallery_sign_up' %}">Sign Up</a></p>
             <button type="submit" class="btn back-button"><a href="{% url 'gallery_sign_up' %}">Back</a></button>
 

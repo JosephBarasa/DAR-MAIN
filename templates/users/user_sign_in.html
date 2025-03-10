@@ -1,3 +1,4 @@
+
 {% block content %}
 
 <style>
@@ -31,10 +32,10 @@
         border-color: #465B4B;
     }
 
-    .btn-register {
+    .btn-dark {
         width: 100%;
         padding: 0.75rem;
-        background-color: #384B3D;
+        background-color: #465B4B;
         color: white;
         border: none;
         border-radius: 0.375rem;
@@ -44,7 +45,8 @@
         transition: background-color 0.2s;
     }
 
-    .btn-register:hover {
+
+    .btn-dark:hover {
         background-color: #384B3D;
     }
 
@@ -87,7 +89,6 @@
         background-color: #384B3D;
         border-radius: 0.375rem;
         padding: 0.75rem;
-
     }
 
     .back-button a{
@@ -101,24 +102,20 @@
 </style>
 
 <div class="register">
-    <div class="form-title">User Sign Up</div>
-    <form method="POST" action="{% url 'register' %}">
+    <div class="form-title">User Sign In</div>
+    <form method="POST" action="{% url 'user_sign_in' %}">
         {% csrf_token %}
         <div class="row mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>
-            
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
 
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
-            
-            <label for="confirm_password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <button type="submit" class="btn-register">Register</button>
-            <p class="no-account">Already have an account? <a href="{% url 'sign_in' %}">Sign In</a></p>
-            <button type="submit" class="btn back-button"><a href="{% url 'home' %}">Back</a></button>
+
+            <button type="submit" class="btn btn-dark">Sign In</button>
+
+            <p class="no-account">Don't have an account? <a href="{% url 'user_sign_up' %}">Sign Up</a></p>
+            <button type="submit" class="btn back-button"><a href="{% url 'user_sign_up' %}">Back</a></button>
 
             <div class="messages">
                 {% for message in messages %}

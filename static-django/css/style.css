@@ -1291,8 +1291,8 @@ button[type="submit"] i {
   margin-top: 60px;
 }
 .page-header .inner h1 {
-  font-size: 126px;
-  font-weight: 400;
+  font-size: 100px;
+  font-weight: 200;
   font-family: 'Cinzel', serif;
   line-height: 1;
   margin-bottom: 30px;
@@ -1316,7 +1316,7 @@ button[type="submit"] i {
   transform: translateX(-140%);
 }
 .page-header .inner .svg-morph path {
-  fill: #94ffc4;
+  fill: #465B4B;
   animation-name: svg-morph;
   -webkit-animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
   -moz-animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
@@ -1458,12 +1458,12 @@ button[type="submit"] i {
   bottom: -4px;
   height: 4px;
   width: 0;
-  background: #94ffc4;
+  background: #465B4B;
   transition: width .25s ease;
 }
 .custom-link:hover:before {
   width: 50%;
-  background: #94ffc4;
+  background: #465B4B;
   transition: width .25s ease;
 }
 .custom-link:hover:after {

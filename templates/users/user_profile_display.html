@@ -5,20 +5,12 @@
 <section class="register">
   <div class="container mt-5">
     <div class="col-md-4 text-center">
-      {% if profile.profile_picture %}
-      <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"
-        class="img-fluid rounded-circle border shadow" width="200" height="200">
-      {% else %}
-      <img src="https://via.placeholder.com/200" alt="Default Profile Picture"
-        class="img-fluid rounded-circle border shadow">
-      {% endif %}
 
-      <h2>{{ profile.first_name}} {{profile.last_name}}</h2>
-      <p>{{ profile.user.email }}</p>
-      <p>{{ profile.location }}</p>
-      <p>{{ profile.bio }}</p>
+      <p>{{user.username}}</p>
+      <p>{{user.email}}</p>
 
-      <button class="btn btn-success"><a href="{% url 'artist_profile_edit' %}">Edit Profile</a></button>
+      <button class="btn-dark"><a href="{% url 'user_profile_edit' %}">Edit Profile</a></button>
+      <button class="btn-dark"><a href="{% url 'user_index' %}">Back</a></button>
     </div>
   </div>
 </section>
@@ -30,14 +22,27 @@
     margin-bottom: 20px;
   }
 
-  /* Buttons inside profile */
-  .btn-success a {
-    text-decoration: none;
+  .btn-dark {
+    width: 40%;
+    padding: 0.75rem;
+    background-color: #465B4B;
     color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
   }
 
-  .btn-success {
-    margin: 10px;
+
+  .btn-dark:hover {
+    background-color: #384B3D;
+  }
+
+  .btn-dark a {
+    color: white;
+    text-decoration: none;
   }
 </style>
 

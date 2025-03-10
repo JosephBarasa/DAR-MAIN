@@ -106,17 +106,11 @@
 
       <!-- when to display accounts buttons -->
 
-      {% if user.is_authenticated %}
       <div class="profie-icon">
         <a href="{% url 'user_profile_display' %}">Create Your User Profile</a>
       </div>
+
       <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
-      {% else %}
-
-      <div class="navbar-button"><a href="{% url 'user_sign_up' %}">Sign Up</a></div>
-
-      <div class="navbar-button"><a href="{% url 'user_sign_in' %}">Sign In</a></div>
-       {% endif %}
     </nav>
 
     <!-- END NAVBAR -->
@@ -126,12 +120,9 @@
 	  <header class="page-header" data-background="images/page-header.jpg">
 
 	  	<div class="inner">
-        {% if user.is_authenticated %}
-        <h1>Explore Artists, Galleries and Exhibitions</h1>
-        {% else %}
-        <h1>Art Repository</h1>
-        {% endif %}
-		  </div>
+            <h1>Hello {{user.username}}</h1>
+            <p>Explore Artists, Galleries and Exhibitions around Kenya</p>
+		</div>
 
       <div class="art-button-container">
         <!-- <button class="art-button"><a href="{% url 'artist_sign_up' %}"></a>Sign Up As Artist</button> -->

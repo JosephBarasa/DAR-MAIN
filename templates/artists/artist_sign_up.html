@@ -106,7 +106,7 @@
 
 <div class="register">
     <div class="form-title">Artist Sign Up</div>
-    <form method="POST" action="{% url 'register' %}">
+    <form method="POST" action="{% url 'artist_sign_up' %}">
         {% csrf_token %}
         <div class="row mb-3">
             <label for="username" class="form-label">Username</label>
@@ -120,7 +120,8 @@
             
             <label for="confirm_password" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <div class="btn-register"><a href="{% url 'artist_sign_in' %}">Register</a></div>
+
+            <button type="submit" class="btn-register">Sign Up</button>
             <p class="no-account">Already have an account? <a href="{% url 'artist_sign_in' %}">Sign In</a></p>
             <button type="submit" class="btn back-button"><a href="{% url 'home' %}">Back</a></button>
 
