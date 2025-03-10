@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %}
+{% extends 'users/users-base.html' %}
 {% load static %}
 {% block content %}
 
@@ -19,71 +19,15 @@
       <p>{{ profile.bio }}</p>
 
       <button class="btn btn-success"><a href="{% url 'artist_profile_edit' %}">Edit Profile</a></button>
-      <button class="btn btn-success"><a href="{% url 'artwork_upload' %}">Upload Artwork</a></button>
     </div>
-  </div>
-</section>
-
-<!-- Artworks Section -->
-<section class="artworks-section">
-  <h2 class="section-title">Artworks</h2>
-  <div class="artwork-grid">
-    {% for artwork in artworks %}
-    <div class="artwork-card">
-      <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
-      <h3>{{ artwork.title }}</h3>
-      <p>{{ artwork.description }}</p>
-    </div>
-    {% empty %}
-    <p>No artworks uploaded yet.</p>
-    {% endfor %}
   </div>
 </section>
 
 <!-- Internal CSS -->
 <style>
-  .artworks-section {
-    margin-top: 50px;
-    text-align: center;
-    padding: 20px;
-  }
-
   .section-title {
     font-size: 24px;
     margin-bottom: 20px;
-  }
-
-  .artwork-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 90%;
-    margin: 0 auto;
-  }
-
-  .artwork-card {
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-
-  .artwork-card img {
-    width: 100%;
-    border-radius: 10px;
-    height: auto;
-  }
-
-  .artwork-card h3 {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-
-  .artwork-card p {
-    font-size: 14px;
-    color: #666;
   }
 
   /* Buttons inside profile */

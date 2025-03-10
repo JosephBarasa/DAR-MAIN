@@ -108,7 +108,7 @@
 
       {% if user.is_authenticated %}
       <div class="profie-icon">
-        <a href="{% url 'artist_profile_display' %}">Profile</a>
+        <a href="{% url 'user_profile_display' %}">Create Your User Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'sign_out' %}">Sign Out</a></div>
       {% else %}
@@ -126,7 +126,7 @@
 	  <header class="page-header" data-background="images/page-header.jpg">
 	  	<div class="inner">
         {% if user.is_authenticated %}
-        <h1>Art Repository</h1>
+        <h1>Explore Artists, Galleries and Exhibitions</h1>
         {% else %}
         <h1>Art Repository</h1>
         {% endif %}

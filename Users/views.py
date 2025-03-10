@@ -3,9 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.urls import reverse 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from .forms import ProfileUpdateForm, ArtworkUploadForm
-from .models import Profile
 
 
 def register(request):
@@ -74,44 +71,6 @@ def sign_out(request):
     return redirect('/')
 
 
-@login_required
-def artist_profile_edit(request):
-    profile = request.user.profile 
-    if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('artist_profile_display')
-    else:
-        form = ProfileUpdateForm(instance=profile)
-        
-    return render(request, 'users/artist_profile_edit.html', {'form': form})
-
-
-# ARTWORK UPLOAD
-
-@login_required
-def artist_profile_display(request):
-    profile = Profile.objects.get(user=request.user)
-    artworks = request.user.artworks.all()  
-    
-    return render(request, 'users/artist_profile_display.html', {
-        'profile': profile,
-        'artworks': artworks
-    })
-    
-    
-@login_required
-def artwork_upload(request):
-    if request.method == 'POST':
-        form = ArtworkUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            artwork = form.save(commit=False)
-            artwork.artist = request.user 
-            artwork.save()
-            messages.success(request, 'Artwork uploaded successfully!')
-            return redirect('artist_profile_display')
-    else:
-        form = ArtworkUploadForm()
-    
-    return render(request, 'users/artwork_upload.html', {'form': form})
+# user profile
+def user_profile_display(request):
+    return render(request, 'users/user_profile_display.html')

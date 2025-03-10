@@ -1,4 +1,4 @@
-{% extends 'users/users-base.html' %}
+
 {% block content %}
 
 <style>
@@ -45,6 +45,7 @@
         transition: background-color 0.2s;
     }
 
+
     .btn-dark:hover {
         background-color: #384B3D;
     }
@@ -81,10 +82,28 @@
         font-size: 1.5rem;
         font-weight: bold;
     }
+
+    .back-button {
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: #384B3D;
+        border-radius: 0.375rem;
+        padding: 0.75rem;
+        margin-left: 10rem;
+    }
+
+    .back-button a{
+        color:white;
+        text-decoration: none;
+    }
+
+    .no-account {
+        margin-left: 5rem;
+    }
 </style>
 
 <div class="register">
-    <div class="form-title">Sign In</div>
+    <div class="form-title">User Sign In</div>
     <form method="POST" action="{% url 'sign_in' %}">
         {% csrf_token %}
         <div class="row mb-3">
@@ -94,7 +113,9 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
 
-            <button type="submit" class="btn btn-dark">Sign In</button>
+            <button type="submit" class="btn btn-dark">Sign In</button> </div> 
+            <p class="no-account">Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+            <button type="submit" class="btn back-button"><a href="{% url 'register' %}">Back</a></button>
 
             <div class="messages">
                 {% for message in messages %}

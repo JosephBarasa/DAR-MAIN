@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile
+from Artists.models import Profile
 from Artworks.models import Artwork
 
 

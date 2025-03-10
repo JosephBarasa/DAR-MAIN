@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Home.apps.HomeConfig',
     'Users.apps.UsersConfig',
+    'Artists.apps.ArtistsConfig',
     'Galleries.apps.GalleriesConfig',
     'Artworks.apps.ArtworksConfig',
     'Store.apps.StoreConfig',

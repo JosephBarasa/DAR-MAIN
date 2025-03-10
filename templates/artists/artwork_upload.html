@@ -10,9 +10,9 @@
             <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               {{ form.as_p }}
-              <div class="btn btn-primary"><a href="{% url 'artist_profile_display' %}">Update Profile</a></div>
+              <div class="btn btn-primary"><a href="{% url 'artist_dashboard' %}">Update Profile</a></div>
             </form>
-          </div>
+        </div>
 
     </div>
 
