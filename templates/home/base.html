@@ -125,7 +125,7 @@
 
       {% if user.is_authenticated %}
       <div class="profie-icon">
-        <a href="{% url 'artist_profile_display' %}">Profile</a>
+        <a href="{% url 'artist_dashboard' %}">Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
       {% else %}
@@ -143,6 +143,15 @@
 
     <!-- END NAVBAR -->
 
+
+<!-- HOME -->
+
+    <main>
+        {% block content %}
+          
+        {% endblock %}
+    </main>
+
     <div>
       {% if messages %}
       {% for message in messages %}
@@ -150,16 +159,8 @@
           {{ message }}
         </div>
       {% endfor %}
-    {% endif %}
+      {% endif %}
     </div>
-
-<!-- HOME -->
-
-    <main>
-        {% block content %}
-
-        {% endblock %}
-    </main>
 
     <footer class="footer">
       <!-- end container -->

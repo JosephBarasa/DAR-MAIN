@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
+from .models import CustomUser
 
 # USER SIGN UP
 
@@ -28,18 +28,19 @@ def user_sign_up(request):
             return redirect('user_sign_up')
         
         # check if username already exists
-        if User.objects.filter(username=username).exists():
+        if CustomUser.objects.filter(username=username).exists():
             messages.error(request, 'Username already exists!')
             return redirect('user_sign_up')
         
         # check if email already exists
-        if User.objects.filter(email=email).exists():
+        if CustomUser.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists')
             return redirect('user_sign_up')
         
         # create and save the user in the db
-        user = User.objects.create_user(username=username, email=email,
-                                        password=password)
+        user = CustomUser.objects.create_user(username=username, email=email,
+                                        password=password,
+                                        role='normal_user')
         user.save()
         messages.success(request, 'Account created successfully.')
         return redirect('user_sign_in')
@@ -59,9 +60,13 @@ def user_sign_in(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            login(request, user)
-            messages.success(request, 'Login Successful.')
-            return redirect('user_index')
+            if user.role == 'normal_user':
+                login(request, user)
+                messages.success(request, 'Login Successful.')
+                return redirect('user_index')
+            else:
+                messages.error(request, 'You are not registered as a normal user.')
+                return redirect('user_sign_in')
         else:
             messages.error(request, 'Invalid username or password')
             return redirect('user_sign_in')

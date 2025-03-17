@@ -3044,33 +3044,7 @@ button[type="submit"] i {
   flex-wrap: wrap;
   padding-top: 120px;
 }
-.footer .logo {
-  width: 100%;
-  display: block;
-  margin-bottom: 15px;
-}
-.footer .logo img {
-  height: 64px;
-}
-.footer .app-logos {
-  width: 100%;
-  display: block;
-  margin: 0;
-}
-.footer .app-logos img {
-  width: auto;
-  height: 32px;
-}
-.footer .widget-title {
-  width: 100%;
-  display: block;
-  font-weight: 400;
-  font-size: 22px;
-  margin-bottom: 20px;
-  font-family: 'Cinzel', serif;
-  position: relative;
-  padding-bottom: 15px;
-}
+
 .footer .widget-title:after {
   content: "";
   width: 70px;

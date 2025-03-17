@@ -25,4 +25,7 @@ urlpatterns = [
     path('usersregister/', include('Users.urls')),
     path('artists/', include('Artists.urls')),
     path('gallery/', include('Galleries.urls'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

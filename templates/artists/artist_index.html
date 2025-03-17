@@ -109,16 +109,18 @@
       <div class="profie-icon">
         <a href="{% url 'artist_dashboard' %}">Create Your Artist Profile</a>
       </div>
-      <div class="navbar-button"><a href="{% url 'sign_out' %}">Sign Out</a></div>
+      <div class="navbar-button"><a href="{% url 'artist_sign_out' %}">Sign Out</a></div>
     </nav>
 
     <!-- END NAVBAR -->
 
 
 <!-- HOME -->
+
 	  <header class="page-header" data-background="images/page-header.jpg">
 	  	<div class="inner">
-        <h1>Manage Your Artist Portfolio</h1>
+        <h1>Hello {{user.username}}</h1>
+        <p>Manage your digital art portfolio.</p>
 		  <!-- end inner -->
 	  </header>
 
