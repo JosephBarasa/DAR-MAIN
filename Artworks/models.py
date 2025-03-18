@@ -5,7 +5,7 @@ from django.conf import settings
 class Artwork(models.Model):
     artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  null=True, related_name='artworks')
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='artworks/')
+    artwork_image = models.ImageField(upload_to='artworks/')
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     year = models.IntegerField(default=0000)

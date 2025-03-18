@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from Users.models import CustomUser
 from django.contrib.auth.decorators import login_required
+from Artworks.models import Artwork
 
 
 def artist_sign_up(request):
@@ -82,8 +83,14 @@ def artist_index(request):
     return render(request, 'artists/artist_index.html')
 
 
+@login_required
 def artist_dashboard(request):
-    return render(request, 'artists/artists_dashboard.html', {'user': request.user})
+    artworks = Artwork.objects.filter(artist=request.user)
+    return render(request, 'artists/artists_dashboard.html', {
+        'user': request.user,
+        'artworks': artworks  # Pass artworks to template
+    })
+
 
 
 @login_required
@@ -108,7 +115,31 @@ def artist_profile_edit(request):
         return render(request, 'artists/artist_profile_edit.html', {'user': user})
 
 
-def artwork_upload(request):    
+@login_required
+def artwork_upload(request):  
+    if request.method == 'POST':
+        title = request.POST['title']
+        media = request.POST['media']
+        year = request.POST['year']
+        price = request.POST['price']
+        description = request.POST.get('description', '')
+        
+        artwork_image = request.FILES.get('artwork_image', None)
+        
+        # Create the artwork
+        artwork = Artwork.objects.create(
+            title=title,
+            media=media,
+            year=year,
+            price=price,
+            description=description,
+            artwork_image=artwork_image,
+            artist=request.user
+        )
+
+        messages.success(request, 'Your artwork has been successfully uploaded')
+        return redirect('artist_dashboard') 
+
     return render(request, 'artists/artwork_upload.html')
 
 

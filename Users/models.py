@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=USER_ROLES, default='normal_user')
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
-    residence = models.CharField(max_length=20, null=True)
+    residence = models.CharField(max_length=50, null=True)
     bio = models.TextField(max_length=200, null=True)
 
     def __str__(self):

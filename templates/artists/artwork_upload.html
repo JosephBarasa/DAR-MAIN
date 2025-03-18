@@ -1,334 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Artists Management System</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        
-        /* Navigation styles */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .search-icon {
-            font-size: 20px;
-        }
-        
-        .profile-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .sign-out-btn {
-            background-color: #3c4c3f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .sign-out-btn a {
-          color: white;
-          text-decoration: none;
-        }
-        
-        /* Main content styles */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        /* Edit profile card styles */
-        .edit-profile-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 40px;
-            max-width: 800px;
-            margin: 0 auto 60px;
-        }
-        
-        .edit-profile-card h1 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        
-        .profile-form {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-        }
-        
-        .profile-image-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .profile-image-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #eee;
-            background-color: #f9f9f9;
-            position: relative;
-        }
-        
-        .profile-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .image-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .image-upload-btn {
-            background-color: #3c4c3f;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            width: 100%;
-            max-width: 200px;
-        }
-        
-        .image-upload-btn:hover {
-            background-color: #2e3a30;
-        }
-        
-        .profile-details-section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .form-group label {
-            font-weight: 500;
-            font-size: 14px;
-        }
-        
-        .form-group input, 
-        .form-group textarea {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .update-profile-btn {
-            background-color: #465B4B;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            margin-top: 20px;
-            align-self: flex-start;
-        }
-        
-        .update-profile-btn:hover {
-            background-color: #465B4B;
-        }
-
-        .update-profile-btn a {
-          color: white;
-          text-decoration: none;
-        }
-        
-        /* Footer styles */
-        footer {
-            background-color: white;
-            padding: 20px 40px;
-            text-align: center;
-            color: #666;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            font-size: 14px;
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .profile-form {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-image-section {
-                margin-bottom: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Artists Management System</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    /* Navigation styles */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .sign-out-btn {
+      background-color: #3c4c3f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .sign-out-btn a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    /* Main content styles */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    /* Edit profile card styles */
+    .edit-profile-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+    
+    .edit-profile-card h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+    
+    .profile-form {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+    }
+    
+    .profile-image-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .profile-image-container {
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #eee;
+      background-color: #f9f9f9;
+      position: relative;
+    }
+    
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .image-upload-btn {
+      background-color: #3c4c3f;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+      max-width: 200px;
+    }
+    
+    .image-upload-btn:hover {
+      background-color: #2e3a30;
+    }
+    
+    .profile-details-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .form-group label {
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .form-group input, 
+    .form-group textarea {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .update-profile-btn {
+      background-color: #465B4B;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 20px;
+      align-self: flex-start;
+    }
+    
+    .update-profile-btn:hover {
+      background-color: #465B4B;
+    }
+    
+    /* Footer styles */
+    footer {
+      background-color: white;
+      padding: 20px 40px;
+      text-align: center;
+      color: #666;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .profile-form {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-image-section {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">'02</div>
-        <div class="nav-right">
-            <button class="sign-out-btn"><a href="{% url 'artist_dashboard' %}">Back</a></button>
-        </div>
-    </nav>
-    
-    <div class="main-container">
-        <div class="edit-profile-card">
-            <h1>Upload Your Artwork</h1>
-            
-            <form class="profile-form" id="profileForm">
-                <div class="profile-image-section">
-                    <div class="profile-image-container" id="imagePreviewContainer">
-                        <div class="image-placeholder" id="imagePlaceholder">
-                            Click below to upload your artwork
-                        </div>
-                        <img class="profile-image" id="imagePreview" style="display: none;" alt="Profile image preview">
-                    </div>
-                    
-                    <label for="profileImage" class="image-upload-btn">
-                        Upload Artwork
-                        <input type="file" id="profileImage" name="profileImage" accept="image/*" style="display: none;">
-                    </label>
-                </div>
-                
-                <div class="profile-details-section">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" id="title" name="title" placeholder="Title">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="media">Media</label>
-                        <input type="text" id="email" name="media" placeholder="Media">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="year">Year</label>
-                        <input type="text" id="year" name="year" placeholder="Year Created">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="text" id="price" name="price" placeholder="Price">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="bio">Description</label>
-                        <textarea id="bio" name="bio" placeholder="Write a short description of the artwork..."></textarea>
-                    </div>
-
-                    <button type="submit" class="update-profile-btn">Upload Artwork</button>
-                    
-                </div>
-            </form>
-        </div>
+  <nav>
+    <div class="logo">'02</div>
+    <div class="nav-right">
+      <button class="sign-out-btn"><a href="{% url 'artist_dashboard' %}">Back</a></button>
     </div>
-    
-    <footer>
-        © 2025 JB | Visual Artists Management System  <span>Created by <a href="#"> Joseph Barasa</a></span> 
-    </footer>
-    
-    <script>
-        // Handle image preview
-        document.getElementById('profileImage').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                
-                reader.onload = function(event) {
-                    const imagePreview = document.getElementById('imagePreview');
-                    imagePreview.src = event.target.result;
-                    imagePreview.style.display = 'block';
-                    
-                    document.getElementById('imagePlaceholder').style.display = 'none';
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        });
+  </nav>
+  
+  <div class="main-container">
+    <div class="edit-profile-card">
+      <h1>Upload Your Artwork</h1>
+      
+      <form method="POST" action="{% url 'artwork_upload' %}" class="profile-form" id="profileForm" enctype="multipart/form-data">
+        {% csrf_token %}
         
-        // Handle form submission
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Collect form data
-            const formData = new FormData(this);
-            
-            // Log the form data (for demonstration purposes)
-            console.log('Form submitted with:');
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
-            }
-            
-            // Here you would typically send the data to a server
-            alert('Profile updated successfully!');
-        });
-    </script>
+        <div class="profile-image-section">
+          <div class="profile-image-container" id="imagePreviewContainer">
+            <div class="image-placeholder" id="imagePlaceholder">
+              Click below to upload your artwork
+            </div>
+            <img class="profile-image" id="imagePreview" style="display: none;" alt="Artwork image preview">
+          </div>
+          
+          <label for="artwork_image" class="image-upload-btn">
+            Upload Artwork
+            <input type="file" id="artwork_image" name="artwork_image" accept="image/*" style="display: none;">
+          </label>
+        </div>
+        
+        <div class="profile-details-section">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Title">
+          </div>
+          
+          <div class="form-group">
+            <label for="media">Media</label>
+            <input type="text" id="media" name="media" placeholder="Media">
+          </div>
+
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input type="text" id="year" name="year" placeholder="Year Created">
+          </div>
+          
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" id="price" name="price" placeholder="Price">
+          </div>
+          
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Write a short description of the artwork..."></textarea>
+          </div>
+
+          <button type="submit" class="update-profile-btn">Upload Artwork</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <footer>
+    © 2025 JB | Visual Artists Management System  <span>Created by <a href="#"> Joseph Barasa</a></span> 
+  </footer>
+  
+  <script>
+    // Handle image preview
+    document.getElementById('artwork_image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+          const imagePreview = document.getElementById('imagePreview');
+          imagePreview.src = event.target.result;
+          imagePreview.style.display = 'block';
+          document.getElementById('imagePlaceholder').style.display = 'none';
+        };
+        
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // Remove preventDefault if you want to submit the form to the server.
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+      // e.preventDefault(); // Comment out or remove this to allow form submission
+      // Optionally, you can handle form submission via AJAX here.
+    });
+  </script>
 </body>
 </html>
