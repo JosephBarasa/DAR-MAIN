@@ -70,4 +70,29 @@ def gallery_index(request):
 
 
 def gallery_sign_out(request):
+    logout(request)
     return redirect('home')
+
+
+def gallery_artists(request):
+    return render(request, 'gallery/artists.html')
+
+
+def gallery_galleries(request):
+    return render(request, 'gallery/gallery.html')
+
+
+def gallery_events(request):
+    return render(request, 'gallery/events.html')
+
+
+def gallery_about(request):
+    return render(request, 'gallery/about.html')
+
+
+def gallery_contact(request):
+    return render(request, 'gallery/contact.html')
+
+
+def gallery_dashboard(request):
+    return render(request, 'gallery/gallery_dashboard.html')

@@ -183,3 +183,23 @@ def artwork_delete(request, artwork_id):
 def artist_sign_out(request):
     logout(request)
     return redirect('home')
+
+
+def artist_artists(request):
+    return render(request, 'artists/artists.html')
+
+
+def artist_galleries(request):
+    return render(request, 'artists/gallery.html')
+
+
+def artist_events(request):
+    return render(request, 'artists/events.html')
+
+
+def artist_about(request):
+    return render(request, 'artists/about.html')
+
+
+def artist_contact(request):
+    return render(request, 'artists/contact.html')

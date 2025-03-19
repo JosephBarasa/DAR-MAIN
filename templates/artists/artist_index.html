@@ -91,11 +91,11 @@
       <div class="site-menu">
         <ul>
           <li><a href="{% url 'artist_index' %}">Home</a></li>
-          <li><a href="{% url 'artists' %}">Artists</a></li>
-          <li><a href="{% url 'galleries' %}">Galleries</a></li>
-          <li><a href="{% url 'exhibitions' %}">Events & Exhibitions</a></li>
-          <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'artist_artists' %}">Artists</a></li>
+          <li><a href="{% url 'artist_galleries' %}">Galleries</a></li>
+          <li><a href="{% url 'artist_events' %}">Events & Exhibitions</a></li>
+          <li><a href="{% url 'artist_about' %}">About</a></li>
+          <li><a href="{% url 'artist_contact' %}">Contact</a></li>
         </ul>
       </div>
       <!-- end site-menu -->
@@ -107,7 +107,7 @@
       <!-- when to display accounts buttons -->
 
       <div class="profie-icon">
-        <a href="{% url 'artist_dashboard' %}">Create Your Artist Profile</a>
+        <a href="{% url 'artist_dashboard' %}">Artist Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'artist_sign_out' %}">Sign Out</a></div>
     </nav>

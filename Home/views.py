@@ -5,23 +5,23 @@ def home(request):
     return render(request, 'home/index.html')
 
 
-def artists(request):
+def home_artists(request):
     return render(request, 'home/artists.html')
 
 
-def galleries(request):
+def home_galleries(request):
     return render(request, 'home/gallery.html')
 
 
-def exhibitions(request):
+def home_exhibitions(request):
     return render(request, 'home/exhibitions.html')
 
 
-def about(request):
+def home_about(request):
     return render(request, 'home/about.html')
 
 
-def contact(request):
+def home_contact(request):
     return render(request, 'home/contact.html')
 
 
