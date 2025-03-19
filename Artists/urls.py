@@ -9,5 +9,7 @@ urlpatterns = [
     path('artist_dashboard/', views.artist_dashboard, name='artist_dashboard'),
     path('artist_profile_edit/', views.artist_profile_edit, name='artist_profile_edit'),
     path('artwork_upload/', views.artwork_upload, name='artwork_upload'),
+    path('artwork_edit/<int:artwork_id>/', views.artwork_edit, name='artwork_edit'),
+    path('artwork/<int:artwork_id>/delete/', views.artwork_delete, name='artwork_delete'),
     path('artist_sign_out/', views.artist_sign_out, name='artist_sign_out'),
 ]

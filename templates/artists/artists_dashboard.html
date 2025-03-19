@@ -310,13 +310,16 @@
                                 <div class="artwork-meta">
                                     <span>{{ artwork.year }}</span>
                                 </div>
+
+                                <div class="profile-actions">
+                                    <button class="edit-profile-btn"><a href="{% url 'artwork_edit' artwork.id %}">Edit</a></button>
+                                    <button class="upload-artwork-btn"><a href="{% url 'artwork_delete' artwork.id %}">Delete</a></button>
+                                </div>
+
                             </div>
                         </div>
                     {% endfor %}
-                {% else %}
-                    <div class="no-artworks">
-                        No artworks uploaded yet.
-                    </div>
+
                 {% endif %}
                 
               </div>

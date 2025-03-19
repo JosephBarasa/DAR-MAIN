@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -141,6 +141,43 @@ def artwork_upload(request):
         return redirect('artist_dashboard') 
 
     return render(request, 'artists/artwork_upload.html')
+
+
+# artwork edit
+
+@login_required
+def artwork_edit(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id, artist=request.user)
+    
+    if request.method == 'POST':
+        artwork.title = request.POST.get('title', artwork.title)
+        artwork.media = request.POST.get('media', artwork.media)
+        artwork.year = request.POST.get('year', artwork.year)
+        artwork.price = request.POST.get('price', artwork.price)
+        artwork.description = request.POST.get('description', artwork.description)
+        
+        if 'artwork_image' in request.FILES:
+            artwork.artwork_image = request.FILES['artwork_image']
+            
+        artwork.save()
+        messages.success(request, 'Artwork updated successfully.')
+        return redirect('artist_dashboard')
+    
+    return render(request, 'artists/artwork_edit.html', {'artwork': artwork})
+
+
+# artwork deletion
+
+
+def artwork_delete(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id, artist=request.user)
+
+    if request.method == 'POST':
+        artwork.delete()
+        messages.success(request, 'Artwork deleted successfully.')
+        return redirect('artist_dashboard')
+    else:
+        return render(request, 'artists/artwork_confirm_delete.html', {'artwork': artwork})
 
 
 def artist_sign_out(request):
