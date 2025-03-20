@@ -186,23 +186,24 @@ def artist_sign_out(request):
 
 
 def artist_artists(request):
-    return render(request, 'artists/artists.html')
+    artists = CustomUser.objects.filter(role='artist')
+    return render(request, 'artists/artist_artists.html', {'artists': artists})
 
 
 def artist_galleries(request):
-    return render(request, 'artists/gallery.html')
+    return render(request, 'artists/artist_gallery.html')
 
 
 def artist_events(request):
-    return render(request, 'artists/events.html')
+    return render(request, 'artists/artist_events.html')
 
 
 def artist_about(request):
-    return render(request, 'artists/about.html')
+    return render(request, 'artists/artist_about.html')
 
 
 def artist_contact(request):
-    return render(request, 'artists/contact.html')
+    return render(request, 'artists/artist_contact.html')
 
 
 def artist_profile_display(request, artist_id):

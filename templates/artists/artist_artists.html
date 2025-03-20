@@ -1,9 +1,8 @@
-{% extends 'users/users_base.html' %}
+{% extends 'artists/artists_base.html' %}
 {% load static %}
 <body>
 
 {% block content %}
-
     <style>
         .artist-grid {
             display: grid;
@@ -83,35 +82,36 @@
             }
         }
     </style>
-
     <body>
-        <header class="page-header" data-background="images/page-header.jpg">
-            <div class="inner">
-              <h1>Artists In Kenya</h1>
-            </div>
-        </header>
+      <header class="page-header" data-background="images/page-header.jpg">
+          <div class="inner">
+            <h1>Artists In Kenya</h1>
+          </div>
+      </header>
 
-        <div class="artist-grid">
-            {% if artists %}
-                {% for artist in artists %}
-                    <div class="artist-card">
-                        {% if artist.profile_picture %}
-                            <img src="{{ artist.profile_picture.url }}" alt="{{artist.username}}'s Profile Picture" class="artist-image">
-                        {% else %}
-                            <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
-                        {% endif %}
+      <div class="artist-grid">
+          {% if artists %}
+              {% for artist in artists %}
+                  <div class="artist-card">
+                      {% if artist.profile_picture %}
+                          <img src="{{ artist.profile_picture.url }}" alt="{{artist.username}}'s Profile Picture" class="artist-image">
+                      {% else %}
+                          <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
+                      {% endif %}
 
-                        <a href="{% url 'artist_profile_display' artist.id %}"><h2>{{artist.first_name}} {{artist.last_name}}</h2></a>
-                        <p>{{artist.residence}}</p>
-                        <p>{{artist.bio}}</p>
-                        
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>There are no artists currently in the system.</p>
-            {% endif %}
-        </div>
-    </body>
+                      <a href="{% url 'artist_profile_display' artist.id %}"><h2>{{artist.first_name}} {{artist.last_name}}</h2></a>
+                      <p>{{artist.residence}}</p>
+                      <p>{{artist.bio}}</p>
+                      
+                  </div>
+              {% endfor %}
+          {% else %}
+              <p>There are no artists currently in the system.</p>
+          {% endif %}
+      </div>
+  </body>
+    
+    
 
 {% endblock %}
 
