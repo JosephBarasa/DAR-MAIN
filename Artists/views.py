@@ -88,7 +88,7 @@ def artist_dashboard(request):
     artworks = Artwork.objects.filter(artist=request.user)
     return render(request, 'artists/artists_dashboard.html', {
         'user': request.user,
-        'artworks': artworks  # Pass artworks to template
+        'artworks': artworks,
     })
 
 
@@ -203,3 +203,13 @@ def artist_about(request):
 
 def artist_contact(request):
     return render(request, 'artists/contact.html')
+
+
+def artist_profile_display(request, artist_id):
+    artist = get_object_or_404(CustomUser, id=artist_id, role='artist')
+    artworks = Artwork.objects.filter(artist=artist)
+    return render(request, 'artists/artist_profile_display.html',
+                  {'artist': artist, 'artworks': artworks })
+    
+    
+

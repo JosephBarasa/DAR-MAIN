@@ -88,9 +88,30 @@ def user_index(request):
     return render(request, 'users/user_index.html')
 
 
-def user_profile_display(request):
-    return render(request, 'users/user_profile_display.html')
+def user_dashboard(request):
+    return render(request, 'users/user_dashboard.html')
 
 
 def user_profile_edit(request):
     return render(request, 'users/user_profile_edit.html')
+
+
+def user_artists(request):
+    artists = CustomUser.objects.filter(role='artist')
+    return render(request, 'users/user_artists.html', {'artists': artists})
+                  
+
+def user_galleries(request):
+    return render(request, 'users/user_galleries.html')
+
+
+def user_events(request):
+    return render(request, 'users/user_events.html')
+
+
+def user_about(request):
+    return render(request, 'users/user_about.html')
+
+
+def user_contact(request):
+    return render(request, 'users/user_contact.html')

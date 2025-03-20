@@ -91,11 +91,11 @@
       <div class="site-menu">
         <ul>
           <li><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'artists' %}">Artists</a></li>
-          <li><a href="{% url 'galleries' %}">Galleries</a></li>
-          <li><a href="{% url 'exhibitions' %}">Events & Exhibitions</a></li>
-          <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'user_artists' %}">Artists</a></li>
+          <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+          <li><a href="{% url 'user_galleries' %}">Events & Exhibitions</a></li>
+          <li><a href="{% url 'user_about' %}">About</a></li>
+          <li><a href="{% url 'user_contact' %}">Contact</a></li>
         </ul>
       </div>
       <!-- end site-menu -->
@@ -107,7 +107,7 @@
       <!-- when to display accounts buttons -->
 
       <div class="profie-icon">
-        <a href="{% url 'user_profile_display' %}">Create Your User Profile</a>
+        <a href="{% url 'user_dashboard' %}">User Profile</a>
       </div>
 
       <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
@@ -123,12 +123,6 @@
             <h1>Hello {{user.username}}</h1>
             <p>Explore Artists, Galleries and Exhibitions around Kenya</p>
 		</div>
-
-      <div class="art-button-container">
-        <!-- <button class="art-button"><a href="{% url 'artist_sign_up' %}"></a>Sign Up As Artist</button> -->
-        <div class="art-button"><a href="{% url 'artist_sign_up' %}">Sign Up As Artist</a></div>
-        <div class="art-button"><a href="{% url 'gallery_sign_up' %}">Sign Up As Gallery</a></div>
-      </div>
 		  <!-- end inner -->
 	  </header>
 

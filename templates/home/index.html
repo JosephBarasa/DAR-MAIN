@@ -108,7 +108,7 @@
 
       {% if user.is_authenticated %}
       <div class="profie-icon">
-        <a href="{% url 'user_profile_display' %}">Create Your User Profile</a>
+        <a href="{% url 'user_dashboard' %}">Create Your User Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
       {% else %}

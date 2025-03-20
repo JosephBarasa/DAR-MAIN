@@ -17,4 +17,5 @@ urlpatterns = [
     path('artist_events/', views.artist_events, name='artist_events'),
     path('artist_about/', views.artist_about, name='artist_about'),
     path('artist_contact/', views.artist_contact, name='artist_contact'),
+    path('artist_profile_display/<int:artist_id>/', views.artist_profile_display, name='artist_profile_display'),
 ]

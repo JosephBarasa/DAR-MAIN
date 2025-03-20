@@ -121,12 +121,6 @@
       <div class="search-button"> <i class="far fa-search"></i> </div>
       <!-- end search-button -->
 
-      {% if user.is_authenticated %}
-      <div class="profie-icon">
-        <a href="{% url 'artist_dashboard' %}">Profile</a>
-      </div>
-      <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
-      {% else %}
       <!-- sign up-button -->
       <div class="navbar-button"><a href="{% url 'user_sign_up' %}">Sign Up</a></div>
       <!-- end sign up-button -->
@@ -134,7 +128,7 @@
       <!-- sign in-button -->
       <div class="navbar-button"><a href="{% url 'user_sign_in' %}">Sign In</a></div>
       <!-- end sign in-button -->
-       {% endif %}
+
 
 
     </nav>

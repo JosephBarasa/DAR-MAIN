@@ -1,0 +1,121 @@
+{% extends 'users/users_base.html' %}
+{% load static %}
+<body>
+
+{% block content %}
+
+    <style>
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        
+        .artist-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .artist-image {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        
+        .artist-card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .artist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 0 15px 40px;
+            }
+            
+            .artist-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .artist-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .artist-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .artist-card h2 {
+                font-size: 16px;
+            }
+            
+            .page-header h1 {
+                font-size: 28px;
+            }
+            
+            .page-header p {
+                font-size: 16px;
+            }
+        }
+    </style>
+
+    <body>
+        <header class="page-header" data-background="images/page-header.jpg">
+            <div class="inner">
+              <h1>Artists In Kenya</h1>
+            </div>
+            <!-- end inner -->
+      
+            {{artists.username}}
+        </header>
+
+        <div class="artist-grid">
+            {% if artists %}
+                {% for artist in artists %}
+                    <div class="artist-card">
+                        {% if artist.profile_picture %}
+                            <img src="{{ artist.profile_picture.url }}" alt="{{artist.username}}'s Profile Picture" class="artist-image">
+                        {% else %}
+                            <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
+                        {% endif %}
+
+                        <a href="{% url 'artist_profile_display' artist.id %}"><h2>{{artist.first_name}} {{artist.last_name}}</h2></a>
+                        <p>{{artist.residence}}</p>
+                        <p>{{artist.bio}}</p>
+                        
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>There are no artists currently in the system.</p>
+            {% endif %}
+        </div>
+    </body>
+
+{% endblock %}
+
+</body>

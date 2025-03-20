@@ -56,8 +56,9 @@
         
         h1 {
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 28px;
+            margin-bottom: 2rem;
+            margin-top: 7rem;
+            font-size: 30px;
             font-weight: 500;
         }
         
@@ -253,32 +254,24 @@
 <body>
     <header>
         <div class="logo">'02</div>
-        <button class="sign-out-btn"><a href="{% url 'artist_index' %}">Back</a></button>
+        <button class="sign-out-btn"><a href="{% url 'user_artists' %}">Back</a></button>
     </header>
     
     <div class="main-container">
-        <h1>Artist Profile</h1>
         
         <div class="profile-card">
             <div class="profile-container">
-                {% if user.profile_picture %}
-                    <img src="{{user.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
+                {% if artist.profile_picture %}
+                    <img src="{{artist.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
                 {% else %}
                     <img src="" alt="Default Profile Picture" class="profile-picture">
                 {% endif %}
                 
                 <div class="profile-info">
-                    <h2>{{user.first_name}} {{user.last_name}}</h2>
-                    <p>{{user.email}}</p>
-                    <p>{{user.residence}}</p>
-                    <p>{{user.bio}}</p>
-                    
-                    {% if user.role == 'artist' %}
-                    <div class="profile-actions">
-                        <button class="edit-profile-btn"><a href="{% url 'artist_profile_edit' %}">Edit Profile</a></button>
-                        <button class="upload-artwork-btn"><a href="{% url 'artwork_upload' %}">Upload Artwork</a></button>
-                    </div>
-                    {% endif %}
+                    <h2>{{artist.first_name}} {{artist.last_name}}</h2>
+                    <p>{{artist.email}}</p>
+                    <p>{{artist.residence}}</p>
+                    <p>{{artist.bio}}</p>
                 </div>
             </div>
         </div>
@@ -286,7 +279,7 @@
         
         <div class="artworks-section">
 
-            <h2>Artworks</h2>
+            <h1>{{artist.first_name}}'s</h1>
 
             <div class="artwork-grid">
                 {% if artworks %}
@@ -312,15 +305,6 @@
                                 <div class="artwork-meta">
                                     <span>{{ artwork.year }}</span>
                                 </div>
-
-                                {% if user.role == 'artist' %}
-                                <div class="profile-actions">
-                                    <button class="edit-profile-btn"><a href="{% url 'artwork_edit' artwork.id %}">Edit</a></button>
-                                    <button class="upload-artwork-btn"><a href="{% url 'artwork_delete' artwork.id %}">Delete</a></button>
-                                    <button class="upload-artwork-btn"><a href="{% url 'artwork_edit' artwork.id %}">Upload To Gallery</a></button>
-                                </div>
-                                {% endif %}
-
                             </div>
                         </div>
                     {% endfor %}
