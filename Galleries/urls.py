@@ -13,4 +13,5 @@ urlpatterns = [
     path('gallery_about/', views.gallery_about, name='gallery_about'),
     path('gallery_contact/', views.gallery_contact, name='gallery_contact'),
     path('gallery_dashboard/', views.gallery_dashboard, name='gallery_dashboard'),
+    path('gallery_artist_profile_display/<int:artist_id>/', views.gallery_artist_profile_display, name='gallery_artist_profile_display'),
 ]

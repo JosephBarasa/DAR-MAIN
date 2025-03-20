@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from Users.models import CustomUser
 from django.contrib.auth import authenticate, login, logout
+from Artworks.models import Artwork
 
 
 def gallery_sign_up(request):
@@ -75,24 +76,32 @@ def gallery_sign_out(request):
 
 
 def gallery_artists(request):
-    return render(request, 'gallery/artists.html')
+    artists = CustomUser.objects.filter(role='artist')
+    return render(request, 'gallery/gallery_artists.html', {'artists': artists})
 
 
 def gallery_galleries(request):
-    return render(request, 'gallery/gallery.html')
+    return render(request, 'gallery/gallery_galleries.html')
 
 
 def gallery_events(request):
-    return render(request, 'gallery/events.html')
+    return render(request, 'gallery/gallery_events.html')
 
 
 def gallery_about(request):
-    return render(request, 'gallery/about.html')
+    return render(request, 'gallery/gallery_about.html')
 
 
 def gallery_contact(request):
-    return render(request, 'gallery/contact.html')
+    return render(request, 'gallery/gallery_contact.html')
 
 
 def gallery_dashboard(request):
     return render(request, 'gallery/gallery_dashboard.html')
+
+
+def gallery_artist_profile_display(request, artist_id):
+    artist = get_object_or_404(CustomUser, id=artist_id, role='artist')
+    artworks = Artwork.objects.filter(artist=artist)
+    return render(request, 'gallery/artist_profile_display.html',
+                  {'artist': artist, 'artworks': artworks })

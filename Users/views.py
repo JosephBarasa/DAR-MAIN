@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
+from Artworks.models import Artwork
 
 # USER SIGN UP
 
@@ -115,3 +116,9 @@ def user_about(request):
 
 def user_contact(request):
     return render(request, 'users/user_contact.html')
+
+
+def user_artist_profile_display(request, artist_id):
+    artist = get_object_or_404(CustomUser, id=artist_id, role='artist')
+    artworks = Artwork.objects.filter(artist=artist)
+    return render(request, 'users/artist_profile_display.html', {'artist': artist, 'artworks': artworks})

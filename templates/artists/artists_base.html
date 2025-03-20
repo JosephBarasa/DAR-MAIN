@@ -67,30 +67,75 @@
 
 <!-- END PAGE TRANSITION -->
 
+<!-- SEARCH -->
+
+<div class="smooth-scroll">
+  <div class="section-wrapper" data-scroll-section>
+    <div class="search-box">
+      <div class="container">
+        <div class="form">
+          <h3>SEARCH</h3>
+          <!--  search form-->
+          <input type="search" placeholder="What are you looking for ?">
+          <input type="submit" value="SEARCH">
+        </div>
+        <!-- end form -->
+
+        <!-- search-events-->
+
+        <div class="search-events">
+          <ul>
+            <li>
+              <h5><a href="#">OUR MOST RECENT EVENTS & EXHIBITIONS</a></h5>
+              <small>28TH DECEMBER 2024</small> </li>
+            <li>
+              <h5><a href="#">JOSEPH BARASA</a></h5>
+              <small>Artist & Developer</small> </li>
+            <li>
+              <h5><a href="#">GALLERIES</a></h5>
+              <small>In Nairobi and all over Kenya</small> </li>
+          </ul>
+        </div>
+
+        <!-- end search-events -->
+
+      </div>
+    </div>
+
+    <!-- END SEARCH -->
+
     <!-- NAVBAR -->
 
     <nav class="navbar">
       <div> <small>'0</small><strong>2</strong> </div>
 
-      {% if user.is_authenticated %}
-
+      <!-- site-menu -->
       <div class="site-menu">
         <ul>
-          <li><a href="{% url 'artist_index' %}">Home</a></li>
-          <li><a href="{% url 'artist_artists' %}">Artists</a></li>
-          <li><a href="{% url 'artist_galleries' %}">Galleries</a></li>
-          <li><a href="{% url 'artist_events' %}">Events & Exhibitions</a></li>
-          <li><a href="{% url 'artist_about' %}">About</a></li>
-          <li><a href="{% url 'artist_contact' %}">Contact</a></li>
+          <li><a href="{% url 'user_index' %}">Home</a></li>
+          <li><a href="{% url 'user_artists' %}">Artists</a></li>
+          <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+          <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+          <li><a href="{% url 'user_about' %}">About</a></li>
+          <li><a href="{% url 'user_contact' %}">Contact</a></li>
         </ul>
       </div>
+      <!-- end site-menu -->
 
+      <!-- search button -->
+      <div class="search-button"> <i class="far fa-search"></i> </div>
+      <!-- end search-button -->
+
+      {% if user.is_authenticated %}
       <div class="profie-icon">
         <a href="{% url 'artist_dashboard' %}">Artist Profile</a>
       </div>
       <div class="navbar-button"><a href="{% url 'artist_sign_out' %}">Sign Out</a></div>
-
       {% else %}
+      <!-- sign up-button -->
+      <div class="navbar-button"><a href="{% url 'artist_sign_up' %}">Sign Up</a></div>
+      <!-- end sign up-button -->
+
       <!-- sign in-button -->
       <div class="navbar-button"><a href="{% url 'artist_sign_in' %}">Sign In</a></div>
       <!-- end sign in-button -->
@@ -129,6 +174,7 @@
 <script src="{% static 'js/odometer.min.js' %}"></script>
 <script src="{% static 'js/swiper.min.js' %}"></script>
 <script src="{% static 'js/scripts.js' %}"></script>
+
 </body>
 
 </html>
