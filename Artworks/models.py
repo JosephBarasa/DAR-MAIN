@@ -3,7 +3,9 @@ from django.conf import settings
 
 
 class Artwork(models.Model):
-    artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  null=True, related_name='artworks')
+    artist = models.ForeignKey(settings.AUTH_USER_MODEL, 
+                               on_delete=models.CASCADE, 
+                               null=True, related_name='artworks')
     title = models.CharField(max_length=255)
     artwork_image = models.ImageField(upload_to='artworks/')
     description = models.TextField(blank=True, null=True)
@@ -14,20 +16,25 @@ class Artwork(models.Model):
     def __str__(self):
         return self.title
     
+
+# user's shopping cart
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
-# class ArtworkSubmission(models.Model):
-#     STATUS_CHOICES = [
-#         ('pending', 'Pending'),
-#         ('approved', 'Approved'),
-#         ('rejected', 'Rejected'),
-#     ]
+    def __str__(self):
+        return f"Cart for {self.user.username}"
 
-#     artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  null=True, related_name="submissions")
-#     gallery = models.ForeignKey(Galleries, on_delete=models.CASCADE, related_name="submissions")
-#     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-#     submitted_at = models.DateTimeField(auto_now_add=True)
-#     reviewed_at = models.DateTimeField(blank=True, null=True)
 
-#     def __str__(self):
-#         return f"{self.artist.username} -> {self.gallery.name} ({self.status})"
+# artworks added to cart
 
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart_items')
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.artwork.title} (x{self.quantity})"

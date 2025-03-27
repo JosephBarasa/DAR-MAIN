@@ -72,7 +72,7 @@ def gallery_index(request):
 
 def gallery_sign_out(request):
     logout(request)
-    return redirect('home')
+    return redirect('home_index')
 
 
 def gallery_artists(request):
@@ -82,6 +82,10 @@ def gallery_artists(request):
 
 def gallery_galleries(request):
     return render(request, 'gallery/gallery_galleries.html')
+
+
+def gallery_artworks(request):
+    return render(request, 'gallery/gallery_artworks.html')
 
 
 def gallery_events(request):

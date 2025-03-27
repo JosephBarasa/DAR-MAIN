@@ -1,18 +1,13 @@
-{% extends 'home/base.html' %}
+{% extends 'gallery/gallery_base.html' %}
 {% load static %}
-<body>
 
 {% block content %}
 
 <header class="page-header" data-background="images/page-header.jpg">
       <div class="inner">
-        <h1>Galleries</h1>
-        <p>Explore art galleries in Kenya.</p>
+        <h1>{{user.username}} Gallery's Artworks</h1>
       </div>
       <!-- end inner -->
     </header>
-    <!-- end page-header -->
 
 {% endblock %}
-
-</body>

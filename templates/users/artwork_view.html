@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 120px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .artwork-detail {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .artwork-image {
+            flex: 1;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+
+        .artwork-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .artwork-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artwork-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        .artwork-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .artwork-description {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .detail-item {
+            font-size: 15px;
+            color: #666;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: #444;
+            margin-right: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #444;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #444;
+            border: 1px solid #444;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f5f7ff;
+            transform: translateY(-2px);
+        }
+
+        .related-artworks {
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+            width: 100%;
+        }
+
+        /* Navigation Styles */
+    .main-navigation {
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+  
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        height: 70px;
+      }
+  
+      .logo a {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+  
+      .logo a:hover {
+        color: #444;
+      }
+  
+      .nav-links {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+  
+      .nav-item {
+        color: #555;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+  
+      .nav-item:hover {
+        color: #444;
+      }
+  
+      .nav-item.active {
+        color: #444;
+        font-weight: 600;
+      }
+  
+      .nav-auth {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+  
+      .sign-out-btn {
+        background-color: #444;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+  
+      .sign-out-btn:hover {
+        background-color: #444;
+      }
+  
+      /* Responsive Navigation */
+      @media (max-width: 992px) {
+        .nav-container {
+          flex-wrap: wrap;
+          height: auto;
+          padding: 15px 20px;
+        }
+  
+        .nav-links {
+          order: 3;
+          flex-basis: 100%;
+          flex-direction: column;
+          display: none;
+          margin-top: 15px;
+        }
+  
+        .nav-links.show {
+          display: flex;
+        }
+  
+        .nav-item {
+          padding: 12px 0;
+          border-top: 1px solid #eee;
+        }
+  
+        .nav-auth {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+      }
+
+        @media (max-width: 768px) {
+            .artwork-detail {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .artwork-image {
+                height: 350px;
+            }
+
+            .action-buttons {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .btn {
+                flex: 1;
+                text-align: center;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+      <!-- Navigation Menu -->
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="logo">
+        <a href="/">Art Gallery</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="{% url 'user_index' %}" class="nav-item">Home</a></li>
+        <li><a href="{% url 'user_artists' %}" class="nav-item">Artists</a></li>
+        <li><a href="{% url 'user_galleries' %}" class="nav-item">Galleries</a></li>
+        <li><a href="{% url 'user_artworks' %}" class="nav-item active">Artworks</a></li>
+        <li><a href="{% url 'user_events' %}" class="nav-item">Events & Exhibitions</a></li>
+        <li><a href="{% url 'user_about' %}" class="nav-item">About</a></li>
+        <li><a href="{% url 'user_contact' %}" class="nav-item">Contact</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="{% url 'user_dashboard' %}" class="nav-item">User Profile</a>
+        <a href="{% url 'user_sign_out' %}" class="sign-out-btn">Sign Out</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container">
+        {% if artwork %}
+        <div class="artwork-detail">
+            {% if artwork.artwork_image %}
+            <div class="artwork-image">
+                <img src="{{ artwork.artwork_image.url }}" alt="Artwork Title">
+            </div>
+            {% else %}
+            <div class="artwork-image">
+                <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork">
+            </div>
+            {% endif %}
+            <div class="artwork-info">
+                <h1 class="artwork-title">{{artwork.title}}</h1>
+                <p class="artwork-description">
+                    {{artwork.description}}
+                </p>
+                <div class="artwork-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Artist:</span> <a href="{% url 'user_artist_profile_display' artist.id %}">{{artist.first_name}} {{artist.last_name}}</a>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Year:</span> {{artwork.year}}
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Medium:</span> {{artwork.media}}
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Price:</span> Kshs. {{artwork.price}}
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary">Buy</button>
+                    <button class="btn btn-secondary"><a href="{% url 'add_to_cart' artwork.id %}">Add to Cart</a></button>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <h3>This artwork is currently not available for viewing.</h3>
+
+        <div class="related-artworks">
+            <h2 class="section-title">You May Also Like</h2>
+            <!-- Related artworks would go here -->
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

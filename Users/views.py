@@ -4,7 +4,8 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
-from Artworks.models import Artwork
+from Artworks.models import Artwork, Cart, CartItem
+
 
 # USER SIGN UP
 
@@ -82,7 +83,7 @@ def user_sign_out(request):
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
     
-    return redirect('home')
+    return redirect('home_index')
 
 
 def user_index(request):
@@ -106,6 +107,11 @@ def user_galleries(request):
     return render(request, 'users/user_galleries.html')
 
 
+def user_artworks(request):
+    artworks = Artwork.objects.all()
+    return render(request, 'users/user_artworks.html', {'artworks': artworks})
+
+
 def user_events(request):
     return render(request, 'users/user_events.html')
 
@@ -122,3 +128,34 @@ def user_artist_profile_display(request, artist_id):
     artist = get_object_or_404(CustomUser, id=artist_id, role='artist')
     artworks = Artwork.objects.filter(artist=artist)
     return render(request, 'users/artist_profile_display.html', {'artist': artist, 'artworks': artworks})
+
+
+def artwork_view(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    artist = artwork.artist
+    return render(request, 'users/artwork_view.html', {'artwork': artwork,
+                                                       'artist': artist})
+
+
+def add_to_cart(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    
+    # creating the user's cart
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    
+    # check if artwork exists in the cart
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, artwork=artwork)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    else:
+        pass
+
+    messages.success(request, f"{artwork.title} has been added to your cart.")
+    return redirect('user_dashboard')
+
+
+def user_cart_view(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    return render(request, 'users/user_cart_view.html', {'cart_items': cart_items})

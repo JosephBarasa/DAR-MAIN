@@ -9,6 +9,7 @@ urlpatterns = [
     path('gallery_log_out/', views.gallery_sign_out, name='gallery_sign_out'),
     path('gallery_artists/', views.gallery_artists, name='gallery_artists'),
     path('gallery_galleries/', views.gallery_galleries, name='gallery_galleries'),
+    path('gallery_artworks/', views.gallery_artworks, name='gallery_artworks'),
     path('gallery_events/', views.gallery_events, name='gallery_events'),
     path('gallery_about/', views.gallery_about, name='gallery_about'),
     path('gallery_contact/', views.gallery_contact, name='gallery_contact'),

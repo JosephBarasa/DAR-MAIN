@@ -14,6 +14,7 @@ urlpatterns = [
     path('artist_sign_out/', views.artist_sign_out, name='artist_sign_out'),
     path('artist_artists/', views.artist_artists, name='artist_artists'),
     path('artist_galleries/', views.artist_galleries, name='artist_galleries'),
+    path('artist_artworks/', views.artist_artworks, name='artist_artworks'),
     path('artist_events/', views.artist_events, name='artist_events'),
     path('artist_about/', views.artist_about, name='artist_about'),
     path('artist_contact/', views.artist_contact, name='artist_contact'),

@@ -109,10 +109,13 @@
       <!-- site-menu -->
       <div class="site-menu">
         <ul>
-          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'home_index' %}">Home</a></li>
           <li><a href="{% url 'home_artists' %}">Artists</a></li>
           <li><a href="{% url 'home_galleries' %}">Galleries</a></li>
-          <li><a href="{% url 'home_exhibitions' %}">Events & Exhibitions</a></li>
+          <li><a href="{% url 'home_artworks' %}">Artworks</a></li>
+          <li><a href="{% url 'home_events' %}">Events & Exhibitions</a></li>
+          <li><a href="{% url 'home_about' %}">About</a></li>
+          <li><a href="{% url 'home_contact' %}">Contact</a></li>
         </ul>
       </div>
       <!-- end site-menu -->
@@ -144,12 +147,6 @@
         {% endblock %}
     </main>
 
-    <div class="art-button-container">
-      <!-- <button class="art-button"><a href="{% url 'artist_sign_up' %}"></a>Sign Up As Artist</button> -->
-      <div class="art-button"><a href="{% url 'artist_sign_in' %}">Sign In As Artist</a></div>
-      <div class="art-button"><a href="{% url 'gallery_sign_in' %}">Sign In As Gallery</a></div>
-    </div>
-    
     <div>
       {% if messages %}
       {% for message in messages %}

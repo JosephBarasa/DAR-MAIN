@@ -118,7 +118,8 @@
             <button type="submit" class="btn btn-dark">Sign In</button>
 
             <p class="no-account">Don't have an account? <a href="{% url 'user_sign_up' %}">Sign Up</a></p>
-            <button type="submit" class="btn back-button"><a href="{% url 'user_sign_up' %}">Back</a></button>
+            <button type="submit" class="btn back-button"><a href="{% url 'home_index' %}">Back</a></button>
+            <p class="no-account"><a href="{% url 'home_index' %}">Sign In As Artist or Gallery</a></p>
 
             <div class="messages">
                 {% for message in messages %}
