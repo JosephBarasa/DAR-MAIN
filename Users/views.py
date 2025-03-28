@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
 from Artworks.models import Artwork, Cart, CartItem
+from django.contrib.auth.decorators import login_required
 
 
 # USER SIGN UP
@@ -94,8 +95,25 @@ def user_dashboard(request):
     return render(request, 'users/user_dashboard.html')
 
 
+@login_required
 def user_profile_edit(request):
-    return render(request, 'users/user_profile_edit.html')
+    user = request.user
+    if request.method == 'POST':
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.residence = request.POST['residence']
+        user.bio = request.POST['bio']
+        
+        # profile picture(file upload)
+        if 'profile_picture' in request.FILES:
+            user.profile_picture = request.FILES['profile_picture']
+        
+        user.save()
+        messages.success(request, 'Your profile has been updated successfully.')
+        return redirect('user_dashboard')
+    
+    else:
+        return render(request, 'users/user_profile_edit.html')
 
 
 def user_artists(request):
@@ -137,6 +155,7 @@ def artwork_view(request, artwork_id):
                                                        'artist': artist})
 
 
+@login_required
 def add_to_cart(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
     
@@ -152,9 +171,9 @@ def add_to_cart(request, artwork_id):
         pass
 
     messages.success(request, f"{artwork.title} has been added to your cart.")
-    return redirect('user_dashboard')
+    return redirect('user_cart_view')
 
-
+@login_required
 def user_cart_view(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
