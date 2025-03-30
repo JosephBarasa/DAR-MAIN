@@ -4,7 +4,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
-from Artworks.models import Artwork, Cart, CartItem
+from Artworks.models import Artwork, Cart, CartItem, Order, OrderItem
 from django.contrib.auth.decorators import login_required
 
 
@@ -178,3 +178,48 @@ def user_cart_view(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
     return render(request, 'users/user_cart_view.html', {'cart_items': cart_items})
+
+
+@login_required
+def remove_cart_item(request, artwork_id):
+    
+    # View to remove a specific item from the user's cart.
+
+    # Handles both POST requests (for deletion) and GET requests
+    # (for showing the deletion confirmation page).
+
+    cart_item = get_object_or_404(CartItem, id=artwork_id)
+    if request.method == 'POST':
+        cart_item.delete()
+        messages.success(request, 'Item removed from cart.')
+        return redirect('user_cart_view')
+    else:
+        return render(request, 'users/user_cart_confirm_delete.html', {'cart_item': cart_item})
+
+
+@login_required
+def user_order_details(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    if request.method == 'POST':
+        from_shop = request.POST['from_shop']
+        to = request.POST['to']
+        phone_number = request.POST['phone_number']
+        
+        order = Order.objects.create(
+            artwork=artwork,
+            from_shop=from_shop,
+            to=to,
+            phone_number=phone_number,
+        )
+
+        order.save()
+        
+        messages.success(request, 'Your order has been placed, please proceed to make payment.')
+        return redirect('mpesa_api')
+    else:
+        return render(request, 'users/user_order_details.html',
+                  {'artwork': artwork})
+
+
+def mpesa_api(request):
+    return render(request, 'users/mpesa_api.html')

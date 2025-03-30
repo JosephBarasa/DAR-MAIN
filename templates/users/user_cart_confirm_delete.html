@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirm Remove Cart Item</title>
+</head>
+<body>
+  <h1>Remove Item From Cart</h1>
+  <p>Are you sure you want to remove the artwork titled "{{cart_item.artwork.title}}" from your cart?</p>
+  
+  <form method="POST" action="{% url 'remove_cart_item' cart_item.artwork.id %}">
+    {% csrf_token %}
+    <button type="submit">Yes, remove it</button>
+    <a href="{% url 'user_cart_view' %}">Cancel</a>
+  </form>
+</body>
+</html>

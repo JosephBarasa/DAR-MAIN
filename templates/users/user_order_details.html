@@ -1,0 +1,394 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art Product Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #465B4B;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #465B4B;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Product layout */
+        .product-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+
+        /* Left column - Artwork section */
+        .artwork-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .artwork-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .artwork-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .product-details h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            width: 100px;
+            color: #666;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .footer-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Right column - Order and payment section */
+        .order-section {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .order-box {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .order-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .order-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .payment-box {
+            margin-top: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #465B4B;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #465B4B;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #465B4B;
+            color: #465B4B;
+        }
+
+        .btn-outline:hover {
+            background-color: #f0f7fc;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Related items */
+        .related-items {
+            margin-top: 15px;
+        }
+
+        .related-items .tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #eef2f7;
+            border-radius: 4px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-page {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 10px;
+                margin: 20px auto;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #f8f8f8; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="logo"  style="font-size: 24px;  font-weight: 700; color: #465B4B; text-decoration: none;"> <small>'0</small><strong>2</strong> </div>
+        <div class="nav-container" style="max-width: 1200px;  margin: 0 auto;  display: flex;  justify-content: space-between;  align-items: center;">
+            <ul class="nav-links" style="list-style: none; display: flex;  gap: 25px;">
+                <li style="margin-right: 20px;"><a href="{% url 'user_index' %}"  style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">Home</a></li>
+                <li style="margin-right: 20px;"><a href="{% url 'user_artists' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">Artists</a></li>
+                <li style="margin-right: 20px;"><a href="{% url 'user_galleries' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">Galleries</a></li>
+                <li style="margin-right: 20px;"><a href="{% url 'user_artworks' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">Artworks</a></li>
+                <li style="margin-right: 20px;"><a href="{% url 'user_events' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">Events & Exhibitions</a></li>
+                <li style="margin-right: 20px;"><a href="{% url 'user_about' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">About</a></li>
+                <li style="margin-right: 20px;"><a href="{% url 'user_contact' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">Contact</a></li>
+            </ul>
+        </div>
+        <div class="search-button"> <i class="far fa-search"></i> </div>
+        <div class="profie-icon" style="margin-right: 20px;">
+            <a href="{% url 'user_dashboard' %}" style="color: #333;  text-decoration: none;  font-weight: 500;  transition: color 0.3s;">User Profile</a>
+        </div>
+        <div class="navbar-button">
+          <a href="{% url 'user_sign_out' %}" style="background-color: #e0e0e0; border: none; padding: 8px 15px; border-radius: 5px; color: #333;  text-decoration: none;">Sign Out</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="product-page">
+            <div class="artwork-section">
+                {% if artwork.artwork_image %}
+                <div class="artwork-container">
+                    <img src="{{ artwork.artwork_image.url }}" alt="Artwork" />
+                </div>
+                {% else %}
+                <div class="artwork-image">
+                    <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork">
+                </div>
+                {% endif %}
+                
+                <div class="product-details">
+                    {% if artwork %}
+                    <h1>{{artwork.title}}</h1>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Title:</span>
+                        <span class="detail-value">{{artwork.title}}</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Medium:</span>
+                        <span class="detail-value">{{artwork.media}}</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">Kshs.{{artwork.price}}</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Related:</span>
+                        <div class="related-items">
+                            <span class="tag">Abstract</span>
+                            <span class="tag">Modern</span>
+                            <span class="tag">Geometric</span>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-box">
+                        {{artwork.description}}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="order-section">
+                <div class="order-box">
+                    <h2 class="order-header">For Deliveries</h2>
+                    
+                    <form method="POST" action="{% url 'user_order_details' artwork.id %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="from">From</label>
+                            <input type="text" id="from" placeholder="Nairobi" name="from_shop" required />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="to">To</label>
+                            <input type="text" id="to" placeholder="Enter your address" name="to" required />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Enter your phone number" name="phone_number" />
+                        </div>
+                        
+                        <div class="order-list">
+                            <div class="order-item">
+                                <strong>Artwork:</strong> {{artwork.title}}
+                            </div>
+                            <div class="order-item">
+                                <strong>Price:</strong> Kshs. {{artwork.price}}
+                            </div>
+                            <div class="order-item">
+                                <strong>Shipping:</strong> 
+                            </div>
+                            <div class="order-item">
+                                <strong>Total:</strong> 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="payment-box">
+                    <button type="submit" class="btn btn-primary"><a href="{% url 'mpesa_api' %}">Make Payment</a></button>
+                    <a href="{% url 'add_to_cart' artwork.id %}" class="btn btn-outline" style="margin-left: 10px;">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

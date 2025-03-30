@@ -220,6 +220,11 @@
       .sign-out-btn:hover {
         background-color: #444;
       }
+
+      .payment-box {
+        margin-top: 20px;
+      }
+
   
       /* Responsive Navigation */
       @media (max-width: 992px) {
@@ -331,10 +336,12 @@
                         <span class="detail-label">Price:</span> Kshs. {{artwork.price}}
                     </div>
                 </div>
-                <div class="action-buttons">
-                    <button class="btn btn-primary">Buy</button>
-                    <button class="btn btn-secondary"><a href="{% url 'add_to_cart' artwork.id %}">Add to Cart</a></button>
+
+                <div class="payment-box">
+                  <a href="{% url 'user_order_details' artwork.id %}" class="btn btn-primary">Buy</a>
+                  <a href="{% url 'add_to_cart' artwork.id %}" class="btn btn-outline" style="margin-left: 10px;">Add to Cart</a>
                 </div>
+
             </div>
         </div>
         {% else %}

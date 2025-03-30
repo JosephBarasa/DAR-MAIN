@@ -18,4 +18,7 @@ urlpatterns = [
     path('user_artwork/<int:artwork_id>/view/', views.artwork_view, name='artwork_view'),
     path('user_add_to_cart/<int:artwork_id>/', views.add_to_cart, name='add_to_cart'),
     path('user_cart_view/', views.user_cart_view, name='user_cart_view'),
+    path('user_remove_cart_item/<int:artwork_id>/', views.remove_cart_item, name='remove_cart_item'),
+    path('user_order_details/<int:artwork_id>/', views.user_order_details, name='user_order_details'),
+    path('user_mpesa_api', views.mpesa_api, name='mpesa_api')
 ]
