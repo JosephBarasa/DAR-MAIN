@@ -200,26 +200,24 @@ def remove_cart_item(request, artwork_id):
 @login_required
 def user_order_details(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
+    price = artwork.price
     if request.method == 'POST':
         from_shop = request.POST['from_shop']
         to = request.POST['to']
         phone_number = request.POST['phone_number']
-        
+            
         order = Order.objects.create(
+            user=request.user,
             artwork=artwork,
             from_shop=from_shop,
             to=to,
             phone_number=phone_number,
+            total_price=price,
         )
-
-        order.save()
         
         messages.success(request, 'Your order has been placed, please proceed to make payment.')
-        return redirect('mpesa_api')
+        return redirect('user_order_details',  artwork.id)
     else:
         return render(request, 'users/user_order_details.html',
                   {'artwork': artwork})
 
-
-def mpesa_api(request):
-    return render(request, 'users/mpesa_api.html')

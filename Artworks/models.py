@@ -42,7 +42,7 @@ class CartItem(models.Model):
     
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, default=1)
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=50, default='Pending')
@@ -52,6 +52,6 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, default=1)
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orders')
     price = models.DecimalField(max_digits=10, decimal_places=2)

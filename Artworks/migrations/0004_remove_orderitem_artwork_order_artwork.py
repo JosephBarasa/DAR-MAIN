@@ -3,8 +3,8 @@
 import django.db.models.deletion
 import django.utils.timezone
 from django.db import migrations, models
-
-
+            
+            
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='artwork',
-            field=models.ForeignKey(default=django.utils.timezone.now, on_delete=django.db.models.deletion.CASCADE, to='Artworks.artwork'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='Artworks.artwork'),
             preserve_default=False,
         ),
     ]
