@@ -349,7 +349,11 @@
                 <div class="order-box">
                     <h2 class="order-header">For Deliveries</h2>
                     
-                    <form method="POST" action="{% url 'user_order_details' artwork.id %}">
+                    <form method="POST" action="{% url 'user_order_details' artwork.id %}" 
+      data-artwork-id="{{ artwork.id }}" 
+      data-artwork-title="{{ artwork.title }}" 
+      data-artwork-price="{{ artwork.price }}">
+
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="from">From</label>
@@ -380,8 +384,10 @@
                                 <strong>Total:</strong> <!-- add total cost if applicable -->
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary payment-btn">Make Payment</button>
 
-                        <button type="submit" class="btn btn-primary">Make Payment</button>
+
+                        <!-- <button type="submit" class="btn btn-primary">Make Payment</button> -->
                     </form>
                     
                 </div>

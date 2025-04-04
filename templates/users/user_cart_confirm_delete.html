@@ -1,17 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Confirm Remove Cart Item</title>
+    <meta charset="UTF-8">
+    <title>Confirm Remove Cart Item</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666; 
+            margin-top: 10rem;
+        }
+        h1 {
+            color: #384B3D;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        form {
+            display: inline-block;
+        }
+        button[type="submit"] {
+            background-color: #384B3D;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #384B3D;
+        }
+        a {
+            background-color: #e2e3e4;
+            color: #1a202c;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #d3d4d5;
+        }
+        @media (max-width: 768px) {
+            form {
+                display: block;
+            }
+            button[type="submit"],
+            a {
+                margin-bottom: 10px;
+                width: 25%;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Remove Item From Cart</h1>
-  <p>Are you sure you want to remove the artwork titled "{{cart_item.artwork.title}}" from your cart?</p>
-  
-  <form method="POST" action="{% url 'remove_cart_item' cart_item.artwork.id %}">
-    {% csrf_token %}
-    <button type="submit">Yes, remove it</button>
-    <a href="{% url 'user_cart_view' %}">Cancel</a>
-  </form>
+    <div class="container">
+        <h1>Remove Item From Cart</h1>
+        <p>Are you sure you want to remove the artwork titled "{{cart_item.artwork.title}}" from your cart?</p>
+        
+        <form method="POST" action="{% url 'remove_cart_item' cart_item.artwork.id %}">
+            {% csrf_token %}
+            <button type="submit">Yes, remove it</button>
+            <a href="{% url 'user_cart_view' %}">Cancel</a>
+        </form>
+    </div>
 </body>
 </html>

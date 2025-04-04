@@ -225,6 +225,22 @@
         margin-top: 20px;
       }
 
+       /* Messages styling */
+    .messages {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 0.375rem;
+      background-color: #f8f9fa;
+      text-align: center;
+  }
+
+  .messages h2 {
+      color: #4a5568;
+      font-size: 0.95rem;
+      margin: 0;
+  }
+
+
   
       /* Responsive Navigation */
       @media (max-width: 992px) {
@@ -307,6 +323,11 @@
 
     <div class="container">
         {% if artwork %}
+        <div class="messages">
+          {% for message in messages %}
+          <h3>{{message}}</h3>
+          {% endfor %}
+        </div>
         <div class="artwork-detail">
             {% if artwork.artwork_image %}
             <div class="artwork-image">
@@ -342,9 +363,11 @@
                   <a href="{% url 'add_to_cart' artwork.id %}" class="btn btn-outline" style="margin-left: 10px;">Add to Cart</a>
                 </div>
 
+
             </div>
         </div>
         {% else %}
+
         <h3>This artwork is currently not available for viewing.</h3>
 
         <div class="related-artworks">

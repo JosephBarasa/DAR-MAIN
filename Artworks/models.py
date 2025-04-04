@@ -42,7 +42,8 @@ class CartItem(models.Model):
     
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, null=True)
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE,
+                                null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=50, default='Pending')
@@ -55,3 +56,20 @@ class OrderItem(models.Model):
     artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orders')
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+class MpesaPayment(models.Model):
+    order = models.ForeignKey('Artworks.Order', on_delete=models.CASCADE, related_name='payments')
+    phone_number = models.CharField(max_length=15)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    reference = models.CharField(max_length=50)
+    description = models.TextField()
+    request_id = models.CharField(max_length=100, blank=True)
+    response = models.TextField(blank=True)
+    status = models.CharField(max_length=20, default='PENDING', 
+                            choices=[('PENDING', 'Pending'), ('COMPLETED', 'Completed'), ('FAILED', 'Failed')])
+    callback_data = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed_time = models.DateTimeField(null=True, blank=True)
+    
+    def __str__(self):
+        return f"Payment {self.id} - {self.status} - {self.amount}"

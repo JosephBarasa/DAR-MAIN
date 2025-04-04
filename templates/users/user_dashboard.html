@@ -271,11 +271,14 @@
                     <h2>{{user.first_name}} {{user.last_name}}</h2>
                     <p>{{user.email}}</p>
                     <p>{{user.residence}}</p>
+                    <p>{{user.phone_number}}</p>
                     <p>{{user.bio}}</p>
                     
                     <div class="profile-actions">
                         <button class="edit-profile-btn"><a href="{% url 'user_profile_edit' %}">Edit Profile</a></button>
+                        {% if cart %}
                         <button class="upload-artwork-btn"><a href="{% url 'user_cart_view' %}">View Cart</a></button>
+                        {% endif %}
                     </div>
                     
                 </div>

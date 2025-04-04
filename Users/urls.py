@@ -20,4 +20,8 @@ urlpatterns = [
     path('user_cart_view/', views.user_cart_view, name='user_cart_view'),
     path('user_remove_cart_item/<int:artwork_id>/', views.remove_cart_item, name='remove_cart_item'),
     path('user_order_details/<int:artwork_id>/', views.user_order_details, name='user_order_details'),
+    path('order/<int:order_id>/payment/mpesa_payment', views.mpesa_payment, name='mpesa_payment'),
+    path('mpesa/callback/', views.mpesa_callback, name='mpesa_callback'),
+    
+
 ]

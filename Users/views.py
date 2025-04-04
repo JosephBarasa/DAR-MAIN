@@ -4,9 +4,13 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
-from Artworks.models import Artwork, Cart, CartItem, Order, OrderItem
+from Artworks.models import Artwork, Cart, CartItem, Order, OrderItem,MpesaPayment
 from django.contrib.auth.decorators import login_required
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from .mpesa import MpesaClient
+import json
 
 # USER SIGN UP
 
@@ -92,7 +96,8 @@ def user_index(request):
 
 
 def user_dashboard(request):
-    return render(request, 'users/user_dashboard.html')
+    cart, created = Cart.objects.get_or_create(user=request.user)    
+    return render(request, 'users/user_dashboard.html', {'cart': cart})
 
 
 @login_required
@@ -103,6 +108,7 @@ def user_profile_edit(request):
         user.last_name = request.POST['last_name']
         user.residence = request.POST['residence']
         user.bio = request.POST['bio']
+        user.phone_number = request.POST['phone_number']
         
         # profile picture(file upload)
         if 'profile_picture' in request.FILES:
@@ -182,18 +188,17 @@ def user_cart_view(request):
 
 @login_required
 def remove_cart_item(request, artwork_id):
+    # fetch the user's cart
+    user_cart = get_object_or_404(Cart, user=request.user)
+    # Fetch the cart item using get_object_or_404
+    cart_item = get_object_or_404(CartItem, artwork_id=artwork_id, cart=user_cart)
     
-    # View to remove a specific item from the user's cart.
-
-    # Handles both POST requests (for deletion) and GET requests
-    # (for showing the deletion confirmation page).
-
-    cart_item = get_object_or_404(CartItem, id=artwork_id)
     if request.method == 'POST':
         cart_item.delete()
         messages.success(request, 'Item removed from cart.')
         return redirect('user_cart_view')
     else:
+        # Render a confirmation page with the cart item
         return render(request, 'users/user_cart_confirm_delete.html', {'cart_item': cart_item})
 
 
@@ -205,6 +210,11 @@ def user_order_details(request, artwork_id):
         from_shop = request.POST['from_shop']
         to = request.POST['to']
         phone_number = request.POST['phone_number']
+        
+        # check if order exits
+        if Order.objects.filter(artwork=artwork).exists():
+            messages.error(request, "Sorry, this artwork has already been ordered.")
+            return redirect('artwork_view', artwork_id)
             
         order = Order.objects.create(
             user=request.user,
@@ -216,8 +226,88 @@ def user_order_details(request, artwork_id):
         )
         
         messages.success(request, 'Your order has been placed, please proceed to make payment.')
-        return redirect('user_order_details',  artwork.id)
+        return redirect('mpesa_payment', order.id)
     else:
         return render(request, 'users/user_order_details.html',
                   {'artwork': artwork})
+        
 
+# MPESA API INTEGRATION
+@login_required
+def mpesa_payment(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    
+    if request.method == 'POST':
+        phone_number = request.POST.get('phone_number', order.phone_number)
+        
+        # Initialize M-Pesa client
+        mpesa = MpesaClient()
+        
+        # Make STK push request
+        response = mpesa.stk_push(
+            phone_number=phone_number,
+            amount=int(order.total_price),
+            account_reference=f"ART-{order.id}",
+            transaction_desc=f"Payment for {order.artwork.title}"
+        )
+        
+        # Save the payment request to the database
+        payment = MpesaPayment.objects.create(
+            order=order,
+            phone_number=phone_number,
+            amount=order.total_price,
+            reference=f"ART-{order.id}",
+            description=f"Payment for {order.artwork.title}",
+            request_id=response.get('CheckoutRequestID', ''),
+            response=json.dumps(response)
+        )
+        
+        # Check if the request was successful
+        if response.get('ResponseCode') == '0':
+            messages.success(request, 'Payment request sent. Please check your phone to complete the transaction.')
+            return render(request, 'users/mpesa_payment_pending.html', {'order': order, 'payment': payment})
+        else:
+            messages.error(request, f"Payment request failed: {response.get('ResponseDescription', 'Unknown error')}")
+            return redirect('user_order_details', order.artwork.id)
+    else:
+        return render(request, 'users/mpesa_payment.html', {'order': order})
+
+@csrf_exempt
+def mpesa_callback(request):
+    """Handle the M-Pesa callback"""
+    if request.method == 'POST':
+        try:
+            callback_data = json.loads(request.body)
+            
+            # Extract the callback data
+            result_code = callback_data.get('Body', {}).get('stkCallback', {}).get('ResultCode')
+            checkout_request_id = callback_data.get('Body', {}).get('stkCallback', {}).get('CheckoutRequestID')
+            
+            # Find the payment associated with this request
+            try:
+                payment = MpesaPayment.objects.get(request_id=checkout_request_id)
+                
+                # Update payment status
+                if result_code == 0:  # 0 means success
+                    payment.status = 'COMPLETED'
+                    payment.completed_time = datetime.datetime.now()
+                    payment.callback_data = json.dumps(callback_data)
+                    payment.save()
+                    
+                    # Update order status
+                    order = payment.order
+                    order.payment_status = 'PAID'
+                    order.save()
+                else:
+                    payment.status = 'FAILED'
+                    payment.callback_data = json.dumps(callback_data)
+                    payment.save()
+                
+                return JsonResponse({'ResultCode': 0, 'ResultDesc': 'Success'})
+            except MpesaPayment.DoesNotExist:
+                return JsonResponse({'ResultCode': 1, 'ResultDesc': 'Payment not found'})
+                
+        except Exception as e:
+            return JsonResponse({'ResultCode': 1, 'ResultDesc': f'Error: {str(e)}'})
+    
+    return JsonResponse({'ResultCode': 1, 'ResultDesc': 'Invalid request method'})
