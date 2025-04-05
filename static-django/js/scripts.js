@@ -10,26 +10,6 @@
       }
     };
 
-
-    // ACCORDION
-    var allPanels = $('.accordion > dd').hide();
-    $('.accordion > dt > a').click(function () {
-      var panel = $(this).parent().next();
-      panel.slideToggle();
-      setTimeout(function() {
-        locoScroll.update();
-      }, 400); // Delay for 1 second
-      return false;
-    });
-
-
-    /* HAMBURGER */
-    $('.hamburger').on('click', function () {
-      $(".hamburger").toggleClass("active")
-      $(".side-widget").toggleClass("active")
-      $(".section-wrapper").toggleClass("no-transform")
-    })
-
     /* SEARCH */
     $('.search-button').on('click', function () {
       $(".search-box").toggleClass("active")
@@ -97,28 +77,6 @@
   pageSection.each(function (indx) {
     if ($(this).attr("data-background")) {
       $(this).css("background", $(this).data("background"));
-    }
-  });
-
-
-  // IMAGE BOX CAROUSEL
-  var swiper = new Swiper('.image-box-carousel', {
-    slidesPerView: 1,
-    loop: true,
-    spaceBetween: 0,
-    breakpoints: {
-      640: {
-        slidesPerView: 1,
-        spaceBetween: 0,
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 30,
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 60,
-      },
     }
   });
 
