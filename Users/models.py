@@ -10,7 +10,7 @@ USER_ROLES = [
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True)
     role = models.CharField(max_length=20, choices=USER_ROLES, default='normal_user')
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
     residence = models.CharField(max_length=50, null=True)

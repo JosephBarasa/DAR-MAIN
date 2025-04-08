@@ -1,6 +1,5 @@
 from django.contrib import admin
-from Galleries.models import Galleries, Events
+from Galleries.models import Events
 
 # Register your models here.
-admin.site.register(Galleries)
 admin.site.register(Events)

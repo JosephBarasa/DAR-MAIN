@@ -196,6 +196,43 @@
             font-size: 14px;
         }
 
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px 60px;
+        }
+        .artist-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .artist-image {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .artist-card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
         .footer {
           width: 100%;
           display: flex;
@@ -232,6 +269,85 @@
           text-decoration: none;
         }
 
+        /* Navigation Styles */
+    .main-navigation {
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+  
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        height: 70px;
+      }
+  
+      .logo a {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+  
+      .logo a:hover {
+        color: #444;
+      }
+  
+      .nav-links {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+  
+      .nav-item {
+        color: #555;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+  
+      .nav-item:hover {
+        color: #444;
+      }
+  
+      .nav-item.active {
+        color: #444;
+        font-weight: 600;
+      }
+  
+      .nav-auth {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+  
+      .sign-out-btn {
+        background-color: #444;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+  
+      .sign-out-btn:hover {
+        background-color: #444;
+      }
+
+
         /* Messages styling */
     .messages {
         margin-top: 1rem;
@@ -247,17 +363,100 @@
         margin: 0;
     }
 
+    /* Responsive Navigation */
+    @media (max-width: 992px) {
+        .nav-container {
+          flex-wrap: wrap;
+          height: auto;
+          padding: 15px 20px;
+        }
+  
+        .nav-links {
+          order: 3;
+          flex-basis: 100%;
+          flex-direction: column;
+          display: none;
+          margin-top: 15px;
+        }
+  
+        .nav-links.show {
+          display: flex;
+        }
+  
+        .nav-item {
+          padding: 12px 0;
+          border-top: 1px solid #eee;
+        }
+  
+        .nav-auth {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .artist-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 15px 40px;
+        }
+        .artist-image {
+            width: 150px;
+            height: 150px;
+        }
+    }
+    @media (max-width: 480px) {
+        .artist-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .artist-image {
+            width: 120px;
+            height: 120px;
+        }
+        .artist-card h2 {
+            font-size: 16px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+        }
+        .page-header p {
+            font-size: 16px;
+        }
+    }
+
 
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">'02</div>
-        <button class="sign-out-btn"><a href="{% url 'gallery_index' %}">Back</a></button>
+              <!-- Navigation Menu -->
+        <nav class="main-navigation">
+            <div class="nav-container">
+            <div class="logo">
+                <a href="/">Art Repository</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'gallery_index' %}" class="nav-item">Home</a></li>
+                <li><a href="{% url 'gallery_artists' %}" class="nav-item">Artists</a></li>
+                <li><a href="{% url 'gallery_galleries' %}" class="nav-item">Galleries</a></li>
+                <li><a href="{% url 'gallery_artworks' %}" class="nav-item active">Artworks</a></li>
+                <li><a href="{% url 'gallery_events' %}" class="nav-item">Events & Exhibitions</a></li>
+                <li><a href="{% url 'gallery_about' %}" class="nav-item">About</a></li>
+                <li><a href="{% url 'gallery_contact' %}" class="nav-item">Contact</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Profile</a>
+                <a href="{% url 'gallery_sign_out' %}" class="sign-out-btn">Sign Out</a>
+            </div>
+            </div>
+        </nav>
+
     </header>
     
     <div class="main-container">
-        <h1>{{user.username}}'s Gallery Profile</h1>
+        <h1>{{user.username}} Gallery's Profile</h1>
         
         <div class="profile-card">
             <div class="profile-container">
@@ -274,57 +473,39 @@
                     <p>{{user.bio}}</p>
                     
                     <div class="profile-actions">
-                        <button class="edit-profile-btn"><a href="{% url 'artist_profile_edit' %}">Edit Profile</a></button>
-                        <button class="upload-artwork-btn"><a href="{% url 'artwork_upload' %}">Add Event</a></button>
+                        <button class="edit-profile-btn"><a href="{% url 'gallery_profile_edit' %}">Edit Profile</a></button>
+                        <button class="upload-artwork-btn"><a href="{% url 'gallery_event_upload' %}">Add Event</a></button>
                     </div>
                 </div>
             </div>
         </div>
 
         
-        <div class="artworks-section">
+    <h1>Events & Exhibitions</h1>
 
-            <h2>Events & Exhibitions</h2>
+    <div class="artist-grid">
+        {% if event %}
+            {% for event in event %}
+                <div class="artist-card">
+                    {% if event.poster_image %}
+                        <img src="{{ event.poster_image.url }}" alt="{{ artist.username }}'s Profile Picture" class="artist-image">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
+                    {% endif %}
+                    <h2>{{ event.title }} </h2>
+                    <p>{{ event.date_of_event }}</p>
+                    <p>{{ event.event_description }}</p>
+                    <p>{{ event.ticket_price }}</p>
 
-            <div class="artwork-grid">
-                {% if artworks %}
-                    {% for artwork in artworks %}
-                        <div class="artwork-card">
-                            {% if artwork.artwork_image %}
-                            <img src="{{ artwork.artwork_image.url }}" alt="Artwork" class="artwork-image">
-                            {% else %}
-                            <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork" class="artwork-image">
-                            {% endif %}
-                            <div class="artwork-details">
-                                <h3 class="artwork-title">{{ artwork.title }}</h3>
-                                <p class="artwork-description">{{ artwork.description }}</p>
+                    <button class="upload-artwork-btn"><a href="{% url 'gallery_event_upload' %}">Get Tickets</a></button>
 
-                                <div class="artwork-meta">
-                                    <span>{{ artwork.media }}</span>                                
-                                </div> 
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>There are no events currently in the system.</p>
+        {% endif %}
+    </div>
 
-                                <div class="artwork-meta">
-                                    <span> Kshs. {{ artwork.price }}</span>        
-                                </div>
-
-                                <div class="artwork-meta">
-                                    <span>{{ artwork.year }}</span>
-                                </div>
-
-                                <div class="profile-actions">
-                                    <button class="edit-profile-btn"><a href="{% url 'artwork_edit' artwork.id %}">Edit</a></button>
-                                    <button class="upload-artwork-btn"><a href="{% url 'artwork_delete' artwork.id %}">Delete</a></button>
-                                </div>
-
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                {% endif %}
-                
-              </div>
-              
-        </div>
     </div>
 
     <div class="messages">

@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .mpesa import MpesaClient
 import json
+from Galleries.models import Events
 
 # USER SIGN UP
 
@@ -137,7 +138,8 @@ def user_artworks(request):
 
 
 def user_events(request):
-    return render(request, 'users/user_events.html')
+    event = Events.objects.all()
+    return render(request, 'users/user_events.html', {'event': event})
 
 
 def user_about(request):

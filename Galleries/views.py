@@ -5,6 +5,8 @@ from django.contrib import messages
 from Users.models import CustomUser
 from django.contrib.auth import authenticate, login, logout
 from Artworks.models import Artwork
+from django.contrib.auth.decorators import login_required
+from Galleries.models import Events
 
 
 def gallery_sign_up(request):
@@ -101,7 +103,8 @@ def gallery_contact(request):
 
 
 def gallery_dashboard(request):
-    return render(request, 'gallery/gallery_dashboard.html')
+    event = Events.objects.all()
+    return render(request, 'gallery/gallery_dashboard.html', {'event': event})
 
 
 def gallery_artist_profile_display(request, artist_id):
@@ -109,3 +112,51 @@ def gallery_artist_profile_display(request, artist_id):
     artworks = Artwork.objects.filter(artist=artist)
     return render(request, 'gallery/artist_profile_display.html',
                   {'artist': artist, 'artworks': artworks })
+    
+
+@login_required
+def gallery_profile_edit(request):
+    user = request.user
+    if request.method == 'POST':
+        user.first_name = request.POST['first_name']
+        user.residence = request.POST['residence']
+        user.phone_number = request.POST['phone_number']
+        user.email = request.POST['email']
+        user.bio = request.POST['bio']
+        
+        if 'profile_picture' in request.FILES:
+            user.profile_picture = request.FILES['profile_picture']
+        
+        user.save()
+        messages.success(request, 'Your gallery profile has been successfully updated.')
+        return redirect('gallery_dashboard')
+    else:
+        return render(request, 'gallery/gallery_profile_edit.html')
+
+
+@login_required
+def gallery_event_upload(request):
+    gallery=request.user
+    if request.method == 'POST':
+        title = request.POST['title']
+        date_of_event = request.POST['date_of_event']
+        ticket_price = request.POST['ticket_price']
+        event_description = request.POST['event_description']
+        
+        if 'poster_image' in request.FILES:
+            poster_image = request.FILES['poster_image']
+            
+        event = Events.objects.create(
+            title=title,
+            date_of_event=date_of_event,
+            ticket_price=ticket_price,
+            event_description=event_description,
+            poster_image=poster_image,
+            gallery=gallery
+        )
+        
+        messages.success(request, 'Your event has been successfully uploaded.')
+        return redirect('gallery_dashboard')
+    
+    else:
+        return render(request, 'gallery/gallery_event_upload.html')
