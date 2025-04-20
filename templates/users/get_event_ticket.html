@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Event Ticket Booking</title>
+    <script src="https://kit.fontawesome.com/79e89cef59.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin:  auto;
+            padding: 20px;
+        }
+
+        .event-details {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .event-poster img {
+            width: 150px; 
+            height: 150px; 
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #465B4B;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .event-date {
+            font-size: 1.1rem;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        .event-price {
+            font-size: 1.0rem;
+            font-weight: 100;
+            color: #465B4B;
+            margin-bottom: 25px;
+        }
+
+        .event-description {
+            font-size: 1.1rem;
+            color: black;
+            margin-bottom: 30px;
+        }
+
+        .back-button, .pay-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button {
+            background-color: #465B4B;
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #465B4B;
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        }
+
+        .pay-button {
+            background-color: #465B4B;
+            color: white;
+        }
+
+        .pay-button:hover {
+            background-color: #465B4B;
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        }
+
+        .loading-animation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-left: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-animation.active {
+            opacity: 1;
+        }
+
+        /* Navigation Styles */
+        .main-navigation {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 70px;
+        }
+
+        .logo a {
+            font-size: 24px;
+            font-weight: 700;
+            color: #465B4B;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo a:hover {
+            color: #444;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            color: #555;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-item:hover {
+            color: #444;
+        }
+
+        .nav-item.active {
+            color: #444;
+            font-weight: 600;
+        }
+
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sign-out-btn {
+            background-color: #465B4B;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .sign-out-btn:hover {
+            background-color: #465B4B;
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 992px) {
+            .nav-container {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                order: 3;
+                flex-basis: 100%;
+                flex-direction: column;
+                display: none;
+                margin-top: 15px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-item {
+                padding: 12px 0;
+                border-top: 1px solid #eee;
+            }
+
+            .nav-auth {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .event-details {
+                padding: 20px;
+            }
+
+            .event-title {
+                font-size: 1.8rem;
+            }
+
+            .event-date, .event-price, .event-description {
+                font-size: 1rem;
+            }
+
+            .back-button, .pay-button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-navigation">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/">Art Repository</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'user_index' %}" class="nav-item">Home</a></li>
+                <li><a href="{% url 'user_artists' %}" class="nav-item">Artists</a></li>
+                <li><a href="{% url 'user_artworks' %}" class="nav-item">Artworks</a></li>
+                <li><a href="{% url 'user_galleries' %}" class="nav-item">Galleries</a></li>
+                <li><a href="{% url 'user_events' %}" class="nav-item">Events & Exhibitions</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="{% url 'user_dashboard' %}" class="nav-item">User Profile</a>
+                <a href="{% url 'user_sign_out' %}" class="sign-out-btn">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% if event %}
+        <div class="event-details">
+            {% if event.poster_image %}
+            <div class="event-poster">
+                <img src="{{ event.poster_image.url }}" alt="{{ event.title }} Poster">
+            <div class="event-poster">
+            {% else %}
+            <div class="event-poster">
+                <img src="event-poster.jpg" alt="Event Poster">
+            </div>
+            {% endif %}
+            <h1 class="event-title">{{event.title}}</h1>
+            <p class="event-date">{{event.date_of_event}}</p>
+            <p class="event-price">Kshs. {{event.ticket_price}}</p>
+            <p class="event-description">{{event.event_description}}</p>
+            <div class="actions">
+                <a href="{% url 'user_events' %}" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Back to Events
+                </a>
+                <button class="pay-button">
+                    Pay Now
+                    <i class="fas fa-spinner loading-animation"></i>
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <div class="event-details">
+            <h1 class="event-title">No Event Found</h1>
+            <p class="event-description">Sorry, we couldn't find the event you're looking for.</p>
+            <a href="{% url 'user_events' %}" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Events
+            </a>
+        </div>
+        {% endif %}
+
+    <script>
+        const payButton = document.querySelector('.pay-button');
+        const loadingAnimation = document.querySelector('.loading-animation');
+
+        payButton.addEventListener('click', function() {
+            loadingAnimation.classList.add('active');
+            setTimeout(function() {
+                alert('Payment successful! Your tickets have been sent to your email.');
+                loadingAnimation.classList.remove('active');
+            }, 2000);
+        });
+
+        document.querySelector('.back-button').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>

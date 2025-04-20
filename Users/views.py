@@ -137,9 +137,16 @@ def user_artworks(request):
     return render(request, 'users/user_artworks.html', {'artworks': artworks})
 
 
+# events and event tickets
+
 def user_events(request):
     event = Events.objects.all()
     return render(request, 'users/user_events.html', {'event': event})
+
+
+def get_event_ticket(request, event_id):
+    event = get_object_or_404(Events, id=event_id)
+    return render(request, 'users/get_event_ticket.html', {'event': event})
 
 
 def user_about(request):
@@ -180,6 +187,7 @@ def add_to_cart(request, artwork_id):
 
     messages.success(request, f"{artwork.title} has been added to your cart.")
     return redirect('user_cart_view')
+
 
 @login_required
 def user_cart_view(request):

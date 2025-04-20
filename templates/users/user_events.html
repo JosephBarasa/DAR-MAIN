@@ -98,7 +98,7 @@
                   <p>{{ event.event_description }}</p>
                   <p>{{ event.ticket_price }}</p>
 
-                  <button class="upload-artwork-btn"><a href="{% url 'gallery_event_upload' %}">Get Tickets</a></button>
+                  <button class="upload-artwork-btn"><a href="{% url 'get_event_ticket' event.id %}">Get Ticket</a></button>
 
               </div>
           {% endfor %}

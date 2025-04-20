@@ -103,7 +103,7 @@ def gallery_contact(request):
 
 
 def gallery_dashboard(request):
-    event = Events.objects.all()
+    event = Events.objects.filter(gallery=request.user)
     return render(request, 'gallery/gallery_dashboard.html', {'event': event})
 
 

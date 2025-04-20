@@ -22,6 +22,5 @@ urlpatterns = [
     path('user_order_details/<int:artwork_id>/', views.user_order_details, name='user_order_details'),
     path('order/<int:order_id>/payment/mpesa_payment', views.mpesa_payment, name='mpesa_payment'),
     path('mpesa/callback/', views.mpesa_callback, name='mpesa_callback'),
-    
-
+    path('user_get_event_ticket/<int:event_id>/', views.get_event_ticket, name='get_event_ticket'),
 ]
