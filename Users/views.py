@@ -4,14 +4,14 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
-from Artworks.models import Artwork, Cart, CartItem, Order, OrderItem,MpesaPayment
+from Artworks.models import Artwork, Cart, CartItem, Order, MpesaPayment
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .mpesa import MpesaClient
 import json
-from Galleries.models import Events
+from Galleries.models import Events, Tickets
 
 # USER SIGN UP
 
@@ -129,16 +129,20 @@ def user_artists(request):
                   
 
 def user_galleries(request):
-    return render(request, 'users/user_galleries.html')
+    galleries = CustomUser.objects.filter(role='gallery_admin')
+    return render(request, 'users/user_galleries.html', 
+                  {'galleries': galleries})
 
+
+# display of artworks in the system
 
 def user_artworks(request):
     artworks = Artwork.objects.all()
-    return render(request, 'users/user_artworks.html', {'artworks': artworks})
+    return render(request, 'users/user_artworks.html', 
+                  {'artworks': artworks})
 
 
 # events and event tickets
-
 def user_events(request):
     event = Events.objects.all()
     return render(request, 'users/user_events.html', {'event': event})
@@ -160,12 +164,23 @@ def user_contact(request):
 def user_artist_profile_display(request, artist_id):
     artist = get_object_or_404(CustomUser, id=artist_id, role='artist')
     artworks = Artwork.objects.filter(artist=artist)
-    return render(request, 'users/artist_profile_display.html', {'artist': artist, 'artworks': artworks})
+    return render(request, 'users/artist_profile_display.html', 
+                  {'artist': artist, 'artworks': artworks})
+
+
+def user_gallery_dashboard_display(request, gallery_id):
+    gallery = get_object_or_404(CustomUser, id=gallery_id,
+                                role='gallery_admin')
+    events = Events.objects.filter(gallery=gallery)
+    return render(request, 'users/gallery_dashboard_display.html',
+                  {'gallery': gallery,
+                   'events': events})
 
 
 def artwork_view(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
     artist = artwork.artist
+
     return render(request, 'users/artwork_view.html', {'artwork': artwork,
                                                        'artist': artist})
 
@@ -178,7 +193,8 @@ def add_to_cart(request, artwork_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     
     # check if artwork exists in the cart
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, artwork=artwork)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, 
+                                                        artwork=artwork)
     if not created:
         cart_item.quantity += 1
         cart_item.save()
@@ -193,7 +209,8 @@ def add_to_cart(request, artwork_id):
 def user_cart_view(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
-    return render(request, 'users/user_cart_view.html', {'cart_items': cart_items})
+    return render(request, 'users/user_cart_view.html', 
+                  {'cart_items': cart_items})
 
 
 @login_required
@@ -201,7 +218,8 @@ def remove_cart_item(request, artwork_id):
     # fetch the user's cart
     user_cart = get_object_or_404(Cart, user=request.user)
     # Fetch the cart item using get_object_or_404
-    cart_item = get_object_or_404(CartItem, artwork_id=artwork_id, cart=user_cart)
+    cart_item = get_object_or_404(CartItem, artwork_id=artwork_id, 
+                                  cart=user_cart)
     
     if request.method == 'POST':
         cart_item.delete()
@@ -209,23 +227,26 @@ def remove_cart_item(request, artwork_id):
         return redirect('user_cart_view')
     else:
         # Render a confirmation page with the cart item
-        return render(request, 'users/user_cart_confirm_delete.html', {'cart_item': cart_item})
+        return render(request, 'users/user_cart_confirm_delete.html',
+                      {'cart_item': cart_item})
 
+
+# ORDERS
 
 @login_required
 def user_order_details(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
     price = artwork.price
+    
     if request.method == 'POST':
         from_shop = request.POST['from_shop']
         to = request.POST['to']
         phone_number = request.POST['phone_number']
         
-        # check if order exits
         if Order.objects.filter(artwork=artwork).exists():
-            messages.error(request, "Sorry, this artwork has already been ordered.")
-            return redirect('artwork_view', artwork_id)
-            
+            messages.error(request, "Sorry, this artwork has been sold.")
+            return redirect('artwork_view', artwork.id)
+        
         order = Order.objects.create(
             user=request.user,
             artwork=artwork,
@@ -235,14 +256,17 @@ def user_order_details(request, artwork_id):
             total_price=price,
         )
         
-        messages.success(request, 'Your order has been placed, please proceed to make payment.')
+        messages.success(request, 
+                         'Your order has been placed, please proceed to make payment.')
         return redirect('mpesa_payment', order.id)
     else:
         return render(request, 'users/user_order_details.html',
                   {'artwork': artwork})
-        
+
 
 # MPESA API INTEGRATION
+
+
 @login_required
 def mpesa_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
@@ -281,6 +305,7 @@ def mpesa_payment(request, order_id):
             return redirect('user_order_details', order.artwork.id)
     else:
         return render(request, 'users/mpesa_payment.html', {'order': order})
+
 
 @csrf_exempt
 def mpesa_callback(request):
@@ -321,3 +346,41 @@ def mpesa_callback(request):
             return JsonResponse({'ResultCode': 1, 'ResultDesc': f'Error: {str(e)}'})
     
     return JsonResponse({'ResultCode': 1, 'ResultDesc': 'Invalid request method'})
+
+
+# ticket payment
+
+def ticket_payment(request, event_id):
+    event = get_object_or_404(Events, id=event_id)
+    if request.method == 'POST':
+        phone_number = request.POST['phone_number']
+        
+        # initiate Mpesa-Client
+        mpesa = MpesaClient()
+        
+        # make stk push request
+        response = mpesa.stk_push(
+            phone_number=phone_number,
+            amount=int(event.ticket_price),
+            account_reference=f"TICKET-{event.id}",
+            transaction_desc=f"Payment for {event.event_title}"
+        )
+        
+        # save payment request to the database
+        ticket = Tickets.objects.create(
+            event=event,
+            phone_number=phone_number,
+            amount=event.ticket_price,
+            description=f"Ticket for {event.event_title}",
+        )
+        
+        # check if request was successful
+        if response.get('ResponseCode') == '0':
+            messages.success(request, 'Payment request sent. Please check your phone to complete the transaction.')
+            return render(request, 'users/ticket_payment_pending.html', {'event': event, 'ticket': ticket})
+        else:
+            messages.error(request, f"Payment request failed : {response.get('ResponseDescription', 'Unknown error')}")
+            return redirect('ticket_payment', event.event.id)
+    
+    else:
+        return render(request, 'users/ticket_payment.html', {'event': event})

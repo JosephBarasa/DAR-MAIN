@@ -82,10 +82,6 @@ def gallery_artists(request):
     return render(request, 'gallery/gallery_artists.html', {'artists': artists})
 
 
-def gallery_galleries(request):
-    return render(request, 'gallery/gallery_galleries.html')
-
-
 def gallery_artworks(request):
     return render(request, 'gallery/gallery_artworks.html')
 
@@ -136,22 +132,26 @@ def gallery_profile_edit(request):
 
 @login_required
 def gallery_event_upload(request):
-    gallery=request.user
+    
+    gallery = request.user
+    
     if request.method == 'POST':
-        title = request.POST['title']
+        event_title = request.POST['title']
         date_of_event = request.POST['date_of_event']
         ticket_price = request.POST['ticket_price']
         event_description = request.POST['event_description']
+        venue = request.POST['venue']
         
         if 'poster_image' in request.FILES:
             poster_image = request.FILES['poster_image']
             
-        event = Events.objects.create(
-            title=title,
+        Events.objects.create(
+            event_title=event_title,
             date_of_event=date_of_event,
             ticket_price=ticket_price,
             event_description=event_description,
             poster_image=poster_image,
+            venue=venue,
             gallery=gallery
         )
         

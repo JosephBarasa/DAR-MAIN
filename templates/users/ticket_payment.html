@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Payment Card */
+        .payment-container {
+            max-width: 450px;
+            padding: 25px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Payment Header */
+        .payment-header {
+            margin-bottom: 20px;
+        }
+
+        .payment-header h2 {
+            color: #333;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .payment-header p {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Payment Details */
+        .payment-details {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payment-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Form */
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .form-group input:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+        }
+
+        .form-group small {
+            color: #777;
+            font-size: 12px;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+            transform: scale(1.02);
+        }
+
+        /* M-Pesa Logo */
+        .mpesa-logo {
+            display: block;
+            width: 100px;
+            margin: 15px auto;
+        }
+
+        /* Messages */
+        .messages {
+            margin-top: 15px;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media screen and (max-width: 500px) {
+            .payment-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .payment-item {
+                font-size: 14px;
+            }
+
+            .form-group input {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h2>M-Pesa Payment</h2>
+                <p>Complete your payment for <strong>{{ event.event_title }}</strong></p>
+            </div>
+            
+            <div class="payment-details">
+                <div class="payment-item">
+                    <span>Event Title :</span>
+                    <span>{{ event.event_title }}</span>
+                </div>
+                <div class="payment-item">
+                    <span>Ticket Price :</span>
+                    <span>Kshs. {{ event.ticket_price }}</span>
+                </div>
+                <div class="payment-item">
+                    <span>Venue :</span>
+                    <span>{{ event.venue }}</span>
+                </div>
+            </div>
+            
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="phone">Phone Number (to receive M-Pesa prompt)</label>
+                    <input type="tel" id="phone" name="phone_number" value="" placeholder="e.g., 254712345678" required />
+                    <small>Enter your phone number in the format: 254712345678</small>
+                </div>
+                
+                <button type="submit" class="btn">Pay with M-Pesa</button>
+            </form>
+            
+            <img src="{% static 'images/mpesa_logo.png' %}" alt="M-Pesa Logo" class="mpesa-logo" />
+            
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

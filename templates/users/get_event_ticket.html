@@ -94,12 +94,12 @@
             box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
         }
 
-        .pay-button {
+        .pay-now-btn {
             background-color: #465B4B;
             color: white;
         }
 
-        .pay-button:hover {
+        .pay-now-btn:hover {
             background-color: #465B4B;
             box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
         }
@@ -289,13 +289,14 @@
             <p class="event-price">Kshs. {{event.ticket_price}}</p>
             <p class="event-description">{{event.event_description}}</p>
             <div class="actions">
+
                 <a href="{% url 'user_events' %}" class="back-button">
                     <i class="fas fa-arrow-left"></i> Back to Events
                 </a>
-                <button class="pay-button">
-                    Pay Now
-                    <i class="fas fa-spinner loading-animation"></i>
-                </button>
+
+                <a href="{% url 'ticket_payment' event.id %}" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Pay Now
+                </a>
             </div>
         </div>
         {% else %}

@@ -39,23 +39,31 @@ class CartItem(models.Model):
     def __str__(self):
         return f"{self.artwork.title} (x{self.quantity})"
     
-    
+
+# order models
+
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    artwork = models.OneToOneField(Artwork, on_delete=models.CASCADE,
-                                null=True)
+    
+    PAYMENT_STATUS = [
+        ('pending', 'Pending'), ('paid', 'Paid'),
+        ('cancelled', 'Cancelled')
+    ]
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    artwork = models.OneToOneField(Artwork,
+                                   on_delete=models.CASCADE, null=True,
+                                   related_name='orders')
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50, default='Pending')
     from_shop = models.CharField(max_length=20, default='Nairobi')
     to = models.CharField(max_length=20, default='Nairobi')
     phone_number = models.IntegerField(default=254)
-
-
-class OrderItem(models.Model):
-    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, null=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orders')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS, 
+                                      default='Pending')
+    
+    def __str__(self):
+        return f"{self.user} - {self.artwork} [{self.payment_status}]"
     
     
 class MpesaPayment(models.Model):

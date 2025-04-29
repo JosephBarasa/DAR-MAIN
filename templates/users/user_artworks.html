@@ -40,9 +40,13 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn-dark">
-                  <a href="{% url 'artwork_view' artwork.id %}">View</a>
-                </button>
+                {% if artwork.is_sold %}
+                  <button disabled class="btn btn-danger">SOLD</button>
+                {% else %}
+                  <button type="submit" class="btn-dark">
+                    <a href="{% url 'artwork_view' artwork.id %}">View</a>
+                  </button>
+                {% endif %}
               </div>
             </div>
           {% endfor %}

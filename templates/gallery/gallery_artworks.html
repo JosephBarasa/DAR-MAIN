@@ -3,11 +3,20 @@
 
 {% block content %}
 
+<style>
+  p {
+    margin-left: 6rem;
+    color:red;
+  }
+</style>
+
 <header class="page-header" data-background="images/page-header.jpg">
-      <div class="inner">
-        <h1>{{user.username}} Gallery's Artworks</h1>
-      </div>
-      <!-- end inner -->
-    </header>
+  <div class="inner">
+    <h1>{{user.username}} Gallery's Artworks</h1>
+  </div>
+  <!-- end inner -->
+</header>
+
+<p>Sorry, {{user.username}} is yet to post it's artworks.</p>
 
 {% endblock %}

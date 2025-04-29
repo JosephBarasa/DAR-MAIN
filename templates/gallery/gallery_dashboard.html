@@ -440,7 +440,6 @@
             <ul class="nav-links">
                 <li><a href="{% url 'gallery_index' %}" class="nav-item">Home</a></li>
                 <li><a href="{% url 'gallery_artists' %}" class="nav-item">Artists</a></li>
-                <li><a href="{% url 'gallery_galleries' %}" class="nav-item">Galleries</a></li>
                 <li><a href="{% url 'gallery_artworks' %}" class="nav-item active">Artworks</a></li>
                 <li><a href="{% url 'gallery_events' %}" class="nav-item">Events & Exhibitions</a></li>
                 <li><a href="{% url 'gallery_about' %}" class="nav-item">About</a></li>
@@ -481,29 +480,34 @@
         </div>
 
         
-    <h1>Events & Exhibitions</h1>
+    <h1>Your Events & Exhibitions</h1>
 
     <div class="artist-grid">
+
         {% if event %}
+
             {% for event in event %}
+
                 <div class="artist-card">
+
                     {% if event.poster_image %}
                         <img src="{{ event.poster_image.url }}" alt="{{ artist.username }}'s Profile Picture" class="artist-image">
                     {% else %}
                         <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
                     {% endif %}
-                    <h2>{{ event.title }} </h2>
+                    <h2>{{ event.event_title }}</h2>
                     <p>{{ event.date_of_event }}</p>
                     <p>{{ event.event_description }}</p>
-                    <p>{{ event.ticket_price }}</p>
-
-                    <button class="upload-artwork-btn"><a href="{% url 'gallery_event_upload' %}">Get Tickets</a></button>
+                    <p>Kshs.{{ event.ticket_price }}</p>
 
                 </div>
+
             {% endfor %}
+
         {% else %}
             <p>There are no events currently in the system.</p>
         {% endif %}
+
     </div>
 
     </div>

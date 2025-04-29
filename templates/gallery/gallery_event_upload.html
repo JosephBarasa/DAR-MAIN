@@ -325,7 +325,6 @@
             <ul class="nav-links">
                 <li><a href="{% url 'gallery_index' %}" class="nav-item">Home</a></li>
                 <li><a href="{% url 'gallery_artists' %}" class="nav-item">Artists</a></li>
-                <li><a href="{% url 'gallery_galleries' %}" class="nav-item">Galleries</a></li>
                 <li><a href="{% url 'gallery_artworks' %}" class="nav-item active">Artworks</a></li>
                 <li><a href="{% url 'gallery_events' %}" class="nav-item">Events & Exhibitions</a></li>
                 <li><a href="{% url 'gallery_about' %}" class="nav-item">About</a></li>
@@ -375,6 +374,11 @@
             <input type="text" id="ticket_price" name="ticket_price" placeholder="Ticket price">
           </div>
           
+          <div class="form-group">
+            <label for="venue">Venue</label>
+            <input type="text" id="venue" name="title" placeholder="Venue">
+          </div>
+
           <div class="form-group">
             <label for="event_description">Description</label>
             <textarea id="event_description" name="event_description" placeholder="Write a short description of the event..."></textarea>

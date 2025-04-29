@@ -39,6 +39,11 @@
             margin-bottom: 5px;
             text-align: center;
         }
+
+        p {
+            margin-left: 6rem;
+            color: red;
+        }
         @media (max-width: 768px) {
             .artist-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -77,25 +82,6 @@
         </div>
     </header>
 
-    <div class="artist-grid">
-        {% if artists %}
-            {% for artist in artists %}
-                <div class="artist-card">
-                    {% if artist.profile_picture %}
-                        <img src="{{ artist.profile_picture.url }}" alt="{{ artist.username }}'s Profile Picture" class="artist-image">
-                    {% else %}
-                        <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
-                    {% endif %}
-                    <a href="{% url 'gallery_artist_profile_display' artist.id %}">
-                        <h2>{{ artist.first_name }} {{ artist.last_name }}</h2>
-                    </a>
-                    <p>{{ artist.residence }}</p>
-                    <p>{{ artist.bio }}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>There are no artists currently in the system.</p>
-        {% endif %}
-    </div>
+    <p>Sorry, {{user.username}} gallery is yet to post it's artists.</p>
     
 {% endblock %}
