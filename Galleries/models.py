@@ -14,7 +14,7 @@ class Events(models.Model):
     event_description = models.TextField(null=True)
 
     def __str__(self):
-        return self.title
+        return self.event_title
 
 
 class Tickets(models.Model):

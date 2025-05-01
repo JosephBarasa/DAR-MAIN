@@ -100,9 +100,41 @@ def user_index(request):
     return render(request, 'users/user_index.html')
 
 
-def user_dashboard(request):
-    cart, created = Cart.objects.get_or_create(user=request.user)    
-    return render(request, 'users/user_dashboard.html', {'cart': cart})
+# user dashboard
+def user_dashboard(request, user_id=None):
+    # if you used user_id in the url
+    if user_id:
+        user = get_object_or_404(CustomUser, id=user_id)
+    else:
+        user = request.user
+        
+    # pull cart items and event tickets booked by the user
+    cart_items = CartItem.objects.filter(cart__user=user)
+    booked_tickets = Tickets.objects.filter(user=user, status='Pending')
+    
+    return render(request, 'users/user_dashboard.html', {
+        'user': user,
+        'cart_items': cart_items,
+        'booked_tickets': booked_tickets,
+    })
+
+
+@login_required
+def remove_cart_item(request, artwork_id):
+    # fetch the user's cart
+    user_cart = get_object_or_404(Cart, user=request.user)
+    # Fetch the cart item using get_object_or_404
+    cart_item = get_object_or_404(CartItem, artwork_id=artwork_id, 
+                                  cart=user_cart)
+    
+    if request.method == 'POST':
+        cart_item.delete()
+        messages.success(request, 'Item removed from cart.')
+        return redirect('user_dashboard')
+    else:
+        # Render a confirmation page with the cart item
+        return render(request, 'users/user_cart_confirm_delete.html',
+                      {'cart_item': cart_item})
 
 
 @login_required
@@ -209,34 +241,7 @@ def add_to_cart(request, artwork_id):
     return redirect('user_cart_view')
 
 
-@login_required
-def user_cart_view(request):
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_items = CartItem.objects.filter(cart=cart)
-    return render(request, 'users/user_cart_view.html', 
-                  {'cart_items': cart_items})
-
-
-@login_required
-def remove_cart_item(request, artwork_id):
-    # fetch the user's cart
-    user_cart = get_object_or_404(Cart, user=request.user)
-    # Fetch the cart item using get_object_or_404
-    cart_item = get_object_or_404(CartItem, artwork_id=artwork_id, 
-                                  cart=user_cart)
-    
-    if request.method == 'POST':
-        cart_item.delete()
-        messages.success(request, 'Item removed from cart.')
-        return redirect('user_cart_view')
-    else:
-        # Render a confirmation page with the cart item
-        return render(request, 'users/user_cart_confirm_delete.html',
-                      {'cart_item': cart_item})
-
-
 # ORDERS
-
 @login_required
 def user_order_details(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)

@@ -1,10 +1,10 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Artists Management System</title>
+    <title>Digital Art Repository</title>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <style>
         /* Reset and base styles */
         * {
@@ -16,61 +16,71 @@
         
         body {
             color: #333;
+            background-color: #f9f9f9;
         }
         
-        /* Navigation styles */
+        /* Navigation styles - updated to match the screenshot */
         nav {
-        display: flex;
-        position: sticky;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        background-color: #fff;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        top: 0;
-        z-index: 1000;
-      }
+            display: flex;
+            position: sticky;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            top: 0;
+            z-index: 1000;
+        }
   
-      .nav-links {
-        display: flex;
-        gap: 30px;
-      }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
 
-      .logo-img img {
-        border-radius: 2rem;
-    }
+        .logo-img img {
+            border-radius: 0;
+            width: 40px;
+            height: 40px;
+        }
       
-      .nav-links a {
-        text-decoration: none;
-        color: #333;
-        font-weight: 500;
-      }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #465B4B;
+        }
       
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
       
-      .search-icon {
-        font-size: 20px;
-      }
+        .profile-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
       
-      .profile-link {
-        text-decoration: none;
-        color: #333;
-        font-weight: 500;
-      }
-      
-      .sign-out-btn {
-        background-color: #3c4c3f;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: 500;
-      }
+        .sign-out-btn {
+            background-color: #465B4B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .sign-out-btn:hover {
+            background-color: #3c4c3f;
+        }
         
         /* Main content styles */
         .main-container {
@@ -86,7 +96,7 @@
             font-weight: 500;
         }
         
-        /* Profile card styles */
+        /* Profile card styles - updated to match the screenshot */
         .profile-card {
             background-color: white;
             border-radius: 8px;
@@ -109,6 +119,7 @@
             border-radius: 50%;
             border: 1px solid #eee;
             flex-shrink: 0;
+            background-color: #f5f5f5;
         }
         
         .profile-info {
@@ -117,14 +128,16 @@
         
         .profile-info h2 {
             margin-bottom: 10px;
-            font-size: 22px;
-            font-weight: 500;
+            font-size: 24px;
+            font-weight: 600;
+            color: #222;
         }
         
         .profile-info p {
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             line-height: 1.5;
+            font-size: 16px;
         }
         
         .profile-actions {
@@ -141,169 +154,246 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .edit-profile-btn:hover, .upload-artwork-btn:hover {
+            background-color: #3c4c3f;
         }
 
         .edit-profile-btn a {
-          color: white;
-          text-decoration: none;
+            color: white;
+            text-decoration: none;
         }
 
-        .upload-artwork-btn a{
-          color: white;
-          text-decoration: none;
+        .upload-artwork-btn a {
+            color: white;
+            text-decoration: none;
         }
         
-        /* Artworks section */
-        .artworks-section {
-            margin-top: 60px;
-        }
-        
-        .artworks-section h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        
-        .no-artworks {
-            display: none; /* Hide the no artworks message */
-            text-align: center;
-            padding: 60px 0;
-            color: #666;
-            font-size: 18px;
-        }
-        
-        /* Artwork cards styles */
-        .artwork-grid {
+        /* Dashboard cards - improved to match the screenshot */
+        .dashboard-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
+            margin-top: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .artwork-card {
-            background-color: white;
+        .dashboard-card {
+            background: white;
+            border: 1px solid #eaeaea;
             border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease-in-out;
+            padding: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            height: 100%;
         }
         
-        .artwork-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .artwork-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-        }
-        
-        .artwork-details {
-            padding: 20px;
-        }
-        
-        .artwork-title {
-            font-size: 18px;
+        .dashboard-card h3 {
+            margin-bottom: 25px;
+            font-size: 20px;
             font-weight: 500;
-            margin-bottom: 8px;
+            text-align: center;
+            color: #333;
         }
         
-        .artwork-description {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-            line-height: 1.4;
+        .card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
         
-        .artwork-meta {
+        .card-item {
             display: flex;
-            justify-content: space-between;
-            color: #999;
-            font-size: 14px;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .card-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .card-item .circle {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #465B4B;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-item .item-text {
+            color: #333;
+            font-size: 16px;
+            font-weight: 400;
         }
 
+        /* Event details styling */
+        .poster-image {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 1px solid #eee;
+          flex-shrink: 0;
+          background-color: #f5f5f5;
+      }
+      
+        .item-details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .item-price {
+            color: #465B4B;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        /* Item content container */
+        .item-content {
+            flex-grow: 1;
+        }
+        
+        /* Messages styling */
+        .messages {
+            margin: 1rem auto;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .messages h2 {
+            color: #4a5568;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Footer styles - updated to be more responsive */
         .footer {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          padding-top: 50px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            padding-top: 50px;
+            background-color: #f9f9f9;
         }
 
         .footer .footer-bottom {
-          width: 50%;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          padding: 30px 0 30px 0;
-          border-top: double 10px #f7f7f7;
-          font-size: 14px;
-          margin-left: 35rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 30px 20px;
+            border-top: 1px solid #eaeaea;
+            font-size: 14px;
         }
+        
         .footer .footer-bottom .container {
-          display: flex;
-          flex-wrap: wrap;
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-between;
         }
+        
         .footer .footer-bottom .copyright {
-          display: inline-block;
+            display: inline-block;
+            color: #777;
         }
+        
         .footer .footer-bottom .creation {
-          margin-left: auto;
-          display: inline-block;
+            display: inline-block;
+            color: #777;
         }
+        
         .footer .footer-bottom .creation a {
-          display: inline-block;
-          text-decoration: underline;
+            display: inline-block;
+            text-decoration: underline;
+            color: #465B4B;
         }
+        
         .footer .footer-bottom .creation a:hover {
-          text-decoration: none;
+            text-decoration: none;
         }
 
-        /* Messages styling */
-    .messages {
-        margin-top: 1rem;
-        padding: 1rem;
-        border-radius: 0.375rem;
-        background-color: #f8f9fa;
-        text-align: center;
-    }
-
-    .messages h2 {
-        color: #4a5568;
-        font-size: 0.95rem;
-        margin: 0;
-    }
-
-
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .profile-actions {
+                justify-content: center;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            nav {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-links {
+                gap: 10px;
+                font-size: 14px;
+            }
+            
+            .sign-out-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <nav>
-
         <div class="logo-img">
             <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
         </div>
 
         <div class="nav-links">
-          <a href="{% url 'user_index' %}">Home</a>
-          <a href="{% url 'user_artists' %}">Artists</a>
-          <a href="{% url 'user_galleries' %}">Galleries</a>
-          <a href="{% url 'user_artworks' %}">Artworks</a>
-          <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+            <a href="{% url 'user_index' %}">Home</a>
+            <a href="{% url 'user_artists' %}">Artists</a>
+            <a href="{% url 'user_galleries' %}">Galleries</a>
+            <a href="{% url 'user_artworks' %}">Artworks</a>
+            <a href="{% url 'user_events' %}">Events & Exhibitions</a>
         </div>
         <div class="nav-right">
-          <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
-          <button class="sign-out-btn">Sign Out</button>
+            <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
+            <button class="sign-out-btn"><a href="{% url 'user_sign_out' %}">Sign Out</a></button>
         </div>
-      </nav>
+    </nav>
     
     <div class="main-container">
-        
         <div class="profile-card">
             <div class="profile-container">
-                {% if user.profile_picture %}
-                    <img src="{{user.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
-                {% else %}
-                    <img src="" alt="Default Profile Picture" class="profile-picture">
-                {% endif %}
+              {% if user.profile_picture %}
+                <img src="{{user.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
+              {% else %}
+                <img src="" alt="Default Profile Picture" class="profile-picture">
+              {% endif %}
                 
                 <div class="profile-info">
                     <h2>{{user.first_name}} {{user.last_name}}</h2>
@@ -314,29 +404,83 @@
                     
                     <div class="profile-actions">
                         <button class="edit-profile-btn"><a href="{% url 'user_profile_edit' %}">Edit Profile</a></button>
-                        {% if cart %}
-                        <button class="upload-artwork-btn"><a href="{% url 'user_cart_view' %}">View Cart</a></button>
-                        {% endif %}
                     </div>
-                    
                 </div>
+            </div>
+        </div>
+
+        <!-- Dashboard cards -->
+        <div class="dashboard-cards">
+            <!-- Booked Events -->
+            <div class="dashboard-card">
+                <h3>Booked Events</h3>
+                {% if booked_tickets %}
+                {% for ticket in booked_tickets %}
+                <ul class="card-list">
+                    <li class="card-item">
+                        <div class="circle">
+                          {% if ticket.event.poster_image %}
+                          <img src="{{ticket.event.poster_image.url}}" alt="Event Poster" class="poster-image">
+                          {% else %}
+                          <img src="" alt="Event Poster">
+                          {% endif %}
+                        </div>
+                        <div class="item-content">
+                            <div class="item-text">{{ticket.event.event_title}}</div>
+                            <div class="item-details">{{ticket.event.date_of_event}}</div>
+                            <div class="item-details">{{ticket.event.venue}}</div>
+                        </div>
+                    </li>
+                </ul>
+                {% endfor %}
+                {% else %}
+                <p>You have not booked any tickets yet.</p>
+                {% endif %}
+            </div>
+
+            <!-- Your Cart -->
+            <div class="dashboard-card">
+                <h3>Your Cart</h3>
+                {% if cart_items %}
+                {% for cart_item in cart_items %}
+                <ul class="card-list">
+                    <li class="card-item">
+                        <div class="circle">
+                          {% if cart_item.artwork.artwork_image %}
+                          <img src="{{cart_item.artwork.artwork_image.url}}" alt="Artwork image" class="poster-image">
+                          {% else %}
+                          <img src="" alt="Artwork image">
+                          {% endif %}
+                        </div>
+                        <div class="item-content">
+                            <div class="item-text"><a href="{% url 'artwork_view' cart_item.artwork.id %}">{{cart_item.artwork.title}}</a></div>
+                            <div class="item-details">By {{cart_item.artwork.artist.first_name}} {{cart_item.artwork.artist.last_name}}</div>
+                            <div class="item-price">Kshs.{{cart_item.artwork.price}}</div>
+
+                            <button class="edit-profile-btn"><a href="{% url 'remove_cart_item' cart_item.artwork.id %}">Remove</a></button>
+
+                        </div>
+                    </li>
+                </ul>
+                {% endfor %}
+                {% else %}
+                <p>You have not added any artworks to your cart.</p>
+                {% endif %}
             </div>
         </div>
     </div>
 
     <div class="messages">
-        {% for message in messages %}
-            <h2>{{message}}</h2>
-        {% endfor %}
+        <h2>Your profile has been successfully updated!</h2>
     </div>
 
     <footer class="footer">
-      <div class="footer-bottom">
-        <div class="container"> <span class="copyright">© 2025 JB | Visual Artists Management System </span> <span class="creation">Created by <a href="#"> Joseph Barasa</a></span> </div>
-        <!-- end container -->
-      </div>
-      <!-- end footer-bottom -->
+        <div class="footer-bottom">
+            <div class="container"> 
+                <span class="copyright">© 2025 JB | Visual Artists Management System </span> 
+                <span class="creation">Created by <a href="#"> Joseph Barasa</a></span> 
+            </div>
+        </div>
     </footer>
-
 </body>
 </html>

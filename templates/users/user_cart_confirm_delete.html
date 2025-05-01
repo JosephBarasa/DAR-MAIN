@@ -140,7 +140,7 @@
         <form method="POST" action="{% url 'remove_cart_item' cart_item.artwork.id %}">
             {% csrf_token %}
             <button type="submit">Yes, remove it.</button>
-            <a href="{% url 'user_cart_view' %}">Cancel</a>
+            <a href="{% url 'user_dashboard' %}">Cancel</a>
         </form>
     </div>
 </body>
