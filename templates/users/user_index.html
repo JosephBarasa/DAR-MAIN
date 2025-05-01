@@ -13,13 +13,6 @@
 <meta name="keywords" content="visual artists, management system, art gallery, exhibitions, artwork, booking, culture,
  creativity">
 
-<!-- FAVICON FILES -->
-<link href="{% static 'ico/apple-touch-icon-144-precomposed.png' %}" rel="apple-touch-icon" sizes="144x144">
-<link href="{% static 'ico/apple-touch-icon-114-precomposed.png' %}" rel="apple-touch-icon" sizes="114x114">
-<link href="{% static 'ico/apple-touch-icon-72-precomposed.png' %}" rel="apple-touch-icon" sizes="72x72">
-<link href="{% static 'ico/apple-touch-icon-57-precomposed.png' %}" rel="apple-touch-icon">
-<link href="{% static 'ico/favicon.png' %}" rel="shortcut icon">
-
 <!-- CSS FILES -->
 <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/odometer.min.css' %}">
@@ -27,6 +20,7 @@
 <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
@@ -85,7 +79,9 @@
     <!-- NAVBAR -->
 
     <nav class="navbar">
-      <div> <small>'0</small><strong>2</strong> </div>
+      <div class="logo-img">
+        <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+      </div>
 
       <!-- site-menu -->
       <div class="site-menu">
@@ -99,14 +95,10 @@
       </div>
       <!-- end site-menu -->
 
-      <!-- search button -->
-      <div class="search-button"> <i class="far fa-search"></i> </div>
-      <!-- end search-button -->
-
       <!-- when to display accounts buttons -->
 
       <div class="profie-icon">
-        <a href="{% url 'user_dashboard' %}">User Profile</a>
+        <a href="{% url 'user_dashboard' %}"> User Profile </a>
       </div>
 
       <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
@@ -126,6 +118,10 @@
 	  </header>
 
     <style>
+
+      .logo-img img {
+        border-radius: 2rem;
+     }
 
       .messages{
         margin-left: 6rem;

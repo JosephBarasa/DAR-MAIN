@@ -149,3 +149,12 @@ MPESA_SHORTCODE = "174379"
 MPESA_PASSKEY = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
 MPESA_CALLBACK_URL = "https://webhook.site/3c1f62b5-4214-47d6-9f26-71c1f4b9c8f0"
 MPESA_SANDBOX = True
+
+# EMAIL CONFIGURATION
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'josephbarasa622@gmail.com'
+EMAIL_HOST_PASSWORD = 'lsnu weyt bbfd vrbp'
+DEFAULT_FROM_EMAIL = 'josephbarasa622@gmail.com'

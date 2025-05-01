@@ -18,34 +18,59 @@
             color: #333;
         }
         
-        /* Header styles */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: #fff;
-        }
-        
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .sign-out-btn {
-            background-color: #3c4c3f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
+        /* Navigation styles */
+        nav {
+        display: flex;
+        position: sticky;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        top: 0;
+        z-index: 1000;
+      }
+  
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
 
-        .sign-out-btn a {
-          color: white;
-          text-decoration: none;
-        }
+      .logo-img img {
+        border-radius: 2rem;
+    }
+      
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+      }
+      
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .search-icon {
+        font-size: 20px;
+      }
+      
+      .profile-link {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+      }
+      
+      .sign-out-btn {
+        background-color: #3c4c3f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+      }
         
         /* Main content styles */
         .main-container {
@@ -251,13 +276,26 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">'02</div>
-        <button class="sign-out-btn"><a href="{% url 'user_index' %}">Back</a></button>
-    </header>
+    <nav>
+
+        <div class="logo-img">
+            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+        </div>
+
+        <div class="nav-links">
+          <a href="{% url 'user_index' %}">Home</a>
+          <a href="{% url 'user_artists' %}">Artists</a>
+          <a href="{% url 'user_galleries' %}">Galleries</a>
+          <a href="{% url 'user_artworks' %}">Artworks</a>
+          <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+        </div>
+        <div class="nav-right">
+          <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
+          <button class="sign-out-btn">Sign Out</button>
+        </div>
+      </nav>
     
     <div class="main-container">
-        <h1>User Profile</h1>
         
         <div class="profile-card">
             <div class="profile-container">

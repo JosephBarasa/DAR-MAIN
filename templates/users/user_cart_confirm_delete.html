@@ -7,12 +7,61 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
             padding: 20px;
             text-align: center;
             color: #666; 
-            margin-top: 10rem;
         }
+         /* Navigation styles */
+         nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+          }
+      
+          .nav-links {
+            display: flex;
+            gap: 30px;
+          }
+    
+          .logo-img img {
+            border-radius: 2rem;
+        }
+          
+          .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+          }
+          
+          .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+          }
+          
+          .search-icon {
+            font-size: 20px;
+          }
+          
+          .profile-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+          }
+          
+          .sign-out-btn {
+            background-color: #3c4c3f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+          }
+            
         h1 {
             color: #384B3D;
             margin-bottom: 20px;
@@ -38,7 +87,6 @@
             background-color: #384B3D;
         }
         a {
-            background-color: #e2e3e4;
             color: #1a202c;
             padding: 10px 20px;
             border: none;
@@ -49,6 +97,8 @@
         a:hover {
             background-color: #d3d4d5;
         }
+
+
         @media (max-width: 768px) {
             form {
                 display: block;
@@ -61,14 +111,35 @@
         }
     </style>
 </head>
+
 <body>
+
+    <nav>
+
+        <div class="logo-img">
+            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+        </div>
+
+        <div class="nav-links">
+          <a href="{% url 'user_index' %}">Home</a>
+          <a href="{% url 'user_artists' %}">Artists</a>
+          <a href="{% url 'user_galleries' %}">Galleries</a>
+          <a href="{% url 'user_artworks' %}">Artworks</a>
+          <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+        </div>
+        <div class="nav-right">
+          <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
+          <button class="sign-out-btn">Sign Out</button>
+        </div>
+    </nav>
+    
     <div class="container">
         <h1>Remove Item From Cart</h1>
         <p>Are you sure you want to remove the artwork titled "{{cart_item.artwork.title}}" from your cart?</p>
         
         <form method="POST" action="{% url 'remove_cart_item' cart_item.artwork.id %}">
             {% csrf_token %}
-            <button type="submit">Yes, remove it</button>
+            <button type="submit">Yes, remove it.</button>
             <a href="{% url 'user_cart_view' %}">Cancel</a>
         </form>
     </div>

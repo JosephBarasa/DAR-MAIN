@@ -12,6 +12,10 @@ from django.conf import settings
 from .mpesa import MpesaClient
 import json
 from Galleries.models import Events, Tickets
+# email
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from .pdf import generate_ticket_pdf
 
 # USER SIGN UP
 
@@ -372,7 +376,10 @@ def ticket_payment(request, event_id):
             phone_number=phone_number,
             amount=event.ticket_price,
             description=f"Ticket for {event.event_title}",
+            user=request.user,
         )
+
+        send_ticket_email(ticket)
         
         # check if request was successful
         if response.get('ResponseCode') == '0':
@@ -384,3 +391,40 @@ def ticket_payment(request, event_id):
     
     else:
         return render(request, 'users/ticket_payment.html', {'event': event})
+    
+# ticket email with pdf download
+
+
+def send_ticket_email(ticket):
+    user = ticket.user
+     
+    if not user or not user.email:
+        raise ValueError("Ticket user or email is missing")
+    
+    # render a html email body
+    subject = f"Your Ticket For {ticket.event.event_title}"
+    body = render_to_string('emails/ticket_confirmation.html', {
+        'ticket': ticket,
+        'user': ticket.user,
+        'event': ticket.event,
+    })
+    
+    # create the email message
+    email = EmailMessage(
+        subject=subject,
+        body=body,
+        from_email=None,
+        to=[user.email],
+    )
+    
+    if not ticket.user:
+        raise ValueError("Ticket has no associated user")
+    
+    email.content_subtype = 'html'
+    
+    # generate pdf and attach
+    pdf_buffer = generate_ticket_pdf(ticket)
+    email.attach(f"ticket_{ticket.id}.pdf", pdf_buffer.read(), 'application/pdf')
+    
+    # send
+    email.send(fail_silently=False)

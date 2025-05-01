@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -140,7 +141,9 @@ def gallery_event_upload(request):
         date_of_event = request.POST['date_of_event']
         ticket_price = request.POST['ticket_price']
         event_description = request.POST['event_description']
-        venue = request.POST['venue']
+        venue = request.POST.get('venue')
+        if not venue:
+            return HttpResponse("Venue is required.", status=400)
         
         if 'poster_image' in request.FILES:
             poster_image = request.FILES['poster_image']
