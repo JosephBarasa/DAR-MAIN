@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from Users.models import CustomUser
 from django.contrib.auth.decorators import login_required
 from Artworks.models import Artwork
+from Artists.models import ArtworkSubmission
 
 
 def artist_sign_up(request):
@@ -177,7 +178,43 @@ def artwork_delete(request, artwork_id):
         messages.success(request, 'Artwork deleted successfully.')
         return redirect('artist_dashboard')
     else:
-        return render(request, 'artists/artwork_confirm_delete.html', {'artwork': artwork})
+        return render(request, 'artists/artwork_confirm_delete.html', 
+                      {'artwork': artwork})
+
+
+# ARTWORK SUBMISSION TO GALLERY
+
+def submit_artwork(request, artwork_id):
+    # called when an artist clicks the 'submit to gallery'
+    # creates a pending artwork submission if none exists
+    
+    if request.method != 'POST':
+        messages.error(request, "Invalid request method.")
+        return redirect('artist_dashboard')
+    
+    # fetch the artwork the artist wants to submit
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    
+    # get the chosen gallery from the POST payload
+    gallery_id = request.POST.get('gallery_id')
+    gallery = get_object_or_404(request.user.__class__, id=gallery_id,
+                                role='gallery_admin')
+    
+    # prevent double submission of same artwork by same artist
+    submission, created = ArtworkSubmission.objects.get_or_create(
+        artwork=artwork,
+        artist=request.user,
+        gallery=gallery,
+        defaults={'status': ArtworkSubmission.STATUS_PENDING}
+    )
+    
+    if not created:
+        messages.info(request, 
+                      "You've already submitted this artwork to that gallery.")
+    else:
+        messages.success
+        (request, f"Submitted {artwork.title} to {gallery.get_username()}.")
+    return redirect('artist_dashboard')
 
 
 def artist_sign_out(request):

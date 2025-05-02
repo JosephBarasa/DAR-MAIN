@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Artists Management System</title>
+    <title>Digital Art Repository</title>
     <style>
         /* Reset and base styles */
         * {
@@ -18,33 +18,67 @@
             color: #333;
         }
         
-        /* Header styles */
-        header {
+        /* Navigation styles */
+        nav {
             display: flex;
+            position: sticky;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            top: 0;
+            z-index: 1000;
+        }
+  
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .logo-img img {
+            border-radius: 0;
+            width: 40px;
+            height: 40px;
+        }
+      
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
         
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
+        .nav-links a:hover {
+            color: #465B4B;
         }
-        
+      
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+      
+        .profile-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+      
         .sign-out-btn {
-            background-color: #3c4c3f;
+            background-color: #465B4B;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
         }
 
-        .sign-out-btn a {
-          color: white;
-          text-decoration: none;
+        .sign-out-btn:hover {
+            background-color: #3c4c3f;
         }
         
         /* Main content styles */
@@ -69,6 +103,7 @@
             padding: 40px;
             max-width: 800px;
             margin: 0 auto 60px;
+            position: relative;
         }
         
         .profile-container {
@@ -247,20 +282,147 @@
         margin: 0;
     }
 
+    /* Hamburger menu styles */
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.hamburger-icon {
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 25px;
+}
+
+.hamburger-icon .bar {
+    height: 3px;
+    width: 100%;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown menu styles */
+.gallery-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+.gallery-dropdown a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.gallery-dropdown a:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* Sidebar base */
+.sidebar {
+    height: 30%;         
+    width: 0;                /* Hidden by default */  
+    position: fixed;         /* Stay in place */  
+    z-index: 1001;           /* On top */  
+    top: 0;                  
+    left: 0;                 
+    background-color: #fff;  
+    overflow-x: hidden;      
+    padding-top: 60px;       
+    box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+    transition: 0.3s;        /* Slide-in animation */  
+    margin: 14rem 0 0 2rem;
+  }                           
+  
+  /* Sidebar links */
+  .sidebar a {
+    padding: 12px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    display: block;
+    transition: 0.2s;
+  }
+  .sidebar a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Close button (“×”) */
+  .sidebar .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 36px;
+  }
+  
+  /* Hamburger icon */
+.sidebar-hamburger {
+    position: absolute; /* Absolute to nearest positioned ancestor (.profile-card) */ :contentReference[oaicite:0]{index=0}
+    top: 16px;          /* 16px down from the top edge */ :contentReference[oaicite:1]{index=1}
+    right: 16px;        /* 16px left from the right edge */ :contentReference[oaicite:2]{index=2}
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 1002;      /* Above other elements in the card */
+  }
+  
+  .sidebar-hamburger .bar {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: 0.4s;
+  } 
 
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">'02</div>
-        <button class="sign-out-btn"><a href="{% url 'artist_index' %}">Back</a></button>
-    </header>
+    <nav>
+        <div class="logo-img">
+            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+        </div>
+
+        <div class="nav-links">
+            <a href="{% url 'artist_index' %}">Home</a>
+            <a href="{% url 'artist_artists' %}">Artists</a>
+            <a href="{% url 'artist_galleries' %}">Galleries</a>
+            <a href="{% url 'artist_artworks' %}">Artworks</a>
+            <a href="{% url 'artist_events' %}">Events & Exhibitions</a>
+        </div>
+        <div class="nav-right">
+            <a href="{% url 'artist_dashboard' %}" class="profile-link">User Profile</a>
+            <button class="sign-out-btn"><a href="{% url 'artist_sign_out' %}">Sign Out</a></button>
+        </div>
+    </nav>
     
     <div class="main-container">
         <h1>Artist Profile</h1>
         
         <div class="profile-card">
             <div class="profile-container">
+
+                <!-- Sidebar trigger placed here in markup -->
+                <div class="sidebar-hamburger" onclick="openSidebar()">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+
                 {% if user.profile_picture %}
                     <img src="{{user.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
                 {% else %}
@@ -274,11 +436,21 @@
                     <p>{{user.bio}}</p>
                     
                     {% if user.role == 'artist' %}
-                    <div class="profile-actions">
-                        <button class="edit-profile-btn"><a href="{% url 'artist_profile_edit' %}">Edit Profile</a></button>
-                        <button class="upload-artwork-btn"><a href="{% url 'artwork_upload' %}">Upload Artwork</a></button>
+                    <!-- Sidebar container -->
+                    <div id="profileSidebar" class="sidebar">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+                        <a href="{% url 'artist_profile_edit' %}">Edit Profile</a>
+                        <a href="{% url 'artwork_upload' %}">Upload Artwork</a>
+                    </div>
+
+                    <!-- Hamburger to open sidebar -->
+                    <div class="sidebar-hamburger" onclick="openSidebar()">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
                     </div>
                     {% endif %}
+
                 </div>
             </div>
         </div>
@@ -317,7 +489,25 @@
                                 <div class="profile-actions">
                                     <button class="edit-profile-btn"><a href="{% url 'artwork_edit' artwork.id %}">Edit</a></button>
                                     <button class="upload-artwork-btn"><a href="{% url 'artwork_delete' artwork.id %}">Delete</a></button>
-                                    <button class="upload-artwork-btn"><a href="{% url 'artwork_edit' artwork.id %}">Upload To Gallery</a></button>
+                                    
+                                    <!-- hamburger menu for gallery options -->
+                                     
+                                    <div class="hamburger-menu">
+
+                                        <div class="hamburger-icon" onclick="toggleGalleryMenu(this)">
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                        </div>
+
+                                        <div class="gallery-dropdown">
+                                            <p>Upload to gallery</p>
+                                            <a href="">Ardhi</a>
+                                            <a href="">Ardhi</a>
+                                            <a href="">Ardhi</a>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 {% endif %}
 
@@ -345,6 +535,52 @@
       </div>
       <!-- end footer-bottom -->
     </footer>
+
+    <script>
+        // Function to toggle the display of the gallery dropdown menu
+        function toggleGalleryMenu(element) {
+            var dropdown = element.nextElementSibling;
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+    
+       // Gallery: close when clicking outside any .hamburger-icon
+        document.addEventListener('click', function(e) {
+        if (!e.target.closest('.hamburger-icon')) {
+        document.querySelectorAll('.gallery-dropdown').forEach(dd => {
+        dd.style.display = 'none';
+      });
+    }
+  });
+    </script>
+
+    <script>
+        // Open sidebar: set width to 250px
+        function openSidebar() {
+          document.getElementById("profileSidebar").style.width = "250px";
+        }
+      
+        // Close sidebar: set width back to 0
+        function closeSidebar() {
+          document.getElementById("profileSidebar").style.width = "0";
+        }
+      
+        // Sidebar: close when clicking outside .sidebar or its toggle
+        document.addEventListener('click', function(e) {
+        const sb = document.getElementById('profileSidebar');
+        const toggle = document.querySelector('.sidebar-hamburger');
+        if (sb.style.width === '250px'
+        && !e.target.closest('#profileSidebar')
+        && !e.target.closest('.sidebar-hamburger')) {
+        sb.style.width = '0';
+    }
+  });
+      </script>
+      
+    
 
 </body>
 </html>
