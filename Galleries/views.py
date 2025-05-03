@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from Artworks.models import Artwork
 from django.contrib.auth.decorators import login_required
 from Galleries.models import Events
+from Artists.models import ArtworkSubmission
 
 
 def gallery_sign_up(request):
@@ -100,8 +101,10 @@ def gallery_contact(request):
 
 
 def gallery_dashboard(request):
+    gallery = request.user
     event = Events.objects.filter(gallery=request.user)
-    return render(request, 'gallery/gallery_dashboard.html', {'event': event})
+    return render(request, 'gallery/gallery_dashboard.html', 
+                  {'event': event, 'gallery': gallery})
 
 
 def gallery_artist_profile_display(request, artist_id):
@@ -163,3 +166,13 @@ def gallery_event_upload(request):
     
     else:
         return render(request, 'gallery/gallery_event_upload.html')
+
+
+# NOTIFICATIONS
+@login_required
+def artist_submissions(request):
+    gallery = request.user
+    artist_submissions = ArtworkSubmission.objects.filter(gallery=gallery)
+    return render(request, 'gallery/notifications.html', 
+                  {'artist_submissions': artist_submissions})
+    

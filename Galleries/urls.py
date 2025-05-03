@@ -21,4 +21,6 @@ urlpatterns = [
          name='gallery_profile_edit'),
     path('gallery_event_upload/', views.gallery_event_upload, 
          name='gallery_event_upload'),
+    path('artist_submissions/', views.artist_submissions, 
+         name='artist_submissions'),
 ]
