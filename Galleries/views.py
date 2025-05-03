@@ -88,23 +88,13 @@ def gallery_artworks(request):
     return render(request, 'gallery/gallery_artworks.html')
 
 
-def gallery_events(request):
-    return render(request, 'gallery/gallery_events.html')
-
-
-def gallery_about(request):
-    return render(request, 'gallery/gallery_about.html')
-
-
-def gallery_contact(request):
-    return render(request, 'gallery/gallery_contact.html')
-
-
 def gallery_dashboard(request):
     gallery = request.user
     event = Events.objects.filter(gallery=request.user)
+    artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery)
     return render(request, 'gallery/gallery_dashboard.html', 
-                  {'event': event, 'gallery': gallery})
+                  {'event': event, 'gallery': gallery,
+                   'artwork_submissions': artwork_submissions})
 
 
 def gallery_artist_profile_display(request, artist_id):
@@ -170,9 +160,9 @@ def gallery_event_upload(request):
 
 # NOTIFICATIONS
 @login_required
-def artist_submissions(request):
+def artwork_submissions(request):
     gallery = request.user
-    artist_submissions = ArtworkSubmission.objects.filter(gallery=gallery)
-    return render(request, 'gallery/notifications.html', 
-                  {'artist_submissions': artist_submissions})
+    artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery)
+    return render(request, 'gallery/artwork_submissions.html', 
+                  {'artwork_submissions': artwork_submissions})
     

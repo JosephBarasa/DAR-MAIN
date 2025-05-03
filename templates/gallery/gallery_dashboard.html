@@ -365,7 +365,7 @@
 
     /* Sidebar base */
 .sidebar {
-    height: 30%;         
+    height: 50%;         
     width: 0;                /* Hidden by default */  
     position: fixed;         /* Stay in place */  
     z-index: 1001;           /* On top */  
@@ -398,13 +398,14 @@
     top: 10px;
     right: 20px;
     font-size: 36px;
+    color:rgb(133, 40, 12);
   }
   
   /* Hamburger icon */
 .sidebar-hamburger {
-    position: absolute; /* Absolute to nearest positioned ancestor (.profile-card) */ :contentReference[oaicite:0]{index=0}
-    top: 16px;          /* 16px down from the top edge */ :contentReference[oaicite:1]{index=1}
-    right: 16px;        /* 16px left from the right edge */ :contentReference[oaicite:2]{index=2}
+    position: absolute;
+    top: 16px;       
+    right: 16px;        
     display: flex;
     width: 28px;
     height: 22px;
@@ -500,9 +501,6 @@
                 <li><a href="{% url 'gallery_index' %}" class="nav-item">Home</a></li>
                 <li><a href="{% url 'gallery_artists' %}" class="nav-item">Artists</a></li>
                 <li><a href="{% url 'gallery_artworks' %}" class="nav-item active">Artworks</a></li>
-                <li><a href="{% url 'gallery_events' %}" class="nav-item">Events & Exhibitions</a></li>
-                <li><a href="{% url 'gallery_about' %}" class="nav-item">About</a></li>
-                <li><a href="{% url 'gallery_contact' %}" class="nav-item">Contact</a></li>
             </ul>
             <div class="nav-auth">
                 <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Profile</a>
@@ -535,7 +533,14 @@
                         <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
                         <a href="{% url 'gallery_profile_edit' %}">Edit Profile</a>
                         <a href="{% url 'gallery_event_upload' %}">Post Event</a>
-                        <a href="{% url 'artist_submissions' %}">Artist Submissions</a>
+
+                        {% if artwork_submissions %}
+                        
+                        <a href="{% url 'artwork_submissions' %}" style="color:red">You Have <strong>New</strong> Approval Requests</a>
+                        {% else %}
+                        <a href="{% url 'artwork_submissions' %}">No Artist Submissions</a>
+                        {% endif %}
+
                     </div>
 
                     <!-- Hamburger to open sidebar -->

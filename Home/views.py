@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from Users.models import CustomUser
 from Artworks.models import Artwork
+from Galleries.models import Events
 
 
 def home_index(request):
@@ -13,11 +14,14 @@ def home_artists(request):
 
 
 def home_galleries(request):
-    return render(request, 'home/home_galleries.html')
+    galleries = CustomUser.objects.filter(role='gallery_admin')
+    return render(request, 'home/home_galleries.html',
+                  {'galleries': galleries})
 
 
 def home_events(request):
-    return render(request, 'home/home_events.html')
+    events = Events.objects.all()
+    return render(request, 'home/home_events.html', {'events': events})
 
 
 def home_artworks(request):

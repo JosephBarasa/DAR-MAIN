@@ -99,9 +99,6 @@
           <a href="{% url 'gallery_index' %}">Home</a>
           <a href="{% url 'gallery_artists' %}">Artists</a>
           <a href="{% url 'gallery_artworks' %}">Artworks</a>
-          <a href="{% url 'gallery_events' %}">Events</a>
-          <a href="{% url 'gallery_about' %}">About</a>
-          <a href="{% url 'gallery_contact' %}">Contact</a>
         </div>
         <div class="nav-auth">
           <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Dashboard</a>
@@ -112,10 +109,10 @@
   </header>
 
   <div class="main-container">
-    <h3>Artist Submission Requests</h3>
+    <h3 style="color:rgb(173, 16, 16)">Artist Submissions</h3>
 
-    {% if artist_submissions %}
-      {% for sub in artist_submissions %}
+    {% if artwork_submissions %}
+      {% for sub in artwork_submissions %}
         <div class="submission-card">
           {% if sub.artwork.artwork_image %}
             <img src="{{ sub.artwork.artwork_image.url }}" alt="{{ sub.artwork.title }}">
@@ -123,10 +120,11 @@
             <img src="{% static 'images/default_artwork.png' %}" alt="No image">
           {% endif %}
           <div class="submission-details">
-            <p><strong>Title:</strong> {{ sub.artwork.title }}</p>
-            <p><strong>From:</strong> {{ sub.artist.first_name }} {{ sub.artist.last_name }}</p>
-            <p><strong>Media:</strong> {{ sub.artwork.media }}</p>
-            <p><strong>Submitted:</strong> {{ sub.submitted_at }}</p>
+            <p><strong>Title :</strong> {{ sub.artwork.title }}</p>
+            <p><strong>From :</strong> {{ sub.artist.first_name }} {{ sub.artist.last_name }}</p>
+            <p><strong>Media :</strong> {{ sub.artwork.media }}</p>
+            <p><strong>Submitted On :</strong> {{ sub.submitted_at }}</p>
+            <p><strong>Description : </strong> <em>{{ sub.artwork.description }}</em></p>
           </div>
           <div class="submission-actions">
             <button>Accept</button>
