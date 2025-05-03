@@ -18,6 +18,8 @@ urlpatterns = [
     path('artist_events/', views.artist_events, name='artist_events'),
     path('artist_about/', views.artist_about, name='artist_about'),
     path('artist_contact/', views.artist_contact, name='artist_contact'),
-    path('artist_profile_display/<int:artist_id>/', views.artist_profile_display, name='artist_profile_display'),
-    path('submit_artwork/<int:artwork_id>/', views.submit_artwork, name='submit_artwork'),
+    path('artist_profile_display/<int:artist_id>/',
+         views.artist_profile_display, name='artist_profile_display'),
+    path('submit_artwork_to_gallery/<int:artwork_id>/<int:gallery_id>/', 
+         views.submit_artwork_to_gallery, name='submit_artwork_to_gallery'),
 ]

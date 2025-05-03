@@ -21,15 +21,15 @@ class ArtworkSubmission(models.Model):
     gallery = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
                                 related_name='incoming_submissions')
-    submitted_at = models.DateTimeField(null=True, blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
                               default=STATUS_PENDING)
-    reviewed_at = models.DateTimeField(null=True, blank=True)
+    reviewed_at = models.DateTimeField(auto_now_add=True, null=True)
     rejection_note = models.TextField(blank=True)
     
     class Meta:
-        unique_together = ('artwork', 'artist')
+        unique_together = ('artwork', 'artist', 'gallery')
         
     def __str__(self):
         return f"{self.artwork.title} → {self.get_status_display()}"

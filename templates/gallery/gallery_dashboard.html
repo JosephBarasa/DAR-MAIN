@@ -363,6 +363,65 @@
         margin: 0;
     }
 
+    /* Sidebar base */
+.sidebar {
+    height: 30%;         
+    width: 0;                /* Hidden by default */  
+    position: fixed;         /* Stay in place */  
+    z-index: 1001;           /* On top */  
+    top: 0;                  
+    left: 0;                 
+    background-color: #fff;  
+    overflow-x: hidden;      
+    padding-top: 60px;       
+    box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+    transition: 0.3s;        /* Slide-in animation */  
+    margin: 14rem 0 0 2rem;
+  }                           
+  
+  /* Sidebar links */
+  .sidebar a {
+    padding: 12px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    display: block;
+    transition: 0.2s;
+  }
+  .sidebar a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Close button (“×”) */
+  .sidebar .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 36px;
+  }
+  
+  /* Hamburger icon */
+.sidebar-hamburger {
+    position: absolute; /* Absolute to nearest positioned ancestor (.profile-card) */ :contentReference[oaicite:0]{index=0}
+    top: 16px;          /* 16px down from the top edge */ :contentReference[oaicite:1]{index=1}
+    right: 16px;        /* 16px left from the right edge */ :contentReference[oaicite:2]{index=2}
+    display: flex;
+    width: 28px;
+    height: 22px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-around;
+    z-index: 1002;      /* Above other elements in the card */
+  }
+  
+  .sidebar-hamburger .bar {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: 0.4s;
+  } 
+
     /* Responsive Navigation */
     @media (max-width: 992px) {
         .nav-container {
@@ -455,7 +514,6 @@
     </header>
     
     <div class="main-container">
-        <h1>{{user.username}} Gallery's Profile</h1>
         
         <div class="profile-card">
             <div class="profile-container">
@@ -471,16 +529,28 @@
                     <p>{{user.residence}}</p>
                     <p>{{user.bio}}</p>
                     
-                    <div class="profile-actions">
-                        <button class="edit-profile-btn"><a href="{% url 'gallery_profile_edit' %}">Edit Profile</a></button>
-                        <button class="upload-artwork-btn"><a href="{% url 'gallery_event_upload' %}">Add Event</a></button>
+                    {% if user.role == 'gallery_admin' %}
+                    <!-- Sidebar container -->
+                    <div id="profileSidebar" class="sidebar">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+                        <a href="{% url 'gallery_profile_edit' %}">Edit Profile</a>
+                        <a href="{% url 'gallery_event_upload' %}">Post Event</a>
                     </div>
+
+                    <!-- Hamburger to open sidebar -->
+                    <div class="sidebar-hamburger" onclick="openSidebar()">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
 
         
-    <h1>Your Events & Exhibitions</h1>
+    <h1>Events & Exhibitions</h1>
 
     <div class="artist-grid">
 
@@ -525,6 +595,29 @@
       </div>
       <!-- end footer-bottom -->
     </footer>
+
+    <script>
+        // Open sidebar: set width to 250px
+        function openSidebar() {
+          document.getElementById("profileSidebar").style.width = "250px";
+        }
+      
+        // Close sidebar: set width back to 0
+        function closeSidebar() {
+          document.getElementById("profileSidebar").style.width = "0";
+        }
+      
+        // Sidebar: close when clicking outside .sidebar or its toggle
+        document.addEventListener('click', function(e) {
+        const sb = document.getElementById('profileSidebar');
+        const toggle = document.querySelector('.sidebar-hamburger');
+        if (sb.style.width === '250px'
+        && !e.target.closest('#profileSidebar')
+        && !e.target.closest('.sidebar-hamburger')) {
+        sb.style.width = '0';
+    }
+  });
+      </script>
 
 </body>
 </html>

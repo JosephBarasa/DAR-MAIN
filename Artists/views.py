@@ -7,6 +7,10 @@ from Users.models import CustomUser
 from django.contrib.auth.decorators import login_required
 from Artworks.models import Artwork
 from Artists.models import ArtworkSubmission
+from django.conf.global_settings import AUTH_USER_MODEL
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 def artist_sign_up(request):
@@ -87,10 +91,53 @@ def artist_index(request):
 @login_required
 def artist_dashboard(request):
     artworks = Artwork.objects.filter(artist=request.user)
+    gallery = CustomUser.objects.filter(role='gallery_admin')
     return render(request, 'artists/artists_dashboard.html', {
         'user': request.user,
         'artworks': artworks,
+        'gallery': gallery,
     })
+
+
+# SUBMIT ARTWORK TO GALLERY
+
+@login_required
+def submit_artwork_to_gallery(request, artwork_id, gallery_id):
+    # artist clicks the gallery in the dropdown(get the artwork and gallery_id then create a pending submission
+    
+    # ensure the artwork belongs to the logged in artist
+    artwork = get_object_or_404(
+        Artwork,
+        pk=artwork_id,
+        artist=request.user
+    )
+    
+    # ensure the target is a valid gallery admin
+    gallery = get_object_or_404(
+        User,
+        pk=gallery_id,
+        role='gallery_admin'
+    )
+    
+    # create or retrieve the pending submission
+    sub, created = ArtworkSubmission.objects.get_or_create(
+        artwork=artwork,
+        artist=request.user,
+        gallery=gallery,
+        defaults={'status': ArtworkSubmission.STATUS_PENDING}
+    )
+    
+    # feedback message
+    if created:
+        messages.success(
+            request, f"Submitted {artwork.title} to {gallery.get_username()} for review."
+        )
+    else:
+        messages.info(
+            request, "You already submitted this artwork to that gallery."
+        )
+    
+    return redirect('artist_dashboard')
 
 
 
@@ -183,38 +230,6 @@ def artwork_delete(request, artwork_id):
 
 
 # ARTWORK SUBMISSION TO GALLERY
-
-def submit_artwork(request, artwork_id):
-    # called when an artist clicks the 'submit to gallery'
-    # creates a pending artwork submission if none exists
-    
-    if request.method != 'POST':
-        messages.error(request, "Invalid request method.")
-        return redirect('artist_dashboard')
-    
-    # fetch the artwork the artist wants to submit
-    artwork = get_object_or_404(Artwork, id=artwork_id)
-    
-    # get the chosen gallery from the POST payload
-    gallery_id = request.POST.get('gallery_id')
-    gallery = get_object_or_404(request.user.__class__, id=gallery_id,
-                                role='gallery_admin')
-    
-    # prevent double submission of same artwork by same artist
-    submission, created = ArtworkSubmission.objects.get_or_create(
-        artwork=artwork,
-        artist=request.user,
-        gallery=gallery,
-        defaults={'status': ArtworkSubmission.STATUS_PENDING}
-    )
-    
-    if not created:
-        messages.info(request, 
-                      "You've already submitted this artwork to that gallery.")
-    else:
-        messages.success
-        (request, f"Submitted {artwork.title} to {gallery.get_username()}.")
-    return redirect('artist_dashboard')
 
 
 def artist_sign_out(request):

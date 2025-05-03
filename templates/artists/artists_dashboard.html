@@ -390,6 +390,7 @@
   } 
 
     </style>
+
 </head>
 <body>
     <nav>
@@ -500,12 +501,16 @@
                                             <div class="bar"></div>
                                         </div>
 
+                                        {% if gallery %}
                                         <div class="gallery-dropdown">
                                             <p>Upload to gallery</p>
-                                            <a href="">Ardhi</a>
-                                            <a href="">Ardhi</a>
-                                            <a href="">Ardhi</a>
+                                            {% for gall in gallery %}
+                                            <a href="{% url 'submit_artwork_to_gallery' artwork.id gall.id %}">{{gall.username}}</a>
+                                            {% endfor %}
                                         </div>
+                                        {% else %}
+                                        <p>There are no galleries currently in the system.</p>
+                                        {% endif %}
 
                                     </div>
                                 </div>
@@ -536,8 +541,9 @@
       <!-- end footer-bottom -->
     </footer>
 
+    <!-- Function to toggle the display of the gallery dropdown menu -->
+
     <script>
-        // Function to toggle the display of the gallery dropdown menu
         function toggleGalleryMenu(element) {
             var dropdown = element.nextElementSibling;
             if (dropdown.style.display === "block") {
@@ -556,6 +562,9 @@
     }
   });
     </script>
+
+    
+    <!-- SIDEBAR -->
 
     <script>
         // Open sidebar: set width to 250px
