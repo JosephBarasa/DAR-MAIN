@@ -80,18 +80,25 @@ def gallery_sign_out(request):
 
 
 def gallery_artists(request):
-    artists = CustomUser.objects.filter(role='artist')
-    return render(request, 'gallery/gallery_artists.html', {'artists': artists})
+    gallery_artists = ArtworkSubmission.objects.filter(gallery=request.user,
+                                                       status='accepted')
+    return render(request, 'gallery/gallery_artists.html',
+                  {'gallery_artists': gallery_artists})
 
 
 def gallery_artworks(request):
-    return render(request, 'gallery/gallery_artworks.html')
+    gallery = request.user
+    gallery_artworks = ArtworkSubmission.objects.filter(gallery=gallery,
+                                                        status='accepted')
+    return render(request, 'gallery/gallery_artworks.html', 
+                  {'gallery_artworks': gallery_artworks})
 
 
 def gallery_dashboard(request):
     gallery = request.user
     event = Events.objects.filter(gallery=request.user)
-    artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery)
+    artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery, 
+                                                           status='PENDING')
     return render(request, 'gallery/gallery_dashboard.html', 
                   {'event': event, 'gallery': gallery,
                    'artwork_submissions': artwork_submissions})
@@ -162,7 +169,22 @@ def gallery_event_upload(request):
 @login_required
 def artwork_submissions(request):
     gallery = request.user
-    artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery)
+    artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery, 
+                                                           status='PENDING')
     return render(request, 'gallery/artwork_submissions.html', 
                   {'artwork_submissions': artwork_submissions})
     
+    
+# accept approval
+@login_required
+def accept_artwork_submission(request, artwork_submission_id):
+    artwork_submission = get_object_or_404(ArtworkSubmission, 
+                                           id=artwork_submission_id)
+    # change status to accepted
+    artwork_submission.status = 'accepted'
+    artwork_submission.save() 
+    
+    messages.success(request, 
+                     f"The artwork {artwork_submission.artwork.title} has been added to your gallery's collection")
+    
+    return redirect('artwork_submissions')

@@ -3,7 +3,8 @@
 
 {% block content %}
     <style>
-        .artist-grid {
+
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 30px;
@@ -11,7 +12,8 @@
             margin: 0 auto;
             padding: 0 20px 60px;
         }
-        .artist-card {
+        
+        .gallery-card {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -22,66 +24,94 @@
             align-items: center;
             padding: 20px;
         }
-        .artist-card:hover {
+        
+        .gallery-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        .artist-image {
+        
+        .gallery-image {
             width: 180px;
             height: 180px;
             object-fit: cover;
             border-radius: 50%;
             margin-bottom: 15px;
         }
-        .artist-card h2 {
+        
+        .gallery-card h2 {
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 5px;
             text-align: center;
         }
-
-        p {
-            margin-left: 6rem;
-            color: red;
-        }
+        
         @media (max-width: 768px) {
-            .artist-grid {
+            .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 20px;
                 padding: 0 15px 40px;
             }
-            .artist-image {
+            
+            .gallery-image {
                 width: 150px;
                 height: 150px;
             }
         }
+        
         @media (max-width: 480px) {
-            .artist-grid {
+            .gallery-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 15px;
             }
-            .artist-image {
+            
+            .gallery-image {
                 width: 120px;
                 height: 120px;
             }
-            .artist-card h2 {
+            
+            .gallery-card h2 {
                 font-size: 16px;
             }
+            
             .page-header h1 {
                 font-size: 28px;
             }
+            
             .page-header p {
                 font-size: 16px;
             }
         }
+        
     </style>
 
     <header class="page-header" data-background="images/page-header.jpg">
         <div class="inner">
-            <h1>Artists from {{user.username}} art gallery</h1>
+            <h1>Your Esteemed Artists</h1>
         </div>
     </header>
 
-    <p>Sorry, {{user.username}} gallery is yet to post it's artists.</p>
+    <div class="gallery-grid">
+        {% if gallery_artists %}
+
+            {% for artist in gallery_artists %}
+                <div class="gallery-card">
+                    {% if artist.artist.profile_picture %}
+                        <img src="{{ artist.artist.profile_picture.url }}" alt="{{artist.artist.username}}'s Profile Picture" class="gallery-image">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
+                    {% endif %}
+
+                    <h4>{{artist.artist.first_name}} {{artist.artist.last_name}}</h4>
+
+                    <p>{{artist.artist.residence}}</p>
+                    <p>{{artist.artist.bio}}</p>
+                    
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <p>You have not posted any artists. Check your dashboard for new artist requests.</p>
+        {% endif %}
+    </div>
     
 {% endblock %}

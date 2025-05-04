@@ -112,30 +112,36 @@
     <h3 style="color:rgb(173, 16, 16)">Artist Submissions</h3>
 
     {% if artwork_submissions %}
-      {% for sub in artwork_submissions %}
+      {% for artwork_submission in artwork_submissions %}
         <div class="submission-card">
-          {% if sub.artwork.artwork_image %}
-            <img src="{{ sub.artwork.artwork_image.url }}" alt="{{ sub.artwork.title }}">
+          {% if artwork_submission.artwork.artwork_image %}
+            <img src="{{ artwork_submission.artwork.artwork_image.url }}" alt="{{ artwork_submission.artwork.title }}">
           {% else %}
             <img src="{% static 'images/default_artwork.png' %}" alt="No image">
           {% endif %}
           <div class="submission-details">
-            <p><strong>Title :</strong> {{ sub.artwork.title }}</p>
-            <p><strong>From :</strong> {{ sub.artist.first_name }} {{ sub.artist.last_name }}</p>
-            <p><strong>Media :</strong> {{ sub.artwork.media }}</p>
-            <p><strong>Submitted On :</strong> {{ sub.submitted_at }}</p>
-            <p><strong>Description : </strong> <em>{{ sub.artwork.description }}</em></p>
+            <p><strong>Title :</strong> {{ artwork_submission.artwork.title }}</p>
+            <p><strong>From :</strong> {{ artwork_submission.artist.first_name }} {{ artwork_submission.artist.last_name }}</p>
+            <p><strong>Media :</strong> {{ artwork_submission.artwork.media }}</p>
+            <p><strong>Submitted On :</strong> {{ artwork_submission.submitted_at }}</p>
+            <p><strong>Description : </strong> <em>{{ artwork_submission.artwork.description }}</em></p>
           </div>
           <div class="submission-actions">
-            <button>Accept</button>
+            <button><a href="{% url 'accept_artwork_submission' artwork_submission.id %}">Accept</a></button>
             <button>Reject</button>
           </div>
         </div>
       {% endfor %}
     {% else %}
       <div class="empty-state">
-        <p>There are no new notifications.</p>
+        <p>There are no new artwork submissions.</p>
       </div>
+    {% endif %}
+
+    {% if messages %}
+    {% for message in messages %}
+    <p style="color: rgb(7, 62, 7);">{{message}}</p>
+    {% endfor %}
     {% endif %}
 
   </div>

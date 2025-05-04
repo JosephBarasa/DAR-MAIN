@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="theme-color" content="#feed01"/>
-<title>Visual Artists Management System (VAMS)</title>
+<title>Digital Art Repository</title>
 <meta name="author" content="JB">
 <meta name="description" content="A comprehensive system for managing visual artists, exhibitions, and artwork.">
 <meta name="keywords" content="visual artists, management system, art gallery, exhibitions, artwork, booking, culture,
@@ -119,13 +119,9 @@
       </div>
       <!-- end site-menu -->
 
-      <!-- search button -->
-      <div class="search-button"> <i class="far fa-search"></i> </div>
-      <!-- end search-button -->
-
       {% if user.is_authenticated %}
       <div class="profie-icon">
-        <a href="{% url 'gallery_dashboard' %}">Gallery Profile</a>
+        <a href="{% url 'gallery_dashboard' %}">Gallery Dashboard</a>
       </div>
       <div class="navbar-button"><a href="{% url 'gallery_sign_out' %}">Sign Out</a></div>
       {% else %}

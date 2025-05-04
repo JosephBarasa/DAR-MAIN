@@ -20,4 +20,6 @@ urlpatterns = [
          name='gallery_event_upload'),
     path('artwork_submissions/', views.artwork_submissions, 
          name='artwork_submissions'),
+    path('accept_artwork_submission/<int:artwork_submission_id>/', 
+         views.accept_artwork_submission, name='accept_artwork_submission'),
 ]

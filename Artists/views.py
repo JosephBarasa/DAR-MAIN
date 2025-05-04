@@ -120,7 +120,7 @@ def submit_artwork_to_gallery(request, artwork_id, gallery_id):
     )
     
     # create or retrieve the pending submission
-    sub, created = ArtworkSubmission.objects.get_or_create(
+    artwork_submission, created = ArtworkSubmission.objects.get_or_create(
         artwork=artwork,
         artist=request.user,
         gallery=gallery,
