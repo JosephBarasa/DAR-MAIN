@@ -9,6 +9,7 @@ from Artworks.models import Artwork
 from Artists.models import ArtworkSubmission
 from django.conf.global_settings import AUTH_USER_MODEL
 from django.contrib.auth import get_user_model
+from Galleries.models import Events
 
 User = get_user_model()
 
@@ -92,10 +93,13 @@ def artist_index(request):
 def artist_dashboard(request):
     artworks = Artwork.objects.filter(artist=request.user)
     gallery = CustomUser.objects.filter(role='gallery_admin')
+    artwork_approvals = ArtworkSubmission.objects.filter(status='accepted', 
+                                                         artist=request.user)
     return render(request, 'artists/artists_dashboard.html', {
         'user': request.user,
         'artworks': artworks,
         'gallery': gallery,
+        'artwork_approvals': artwork_approvals,
     })
 
 
@@ -139,6 +143,24 @@ def submit_artwork_to_gallery(request, artwork_id, gallery_id):
     
     return redirect('artist_dashboard')
 
+
+# ARTWORK APPROVALS 
+@login_required
+def artwork_approvals(request):
+    artwork_approvals = ArtworkSubmission.objects.filter(status='accepted',
+                                                         read='False',
+                                                         artist=request.user)
+    return render(request, 'artists/artwork_approvals.html', 
+                  {'artwork_approvals': artwork_approvals})
+
+
+# MARK APPROVAL AS READ
+@login_required
+def mark_approval_as_read(request, submission_id):
+    submission = get_object_or_404(ArtworkSubmission, id=submission_id)
+    submission.read = True
+    submission.save() 
+    return redirect('artwork_approvals')
 
 
 @login_required
@@ -229,9 +251,6 @@ def artwork_delete(request, artwork_id):
                       {'artwork': artwork})
 
 
-# ARTWORK SUBMISSION TO GALLERY
-
-
 def artist_sign_out(request):
     logout(request)
     return redirect('home_index')
@@ -243,30 +262,28 @@ def artist_artists(request):
 
 
 def artist_galleries(request):
-    return render(request, 'artists/artist_gallery.html')
+    galleries = CustomUser.objects.filter(role='gallery_admin')
+    return render(request, 'artists/artist_gallery.html', 
+                  {'galleries': galleries})
 
 
 def artist_artworks(request):
-    return render(request, 'artists/artist_artworks.html')
+    artworks = Artwork.objects.all()
+    return render(request, 'artists/artist_artworks.html',
+                  {'artworks': artworks})
 
 
 def artist_events(request):
-    return render(request, 'artists/artist_events.html')
-
-
-def artist_about(request):
-    return render(request, 'artists/artist_about.html')
-
-
-def artist_contact(request):
-    return render(request, 'artists/artist_contact.html')
+    events = Events.objects.all()
+    return render(request, 'artists/artist_events.html', 
+                  {'events': events})
 
 
 def artist_profile_display(request, artist_id):
     artist = get_object_or_404(CustomUser, id=artist_id, role='artist')
     artworks = Artwork.objects.filter(artist=artist)
     return render(request, 'artists/artist_profile_display.html',
-                  {'artist': artist, 'artworks': artworks })
+                  {'artist': artist, 'artworks': artworks})
     
     
 

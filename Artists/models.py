@@ -27,6 +27,7 @@ class ArtworkSubmission(models.Model):
                               default=STATUS_PENDING)
     reviewed_at = models.DateTimeField(auto_now_add=True, null=True)
     rejection_note = models.TextField(blank=True)
+    read = models.BooleanField(default=False)
     
     class Meta:
         unique_together = ('artwork', 'artist', 'gallery')

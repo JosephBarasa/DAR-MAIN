@@ -1,20 +1,100 @@
 {% extends 'artists/artists_base.html' %}
-
 {% load static %}
 
-<body>
-
 {% block content %}
+    <style>
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        .event-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .event-image {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .event-card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .event-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 0 15px 40px;
+            }
+            .event-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        @media (max-width: 480px) {
+            .event-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .event-image {
+                width: 120px;
+                height: 120px;
+            }
+            .event-card h2 {
+                font-size: 16px;
+            }
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .page-header p {
+                font-size: 16px;
+            }
+        }
+    </style>
 
     <header class="page-header" data-background="images/page-header.jpg">
-      <div class="inner">
-        <h1>Exhibitions</h1>
-        <p>Events and exhibitions around you.</p>
-      </div>
-      <!-- end inner -->
+        <div class="inner">
+            <h1>Events</h1>
+            <p>Book event tickets</p>
+        </div>
     </header>
-    <!-- end page-header -->
 
+    <div class="event-grid">
+        {% if events %}
+            {% for event in events %}
+                <div class="event-card">
+                    {% if event.poster_image %}
+                        <img src="{{ event.poster_image.url }}" alt="{{ event.title }}'s Image" class="event-image">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="Default Image" class="event-image">
+                    {% endif %}
+                    <h2>{{ event.event_title}}</h2>
+                    <p>{{ event.date_of_event }}</p>
+                    <p>{{ event.venue }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>There are no artworks currently in the system.</p>
+        {% endif %}
+    </div>
+    
 {% endblock %}
-
-</body>

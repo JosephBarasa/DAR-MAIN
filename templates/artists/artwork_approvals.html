@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Artwork Submissions</title>
+  <title>Artwork Approvals</title>
   <style>
     /* — Reset & Base — */
     * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
@@ -20,13 +20,18 @@
     .nav-links a:hover { background:rgba(70,91,75,0.1); border-radius:4px; }
     .nav-auth a.sign-out-btn { background:#465B4B; color:#fff; padding:8px 15px; border-radius:4px; }
 
+    .logo-img img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+  }
+  
+
     /* — Main Container — */
     .main-container { max-width: 800px; margin:20px auto; padding:0 20px; }
 
-    h3 { font-size:24px; text-align:center; margin-bottom:30px; }
-
-    /* — Submission Card — */
-    .submission-card {
+    h3 { font-size:24px; text-align:center; margin-bottom:30px; }approved_artwork Card — */
+    .approvals-card {
       display: flex;
       align-items: center;
       background:#fff;
@@ -35,25 +40,25 @@
       margin-bottom:20px;
       overflow:hidden;
     }
-    .submission-card img {
+    .approvals-card img {
       width:120px;
       height:120px;
       object-fit:cover;
       flex-shrink:0;
     }
-    .submission-details {
+    .approvals-details {
       flex:1;
       padding:15px 20px;
     }
-    .submission-details p {
+    .approvals-details p {
       margin-bottom:8px;
       font-size:14px;
     }
-    .submission-details p:last-child { margin-bottom:0; }
-    .submission-actions {
+    .approvals-details p:last-child { margin-bottom:0; }
+    .approvals-actions {
       padding:15px 20px;
     }
-    .submission-actions button {
+    .approvals-actions button {
       background:#465B4B;
       color:#fff;
       border:none;
@@ -63,7 +68,7 @@
       font-size:14px;
       transition:background .2s;
     }
-    .submission-actions button:hover {
+    .approvals-actions button:hover {
       background:#3c4c3f;
     }
 
@@ -77,15 +82,52 @@
       box-shadow:0 2px 8px rgba(0,0,0,0.05);
     }
 
+    .payment-box {
+      margin-top: 20px;
+  }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-weight: 500;
+      text-align: center;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      text-decoration: none;
+  }
+
+  .btn-primary {
+      background-color: #465B4B;
+      color: white;
+  }
+
+  .btn-primary:hover {
+      background-color: #465B4B;
+  }
+
+  .btn-outline {
+      background-color: transparent;
+      border: 1px solid rgb(173, 16, 16);
+      color: rgb(173, 16, 16);
+  }
+
+  .btn-outline:hover {
+      background-color: #f0f7fc;
+  }
+
     /* — Footer — */
     .footer { margin-top:40px; text-align:center; font-size:14px; color:#777; }
     .footer a { color:#465B4B; text-decoration:underline; }
 
     /* — Responsive — */
     @media (max-width:600px) {
-      .submission-card { flex-direction:column; text-align:center; }
-      .submission-card img { width:100%; height:auto; }
-      .submission-actions { width:100%; }
+      .approvals-card { flex-direction:column; text-align:center; }
+      .approvals-card img { width:100%; height:auto; }
+      .approvals-actions { width:100%; }
     }
   </style>
 </head>
@@ -94,47 +136,52 @@
   <header>
     <nav class="main-navigation">
       <div class="nav-container">
-        <div class="logo"><a href="/">Art Repository</a></div>
+
+        <div class="logo-img">
+          <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+        </div>
+
         <div class="nav-links">
-          <a href="{% url 'gallery_index' %}">Home</a>
-          <a href="{% url 'gallery_artists' %}">Artists</a>
-          <a href="{% url 'gallery_artworks' %}">Artworks</a>
+          <a href="{% url 'artist_index' %}">Home</a>
+          <a href="{% url 'artist_artists' %}">Artists</a>
+          <a href="{% url 'artist_artworks' %}">Artworks</a>
+          <a href="{% url 'artist_events' %}">Events & Exhibitions</a>
         </div>
         <div class="nav-auth">
-          <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Dashboard</a>
-          <a href="{% url 'gallery_sign_out' %}" class="sign-out-btn">Sign Out</a>
+          <a href="{% url 'artist_dashboard' %}" class="nav-item">Artist Dashboard</a>
+          <a href="{% url 'artist_sign_out' %}" class="sign-out-btn">Sign Out</a>
         </div>
       </div>
     </nav>
   </header>
 
   <div class="main-container">
-    <h3 style="color:rgb(173, 16, 16)">Artist Submissions</h3>
+    <h3 style="color:rgb(173, 16, 16)">Artwork Approvals</h3>
 
-    {% if artwork_submissions %}
-      {% for artwork_submission in artwork_submissions %}
-        <div class="submission-card">
-          {% if artwork_submission.artwork.artwork_image %}
-            <img src="{{ artwork_submission.artwork.artwork_image.url }}" alt="{{ artwork_submission.artwork.title }}">
+    {% if artwork_approvals %}
+      {% for approved_artwork in artwork_approvals %}
+        <div class="approvals-card">
+          {% if approved_artwork.artwork.artwork_image %}
+            <img src="{{ approved_artwork.artwork.artwork_image.url }}" alt="{{ approved_artwork.artwork.title }}">
           {% else %}
             <img src="{% static 'images/default_artwork.png' %}" alt="No image">
           {% endif %}
-          <div class="submission-details">
-            <p><strong>Title :</strong> {{ artwork_submission.artwork.title }}</p>
-            <p><strong>From :</strong> {{ artwork_submission.artist.first_name }} {{ artwork_submission.artist.last_name }}</p>
-            <p><strong>Media :</strong> {{ artwork_submission.artwork.media }}</p>
-            <p><strong>Submitted On :</strong> {{ artwork_submission.submitted_at }}</p>
-            <p><strong>Description : </strong> <em>{{ artwork_submission.artwork.description }}</em></p>
+          <div class="approvals-details">
+            <p><strong>Title :</strong> {{ approved_artwork.artwork.title }}</p>
+            <p><strong>On Display At :</strong> {{ approved_artwork.gallery.username }}</p>
+            <p><strong>Submitted On :</strong> {{ approved_artwork.submitted_at }}</p>
+            <p><strong>Approved On : </strong> <em>{{ approved_artwork.reviewed_at }}</em></p>
           </div>
-          <div class="submission-actions">
-            <button><a href="{% url 'accept_artwork_submission' artwork_submission.id %}">Accept</a></button>
-            <button>Reject</button>
-          </div>
+
+          <div class="payment-box">
+            <a href="{% url 'mark_approval_as_read' approved_artwork.id %}" class="btn btn-outline" style="margin-left: 10px;">Mark As Read</a>
+        </div>
+
         </div>
       {% endfor %}
     {% else %}
       <div class="empty-state">
-        <p>There are no new artwork submissions.</p>
+        <p>There are no new artwork approvals.</p>
       </div>
     {% endif %}
 
@@ -147,7 +194,7 @@
   </div>
 
   <footer class="footer">
-    © 2025 JB | Visual Artists Management System — Created by <a href="#">Joseph Barasa</a>
+    © 2025 | For This Little Thing Of Ours  Created By <a href="#">Joseph Barasa</a>
   </footer>
 
 </body>

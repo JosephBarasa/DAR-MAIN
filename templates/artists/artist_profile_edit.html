@@ -18,57 +18,69 @@
       color: #333;
     }
     
-    /* Navigation styles */
-    nav {
+     /* Navigation styles */
+     nav {
       display: flex;
+      position: sticky;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
+      padding: 15px 40px;
       background-color: #fff;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    
-    .logo {
-      font-weight: bold;
-      font-size: 18px;
-    }
-    
-    .nav-links {
+      top: 0;
+      z-index: 1000;
+  }
+
+  .nav-links {
       display: flex;
       gap: 30px;
-    }
-    
-    .nav-links a {
+  }
+
+  .logo-img img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+  }
+
+  .nav-links a {
       text-decoration: none;
       color: #333;
       font-weight: 500;
-    }
-    
-    .nav-right {
+      transition: color 0.2s ease;
+  }
+  
+  .nav-links a:hover {
+      color: #465B4B;
+  }
+
+  .nav-right {
       display: flex;
       align-items: center;
       gap: 20px;
-    }
-    
-    .search-icon {
-      font-size: 20px;
-    }
-    
-    .profile-link {
+  }
+
+  .profile-link {
       text-decoration: none;
       color: #333;
       font-weight: 500;
-    }
-    
-    .sign-out-btn {
-      background-color: #3c4c3f;
+  }
+
+  .sign-out-btn {
+      background-color: #465B4B;
       color: white;
       border: none;
       padding: 10px 20px;
       border-radius: 4px;
       cursor: pointer;
       font-weight: 500;
-    }
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+  }
+
+  .sign-out-btn:hover {
+      background-color: #3c4c3f;
+  }
+  
     
     /* Main content styles */
     .main-container {
@@ -218,22 +230,28 @@
         margin-bottom: 20px;
       }
     }
+
   </style>
 </head>
 <body>
+
   <nav>
-    <div class="logo">'02</div>
+    <div class="logo-img">
+        <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+    </div>
+
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Artists</a>
-      <a href="#">Galleries</a>
-      <a href="#">Events & Exhibitions</a>
+        <a href="{% url 'artist_index' %}">Home</a>
+        <a href="{% url 'artist_artists' %}">Artists</a>
+        <a href="{% url 'artist_galleries' %}">Galleries</a>
+        <a href="{% url 'artist_artworks' %}">Artworks</a>
+        <a href="{% url 'artist_events' %}">Events & Exhibitions</a>
     </div>
     <div class="nav-right">
-      <a href="{% url 'artist_dashboard' %}" class="profile-link">Artist Profile</a>
-      <button class="sign-out-btn">Sign Out</button>
+        <a href="{% url 'artist_dashboard' %}" class="profile-link">Artist Profile</a>
+        <a class="sign-out-btn" href="{% url 'artist_sign_out' %}">Sign Out</a>
     </div>
-  </nav>
+</nav>
   
   <div class="main-container">
     <div class="edit-profile-card">

@@ -82,8 +82,11 @@ def gallery_sign_out(request):
 def gallery_artists(request):
     gallery_artists = ArtworkSubmission.objects.filter(gallery=request.user,
                                                        status='accepted')
-    return render(request, 'gallery/gallery_artists.html',
-                  {'gallery_artists': gallery_artists})
+    if gallery_artists == gallery_artists.exists():
+        return redirect('gallery_artists')
+    else:
+        return render(request, 'gallery/gallery_artists.html', 
+                      {'gallery_artists': gallery_artists})
 
 
 def gallery_artworks(request):

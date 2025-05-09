@@ -38,7 +38,7 @@
         }
 
         .logo-img img {
-            border-radius: 0;
+            border-radius: 50%;
             width: 40px;
             height: 40px;
         }
@@ -382,7 +382,7 @@
         </div>
         <div class="nav-right">
             <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
-            <button class="sign-out-btn"><a href="{% url 'user_sign_out' %}">Sign Out</a></button>
+            <a class="sign-out-btn" href="{% url 'user_sign_out' %}">Sign Out</a>
         </div>
     </nav>
     
@@ -397,10 +397,10 @@
                 
                 <div class="profile-info">
                     <h2>{{user.first_name}} {{user.last_name}}</h2>
-                    <p>{{user.email}}</p>
-                    <p>{{user.residence}}</p>
-                    <p>{{user.phone_number}}</p>
-                    <p>{{user.bio}}</p>
+                    <p>Email : {{user.email}}</p>
+                    <p>Residence : {{user.residence}}</p>
+                    <p>Phone : {{user.phone_number}}</p>
+                    <p>Bio : {{user.bio}}</p>
                     
                     <div class="profile-actions">
                         <button class="edit-profile-btn"><a href="{% url 'user_profile_edit' %}">Edit Profile</a></button>
@@ -434,7 +434,7 @@
                 </ul>
                 {% endfor %}
                 {% else %}
-                <p>You have not booked any tickets yet.</p>
+                <p>You have not booked any event tickets yet.</p>
                 {% endif %}
             </div>
 
@@ -458,6 +458,7 @@
                             <div class="item-price">Kshs.{{cart_item.artwork.price}}</div>
 
                             <button class="edit-profile-btn"><a href="{% url 'remove_cart_item' cart_item.artwork.id %}">Remove</a></button>
+                            <button class="edit-profile-btn"><a href="{% url 'user_order_details' cart_item.artwork.id %}">Purchase</a></button>
 
                         </div>
                     </li>
@@ -477,8 +478,8 @@
     <footer class="footer">
         <div class="footer-bottom">
             <div class="container"> 
-                <span class="copyright">© 2025 JB | Visual Artists Management System </span> 
-                <span class="creation">Created by <a href="#"> Joseph Barasa</a></span> 
+                <span class="copyright">© 2025 | For This Little Thing Of Ours </span> 
+                <span class="creation">Developed By <a href="#"> Joseph Barasa</a></span> 
             </div>
         </div>
     </footer>

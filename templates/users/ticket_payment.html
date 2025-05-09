@@ -179,7 +179,7 @@
         <div class="payment-container">
             <div class="payment-header">
                 <h2>M-Pesa Payment</h2>
-                <p>Complete your payment for <strong>{{ event.event_title }}</strong></p>
+                <p>Complete your ticket payment for <strong>"{{ event.event_title }}"</strong></p>
             </div>
             
             <div class="payment-details">
@@ -201,7 +201,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="phone">Phone Number (to receive M-Pesa prompt)</label>
-                    <input type="tel" id="phone" name="phone_number" value="" placeholder="e.g., 254712345678" required />
+                    <input type="tel" id="phone" name="phone_number" value="{{user.phone_number}}" placeholder="e.g., 254712345678" required />
                     <small>Enter your phone number in the format: 254712345678</small>
                 </div>
                 

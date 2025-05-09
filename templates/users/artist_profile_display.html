@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Artists Management System</title>
+    <title>Digital Art Repository</title>
     <style>
         /* Reset and base styles */
         * {
@@ -18,33 +18,67 @@
             color: #333;
         }
         
-        /* Header styles */
-        header {
+         /* Navigation styles */
+         nav {
             display: flex;
+            position: sticky;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            top: 0;
+            z-index: 1000;
+        }
+  
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .logo-img img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+      
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
         
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
+        .nav-links a:hover {
+            color: #465B4B;
         }
-        
+      
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+      
+        .profile-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+      
         .sign-out-btn {
-            background-color: #3c4c3f;
+            background-color: #465B4B;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
         }
 
-        .sign-out-btn a {
-          color: white;
-          text-decoration: none;
+        .sign-out-btn:hover {
+            background-color: #3c4c3f;
         }
         
         /* Main content styles */
@@ -275,10 +309,23 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">'02</div>
-        <button class="sign-out-btn"><a href="{% url 'user_artists' %}">Back</a></button>
-    </header>
+    <nav>
+        <div class="logo-img">
+            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+        </div>
+
+        <div class="nav-links">
+            <a href="{% url 'user_index' %}">Home</a>
+            <a href="{% url 'user_artists' %}">Artists</a>
+            <a href="{% url 'user_galleries' %}">Galleries</a>
+            <a href="{% url 'user_artworks' %}">Artworks</a>
+            <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+        </div>
+        <div class="nav-right">
+            <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
+            <a class="sign-out-btn" href="{% url 'user_sign_out' %}">Sign Out</a>
+        </div>
+    </nav>
     
     <div class="main-container">
         
@@ -302,7 +349,7 @@
         
         <div class="artworks-section">
 
-            <h1>{{artist.first_name}}'s</h1>
+            <h1>{{artist.first_name}}'s Catalogue</h1>
 
             <div class="artwork-grid">
                 {% if artworks %}
@@ -352,7 +399,7 @@
 
     <footer class="footer">
       <div class="footer-bottom">
-        <div class="container"> <span class="copyright">© 2025 JB | Visual Artists Management System </span> <span class="creation">Created by <a href="#"> Joseph Barasa</a></span> </div>
+        <div class="container"> <span class="copyright">© 2025 | For This Little Thing Of Ours </span> <span class="creation"> Created By <a href="#"> Joseph Barasa</a></span> </div>
         <!-- end container -->
       </div>
       <!-- end footer-bottom -->

@@ -238,13 +238,14 @@ def add_to_cart(request, artwork_id):
         pass
 
     messages.success(request, f"{artwork.title} has been added to your cart.")
-    return redirect('user_cart_view')
+    return redirect('user_dashboard')
 
 
 # ORDERS
 @login_required
 def user_order_details(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
+    artist = artwork.artist
     price = artwork.price
     
     if request.method == 'POST':
@@ -270,7 +271,7 @@ def user_order_details(request, artwork_id):
         return redirect('mpesa_payment', order.id)
     else:
         return render(request, 'users/user_order_details.html',
-                  {'artwork': artwork})
+                  {'artwork': artwork, 'artist': artist})
 
 
 # MPESA API INTEGRATION

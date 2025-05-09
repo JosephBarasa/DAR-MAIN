@@ -138,16 +138,10 @@
             height: 70px;
         }
 
-        .logo a {
-            font-size: 24px;
-            font-weight: 700;
-            color: #465B4B;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .logo a:hover {
-            color: #444;
+        .logo-img img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
         }
 
         .nav-links {
@@ -256,8 +250,8 @@
 <body>
     <nav class="main-navigation">
         <div class="nav-container">
-            <div class="logo">
-                <a href="/">Art Repository</a>
+            <div class="logo-img">
+                <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
             </div>
             <ul class="nav-links">
                 <li><a href="{% url 'user_index' %}" class="nav-item">Home</a></li>

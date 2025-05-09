@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artwork Detail</title>
+    <title>Artwork Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -143,87 +143,84 @@
             width: 100%;
         }
 
-        /* Navigation Styles */
-    .main-navigation {
-        width: 100%;
-        background-color: #ffffff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-  
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        height: 70px;
-      }
-  
-      .logo a {
-        font-size: 24px;
-        font-weight: 700;
-        color: #333;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-  
-      .logo a:hover {
-        color: #444;
-      }
-  
-      .nav-links {
-        display: flex;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-  
-      .nav-item {
-        color: #555;
-        text-decoration: none;
-        padding: 10px 15px;
-        font-size: 16px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        display: inline-block;
-      }
-  
-      .nav-item:hover {
-        color: #444;
-      }
-  
-      .nav-item.active {
-        color: #444;
-        font-weight: 600;
-      }
-  
-      .nav-auth {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-  
-      .sign-out-btn {
-        background-color: #444;
-        color: white;
-        padding: 8px 15px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-      }
-  
-      .sign-out-btn:hover {
-        background-color: #444;
-      }
+                /* Navigation styles */
+                nav {
+                  display: flex;
+                  position: sticky;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 15px 40px;
+                  background-color: #fff;
+                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                  top: 0;
+                  z-index: 1000;
+              }
+        
+              .nav-links {
+                  display: flex;
+                  gap: 30px;
+              }
+      
+              .logo-img img {
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+              }
+            
+              .nav-links a {
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: 500;
+                  transition: color 0.2s ease;
+              }
+              
+              .nav-links a:hover {
+                  color: #465B4B;
+              }
+            
+              .nav-right {
+                  display: flex;
+                  align-items: center;
+                  gap: 20px;
+              }
+            
+              .profile-link {
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: 500;
+              }
+            
+              .sign-out-btn {
+                  background-color: #465B4B;
+                  color: white;
+                  border: none;
+                  padding: 10px 20px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-weight: 500;
+                  transition: background-color 0.2s ease;
+                  text-decoration: none;
+              }
+      
+              .sign-out-btn:hover {
+                  background-color: #3c4c3f;
+              }
+              
+              .buy-btn {
+                background-color: #465B4B;
+                  color: white;
+                  border: none;
+                  padding: 10px 20px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-weight: 500;
+                  transition: background-color 0.2s ease;
+                  text-decoration: none;
+              }
 
-      .payment-box {
-        margin-top: 20px;
-      }
+              .buy-btn:hover {
+                background-color: #3c4c3f;
+            }
 
        /* Messages styling */
     .messages {
@@ -243,36 +240,6 @@
 
   
       /* Responsive Navigation */
-      @media (max-width: 992px) {
-        .nav-container {
-          flex-wrap: wrap;
-          height: auto;
-          padding: 15px 20px;
-        }
-  
-        .nav-links {
-          order: 3;
-          flex-basis: 100%;
-          flex-direction: column;
-          display: none;
-          margin-top: 15px;
-        }
-  
-        .nav-links.show {
-          display: flex;
-        }
-  
-        .nav-item {
-          padding: 12px 0;
-          border-top: 1px solid #eee;
-        }
-  
-        .nav-auth {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-        }
-      }
 
         @media (max-width: 768px) {
             .artwork-detail {
@@ -294,30 +261,47 @@
                 text-align: center;
                 padding: 12px 15px;
             }
+            
+            .nav-links {
+              gap: 15px;
+          }
+          
+          nav {
+              padding: 15px 20px;
+              flex-wrap: wrap;
+          }
         }
+
+        @media (max-width: 576px) {
+          .nav-links {
+              gap: 10px;
+              font-size: 14px;
+          }
+          
+          .sign-out-btn {
+              padding: 8px 15px;
+              font-size: 14px;
+          }
+      }
     </style>
 </head>
 <body>
 
-      <!-- Navigation Menu -->
-  <nav class="main-navigation">
-    <div class="nav-container">
-      <div class="logo">
-        <a href="/">Art Repository</a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="{% url 'user_index' %}" class="nav-item">Home</a></li>
-        <li><a href="{% url 'user_artists' %}" class="nav-item">Artists</a></li>
-        <li><a href="{% url 'user_galleries' %}" class="nav-item">Galleries</a></li>
-        <li><a href="{% url 'user_artworks' %}" class="nav-item active">Artworks</a></li>
-        <li><a href="{% url 'user_events' %}" class="nav-item">Events & Exhibitions</a></li>
-        <li><a href="{% url 'user_about' %}" class="nav-item">About</a></li>
-        <li><a href="{% url 'user_contact' %}" class="nav-item">Contact</a></li>
-      </ul>
-      <div class="nav-auth">
-        <a href="{% url 'user_dashboard' %}" class="nav-item">User Profile</a>
-        <a href="{% url 'user_sign_out' %}" class="sign-out-btn">Sign Out</a>
-      </div>
+  <nav>
+    <div class="logo-img">
+        <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'user_index' %}">Home</a>
+        <a href="{% url 'user_artists' %}">Artists</a>
+        <a href="{% url 'user_galleries' %}">Galleries</a>
+        <a href="{% url 'user_artworks' %}">Artworks</a>
+        <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+    </div>
+    <div class="nav-right">
+        <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
+        <a class="sign-out-btn" href="{% url 'user_sign_out' %}">Sign Out</a>
     </div>
   </nav>
 
@@ -359,7 +343,7 @@
                 </div>
 
                 <div class="payment-box">
-                  <a href="{% url 'user_order_details' artwork.id %}" class="btn btn-primary">Buy</a>
+                  <a href="{% url 'user_order_details' artwork.id %}" class="buy-btn">Buy</a>
                   <a href="{% url 'add_to_cart' artwork.id %}" class="btn btn-outline" style="margin-left: 10px;">Add to Cart</a>
                 </div>
 
