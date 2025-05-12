@@ -180,8 +180,8 @@ def user_artworks(request):
 
 # events and event tickets
 def user_events(request):
-    event = Events.objects.all()
-    return render(request, 'users/user_events.html', {'event': event})
+    events = Events.objects.all()
+    return render(request, 'users/user_events.html', {'events': events})
 
 
 def get_event_ticket(request, event_id):

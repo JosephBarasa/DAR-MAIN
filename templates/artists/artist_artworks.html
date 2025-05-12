@@ -1,16 +1,26 @@
 {% extends 'artists/artists_base.html' %}
+
 {% load static %}
 
+<body>
+
 {% block content %}
+
     <style>
+
+        .inner h1 {
+            margin-left: 4rem;
+        }
+
         .artwork-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
+            gap: 5rem;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 3rem auto;
             padding: 0 20px 60px;
         }
+        
         .artwork-card {
             background-color: white;
             border-radius: 8px;
@@ -22,10 +32,12 @@
             align-items: center;
             padding: 20px;
         }
+        
         .artwork-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+        
         .artwork-image {
             width: 180px;
             height: 180px;
@@ -33,67 +45,80 @@
             border-radius: 50%;
             margin-bottom: 15px;
         }
+        
         .artwork-card h2 {
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 5px;
             text-align: center;
         }
+        
         @media (max-width: 768px) {
             .artwork-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 20px;
                 padding: 0 15px 40px;
             }
+            
             .artwork-image {
                 width: 150px;
                 height: 150px;
             }
+
+            .inner h1 {
+                margin-left: 4rem;
+                font-size: 1.5rem;
+            }
+
         }
+        
         @media (max-width: 480px) {
             .artwork-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 15px;
             }
+            
             .artwork-image {
                 width: 120px;
                 height: 120px;
             }
+            
             .artwork-card h2 {
-                font-size: 16px;
-            }
-            .page-header h1 {
-                font-size: 28px;
-            }
-            .page-header p {
                 font-size: 16px;
             }
         }
     </style>
 
-    <header class="page-header" data-background="images/page-header.jpg">
-        <div class="inner">
-            <h1>Artworks</h1>
-            <p>Exlore artworks</p>
-        </div>
-    </header>
+    <body>
 
-    <div class="artwork-grid">
-        {% if artworks %}
-            {% for artwork in artworks %}
-                <div class="artwork-card">
-                    {% if artwork.artwork_image %}
-                        <img src="{{ artwork.artwork_image.url }}" alt="{{ artwork.title }}'s Image" class="artwork-image">
-                    {% else %}
-                        <img src="{% static 'images/default_profile.png' %}" alt="Default Image" class="artwork-image">
-                    {% endif %}
-                      <h2>{{ artwork.title}}</h2>
-                    <p>{{ artwork.media }}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>There are no artworks currently in the system.</p>
-        {% endif %}
-    </div>
-    
+        <header class="page-header">
+            <div class="inner">
+              <h1>Art Collection</h1>
+            </div>
+        </header>
+
+        <div class="artwork-grid">
+            {% if artworks %}
+                {% for artwork in artworks %}
+                    <div class="artwork-card">
+                        {% if artwork.artwork_image %}
+                            <img src="{{ artwork.artwork_image.url }}" alt="{{artwork.username}}'s Profile Picture" class="artwork-image">
+                        {% else %}
+                            <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artwork-image">
+                        {% endif %}
+
+                        <h2>{{artwork.title}}</h2>
+                        <p><small><em>{{artwork.artist.first_name}} {{artwork.artist.last_name}}</em></small></p>
+                        <p>{{artwork.year}}</p>
+                        
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You caught us here. We are working on getting you Art artworks you'll like.</p>
+            {% endif %}
+        </div>
+    </body>
+
 {% endblock %}
+
+</body>

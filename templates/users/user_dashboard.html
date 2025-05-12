@@ -1,10 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Art Repository</title>
+    <title>User Dashboard</title>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
+
     <style>
         /* Reset and base styles */
         * {
@@ -18,69 +24,97 @@
             color: #333;
             background-color: #f9f9f9;
         }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
         
-        /* Navigation styles */
-        nav {
+        a:hover {
+            color: #888;
+        }
+        
+        /* Navbar */
+        .navbar {
             display: flex;
-            position: sticky;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #ddd;
             background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            top: 0;
-            z-index: 1000;
-        }
-  
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .logo-img img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
-      
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            position: relative;
+            flex-wrap: wrap;
         }
         
-        .nav-links a:hover {
-            color: #465B4B;
+        .navbar-heading {
+            margin: 0;
+            font-size: 1.5rem;
         }
-      
-        .nav-right {
+        
+        .site-menu {
             display: flex;
-            align-items: center;
-            gap: 20px;
+            gap: 1.5rem;
         }
-      
-        .profile-link {
-            text-decoration: none;
-            color: #333;
+        
+        .site-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .site-menu ul li a {
             font-weight: 500;
+            position: relative;
         }
-      
-        .sign-out-btn {
-            background-color: #465B4B;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s ease;
-            text-decoration: none;
+        
+        .site-menu ul li a::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
         }
-
-        .sign-out-btn:hover {
-            background-color: #3c4c3f;
+        
+        .site-menu ul li a:hover::after {
+            width: 100%;
         }
+        
+        .navbar-button a {
+            padding: 0.75rem 1.5rem;
+            background-color: rgb(102, 102, 102);
+            color: #fff;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .navbar-button a:hover {
+            background-color: rgb(102, 102, 102);
+            color: #fff;
+        }
+        
+        /* Social Media Icons */
+        .social-media-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            color: #000000;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: rgb(255, 0, 0);
+        }
+        
         
         /* Main content styles */
         .main-container {
@@ -134,7 +168,7 @@
         }
         
         .profile-info p {
-            color: #666;
+            color: rgb(102, 102, 102);
             margin-bottom: 12px;
             line-height: 1.5;
             font-size: 16px;
@@ -147,7 +181,7 @@
         }
         
         .edit-profile-btn, .upload-artwork-btn {
-            background-color: #465B4B;
+            background-color: rgb(102, 102, 102);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -222,7 +256,7 @@
         .card-item .circle {
             width: 40px;
             height: 40px;
-            border: 2px solid #465B4B;
+            border: 2px solid rgb(102, 102, 102);
             border-radius: 50%;
             flex-shrink: 0;
             display: flex;
@@ -231,7 +265,7 @@
         }
         
         .card-item .item-text {
-            color: #333;
+            color: rgb(102, 102, 102);
             font-size: 16px;
             font-weight: 400;
         }
@@ -249,12 +283,12 @@
       
         .item-details {
             font-size: 14px;
-            color: #666;
+            color: rgb(102, 102, 102);
             margin-top: 5px;
         }
         
         .item-price {
-            color: #465B4B;
+            color: rgb(102, 102, 102);
             font-weight: 600;
             margin-top: 5px;
         }
@@ -275,9 +309,25 @@
         }
 
         .messages h2 {
-            color: #4a5568;
+            color: #011b05;
             font-size: 0.95rem;
             margin: 0;
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            margin-left: auto;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: all 0.3s ease;
         }
 
         /* Footer styles  */
@@ -321,7 +371,7 @@
         .footer .footer-bottom .creation a {
             display: inline-block;
             text-decoration: underline;
-            color: #465B4B;
+            color: rgb(102, 102, 102);
         }
         
         .footer .footer-bottom .creation a:hover {
@@ -343,47 +393,76 @@
             .profile-actions {
                 justify-content: center;
             }
-            
-            .nav-links {
-                gap: 15px;
+
+            .hamburger {
+                display: flex;
             }
             
-            nav {
-                padding: 15px 20px;
-                flex-wrap: wrap;
+            .site-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 2rem;
+                background-color: white;
+                flex-direction: column;
+                width: 12rem;
+                padding: 1rem;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+                border: 1px solid #ccc;
+                z-index: 100;
             }
+            
+            .site-menu ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .site-menu.active {
+                display: flex;
+            }
+            
+            .navbar-button {
+                margin-top: 1rem;
+            }
+            
+            .navbar-heading {
+                margin-left: 0;
+                font-size: 1.25rem;
+            }
+            
         }
-        
-        @media (max-width: 576px) {
-            .nav-links {
-                gap: 10px;
-                font-size: 14px;
-            }
-            
-            .sign-out-btn {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-        }
+
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo-img">
-            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+   
+    <nav class="navbar">
+
+        <div class="social-media-container">
+            <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
         </div>
 
-        <div class="nav-links">
-            <a href="{% url 'user_index' %}">Home</a>
-            <a href="{% url 'user_artists' %}">Artists</a>
-            <a href="{% url 'user_galleries' %}">Galleries</a>
-            <a href="{% url 'user_artworks' %}">Artworks</a>
-            <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+        <h1 class="navbar-heading">02</h1>
+
+        <div class="hamburger" id="hamburger-toggle">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-        <div class="nav-right">
-            <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
-            <a class="sign-out-btn" href="{% url 'user_sign_out' %}">Sign Out</a>
+
+        <div class="site-menu" id="site-menu">
+            <ul>
+                <li><a href="{% url 'user_index' %}">Home</a></li>
+                <li><a href="{% url 'user_artists' %}">Artists</a></li>
+                <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+                <li><a href="{% url 'user_artworks' %}">Artworks</a></li>
+                <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+                <li><a href="{% url 'user_about' %}">About</a></li>
+            </ul>
+            <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+            <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
         </div>
+
     </nav>
     
     <div class="main-container">
@@ -483,5 +562,15 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const hamburgerToggle = document.getElementById('hamburger-toggle');
+        const siteMenu = document.getElementById('site-menu');
+    
+        hamburgerToggle.addEventListener('click', () => {
+          siteMenu.classList.toggle('active');
+        });
+        </script>
+
 </body>
 </html>

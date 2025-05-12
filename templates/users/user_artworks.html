@@ -1,203 +1,126 @@
 {% extends 'users/users_base.html' %}
+
 {% load static %}
+
+<body>
 
 {% block content %}
 
-    <header class="page-header" data-background="images/page-header.jpg">
-      <div class="inner">
-        <h1>Artworks</h1>
-      </div>
-    </header>
-
-    <div class="artwork-container">
-      {% if artworks %}
-        <div class="artwork-grid">
-          {% for artwork in artworks %}
-            <div class="artwork-card">
-              <div class="artwork-image">
-                {% if artwork.artwork_image %}
-                  <img src="{{ artwork.artwork_image.url }}" alt="{{ artwork.title }}">
-                {% else %}
-                  <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork">
-                {% endif %}
-              </div>
-              <div class="artwork-details">
-                <h3 class="artwork-title">{{ artwork.title }}</h3>
-                <p class="artwork-description">{{ artwork.description }}</p>
-
-                <div class="artwork-meta">
-                  <div class="meta-item">
-                    <span class="meta-label">Price</span>
-                    Kshs.{{ artwork.price }}
-                  </div>
-                  <div class="meta-item">
-                    <span class="meta-label">Year</span>
-                    {{ artwork.year }}
-                  </div>
-                  <div class="meta-item">
-                    <span class="meta-label">Medium</span>
-                    {{ artwork.media }}
-                  </div>
-                </div>
-
-                {% if artwork.is_sold %}
-                  <button disabled class="btn btn-danger">SOLD</button>
-                {% else %}
-                  <button type="submit" class="btn-dark">
-                    <a href="{% url 'artwork_view' artwork.id %}">View</a>
-                  </button>
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <div class="no-artworks">
-          <p>There are no artworks currently available.</p>
-        </div>
-      {% endif %}
-    </div>
-  
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Arial', sans-serif;
-      }
 
-      .page-header {
-        background-color:white;
-        color:white;
-      }
+        .inner h1 {
+            margin-left: 4rem;
+        }
 
-      .page-header h1 {
-        font-size: 32px;
-        color: #333;
-      }
-
-      .artwork-container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .artwork-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-      }
-
-      .artwork-card {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .artwork-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-      }
-
-      .artwork-image {
-        flex: 1;
-        max-width: 300px;
-        height: 200px;
-        overflow: hidden;
-      }
-
-      .artwork-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-      }
-
-      .artwork-card:hover .artwork-image img {
-        transform: scale(1.05);
-      }
-
-      .artwork-details {
-        flex: 2;
-        padding: 20px;
-      }
-
-      .artwork-title {
-        font-size: 20px;
-        font-weight: bold;
-        color: #333;
-      }
-
-      .artwork-description {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.5;
-        margin-bottom: 10px;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .artwork-meta {
-        display: flex;
-        gap: 20px;
-        margin-top: 10px;
-      }
-
-      .meta-item {
-        font-size: 14px;
-        color: #555;
-      }
-
-      .meta-label {
-        font-weight: bold;
-        font-size: 12px;
-        color: #999;
-      }
-
-      .btn-dark {
-        display: inline-block;
-        padding: 8px 16px;
-        background: #465B4B;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
-        text-align: center;
-        text-decoration: none;
-      }
-
-      .btn-dark a {
-        color: white;
-        text-decoration: none;
-      }
-
-      .btn-dark:hover {
-        background: #384B3D;
-      }
-
-      .no-artworks {
-        text-align: center;
-        padding: 60px;
-        color: #777;
-        font-size: 16px;
-      }
-
-      @media (max-width: 768px) {
+        .artwork-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 5rem;
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px 60px;
+        }
+        
         .artwork-card {
-          flex-direction: column;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
-
+        
+        .artwork-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
         .artwork-image {
-          max-width: 100%;
-          height: auto;
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
         }
-      }
+        
+        .artwork-card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .artwork-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 0 15px 40px;
+            }
+            
+            .artwork-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .inner h1 {
+                margin-left: 4rem;
+                font-size: 1.5rem;
+            }
+
+        }
+        
+        @media (max-width: 480px) {
+            .artwork-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .artwork-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .artwork-card h2 {
+                font-size: 16px;
+            }
+        }
     </style>
 
+    <body>
+
+        <header class="page-header">
+            <div class="inner">
+              <h1>Art Collection</h1>
+            </div>
+        </header>
+
+        <div class="artwork-grid">
+            {% if artworks %}
+                {% for artwork in artworks %}
+                    <div class="artwork-card">
+                        {% if artwork.artwork_image %}
+                            <img src="{{ artwork.artwork_image.url }}" alt="{{artwork.username}}'s Profile Picture" class="artwork-image">
+                        {% else %}
+                            <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artwork-image">
+                        {% endif %}
+
+                        <h2>{{artwork.title}}</h2>
+                        <p><small><em>{{artwork.artist.first_name}} {{artwork.artist.last_name}}</em></small></p>
+                        <p>{{artwork.year}}</p>
+
+                        <div class="navbar-button"><a href="{% url 'artwork_view' artwork.id %}">View</a></div>
+                        
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You caught us here. We are working on getting you Art artworks you'll like.</p>
+            {% endif %}
+        </div>
+    </body>
+
 {% endblock %}
+
+</body>

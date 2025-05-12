@@ -2,180 +2,214 @@
 {% load static %}
 
 {% block content %}
-  <header class="page-header" data-background="images/page-header.jpg">
-    <div class="inner">
-      <h1>Artworks</h1>
-      <p>Join Our Community And Get Yourself Some Pieces.</p>
-    </div>
-  </header>
-
-  <div class="artwork-container">
-    {% if artworks %}
-      <div class="artwork-grid">
-        {% for artwork in artworks %}
-          <div class="artwork-card">
-            <div class="artwork-image">
-              {% if artwork.artwork_image %}
-                <img src="{{ artwork.artwork_image.url }}" alt="{{ artwork.title }}">
-              {% else %}
-                <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork">
-              {% endif %}
-            </div>
-            <div class="artwork-details">
-              <h3 class="artwork-title">{{ artwork.title }}</h3>
-              <p class="artwork-description">{{ artwork.description }}</p>
-              
-              <div class="artwork-meta">
-                <div class="meta-item">
-                  <span class="meta-label">Price</span>
-                  Kshs.{{ artwork.price }}
-                </div>
-                <div class="meta-item">
-                  <span class="meta-label">Year</span>
-                  {{ artwork.year }}
-                </div>
-                <div class="meta-item">
-                  <span class="meta-label">Medium</span>
-                  {{ artwork.media }}
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="no-artworks">
-        <p>There are no artworks currently available.</p>
-      </div>
-    {% endif %}
-  </div>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
     }
 
-    .page-header {
-      padding: 60px 0;
-      background-color: #f9f9f9;
-      margin-bottom: 20px;
+    /* Header */
+    .header-container {
+        background-color: #fff;
     }
 
-    .page-header h1 {
-      font-size: 32px;
-      color: #333;
+    header.page-header {
+        padding: 5rem 2rem;
+        text-align: center;
+        position: relative;
+        height: auto;
+        color: black;
+        background-color: white;
     }
 
-    .artwork-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-      background-color: white;
+    header.page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: white;
+        z-index: 0;
     }
 
-    .artwork-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      margin-top: 20px;
+    header.page-header .inner {
+        position: relative;
+        z-index: 2;
     }
 
-    .artwork-card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .page-header .inner h1 {
+        font-size: 2.5rem;
+        margin-top: 0.1rem;
     }
 
-    .artwork-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    .page-header .inner p {
+        font-size: 1rem;
+        color: rgb(187, 29, 29);
     }
 
-    .artwork-image {
-      width: 100%;
-      height: 300px;
-      overflow: hidden;
+    .art-button-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        z-index: 2;
+        position: relative;
     }
 
-    .artwork-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
+    .art-button a {
+        background-color: rgb(102, 102, 102);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
 
-    .artwork-card:hover .artwork-image img {
-      transform: scale(1.05);
+    .art-button a:hover {
+        background-color: rgb(168, 168, 168);
+        color: white;
+    }
+
+    .circle-image-container {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+        z-index: 2;
+        position: relative;
+    }
+
+    .circle-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 10rem;
+    }
+
+    .circle {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 40%;
+        overflow: hidden;
+        border: 0.08rem solid black;
+        box-shadow: none;
+    }
+
+    .circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .artwork-details {
-      padding: 20px;
+        margin-top: 0.8rem;
+        font-size: 1rem;
+        text-align: center;
+        line-height: 1.4;
     }
 
-    .artwork-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #333;
+    .artwork-name {
+        font-weight: 600;
+        color: #333;
     }
 
-    .artwork-description {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 15px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .artwork-meta {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 15px;
-      border-top: 1px solid #eee;
-      padding-top: 15px;
-    }
-
-    .meta-item {
-      flex: 1;
-      min-width: 33%;
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 8px;
-    }
-
-    .meta-label {
-      font-weight: bold;
-      display: block;
-      color: #999;
-      font-size: 12px;
-      margin-bottom: 3px;
+    .artwork-residence {
+        font-style: italic;
+        color: #666;
+        font-size: 0.95rem;
+        margin-top: 0.2rem;
     }
 
     .no-artworks {
-      text-align: center;
-      padding: 60px;
-      color: #777;
-      font-size: 16px;
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 1rem;
+        color: #777;
+        z-index: 2;
+        position: relative;
     }
 
-    @media (max-width: 992px) {
-      .artwork-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+    /* RESPONSIVE STYLES */
+    @media (max-width: 768px) {
+        .circle-image-container {
+            gap: 2rem;
+            margin-top: 2rem;
+        }
 
-    @media (max-width: 576px) {
-      .artwork-grid {
-        grid-template-columns: 1fr;
-      }
+        .circle-wrapper {
+            width: 7rem;
+        }
+
+        .circle {
+            width: 7rem;
+            height: 7rem;
+        }
+
+        .artwork-details {
+            font-size: 0.9rem;
+        }
+
+        .artwork-name {
+            font-size: 0.95rem;
+        }
+
+        .art-button a {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .art-button-container {
+            gap: 0.5rem;
+        }
+
+        .page-header .inner h1 {
+            font-size: 1.8rem;
+        }
+
+        .page-header .inner p {
+            font-size: 0.95rem;
+        }
     }
-  </style>
+</style>
+
+<!-- Header -->
+<div class="header-container">
+    <header class="page-header">
+        <div class="inner">
+            <h1>Inspired By Vision</h1>
+            <p>Join Our Community To Explore More</p>
+        </div>
+
+        <div class="art-button-container">
+            <div class="art-button"><a href="{% url 'artist_sign_in' %}">Sign In As Artist</a></div>
+            <div class="art-button"><a href="{% url 'gallery_sign_in' %}">Sign In As Gallery</a></div>
+        </div>
+
+        {% if artworks %}
+        <div class="circle-image-container">
+            {% for artwork in artworks %}
+            <div class="circle-wrapper">
+                <div class="circle">
+                    {% if artwork.artwork_image %}
+                        <img src="{{ artwork.artwork_image.url }}" alt="artwork">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="artwork">
+                    {% endif %}
+                </div>
+                <div class="artwork-details">
+                    <div class="artwork-name">{{ artwork.title }}</div>
+                    <div class="artwork-residence">{{ artwork.year }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-artworks">
+            <p>You caught us here. We are working on getting you artworks you'll love.</p>
+        </div>
+        {% endif %}
+    </header>
+</div>
 {% endblock %}

@@ -31,9 +31,3 @@ def home_artworks(request):
 
 def home_about(request):
     return render(request, 'home/home_about.html')
-
-
-def home_contact(request):
-    return render(request, 'home/home_contact.html')
-
-

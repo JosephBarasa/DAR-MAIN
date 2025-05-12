@@ -1,409 +1,429 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Art Repository</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        
-        body {
-            color: #333;
-        }
-        
-         /* Navigation styles */
-         nav {
-            display: flex;
-            position: sticky;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 40px;
-            background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            top: 0;
-            z-index: 1000;
-        }
-  
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist Profile</title>
 
-        .logo-img img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
-      
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        
-        .nav-links a:hover {
-            color: #465B4B;
-        }
-      
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-      
-        .profile-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-      
-        .sign-out-btn {
-            background-color: #465B4B;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s ease;
-            text-decoration: none;
-        }
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
 
-        .sign-out-btn:hover {
-            background-color: #3c4c3f;
-        }
-        
-        /* Main content styles */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 2rem;
-            margin-top: 7rem;
-            font-size: 30px;
-            font-weight: 500;
-        }
-        
-        /* Profile card styles */
-        .profile-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 40px;
-            max-width: 800px;
-            margin: 0 auto 60px;
-        }
-        
-        .profile-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 40px;
-        }
-        
-        .profile-picture {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 1px solid #eee;
-            flex-shrink: 0;
-        }
-        
-        .profile-info {
-            flex-grow: 1;
-        }
-        
-        .profile-info h2 {
-            margin-bottom: 10px;
-            font-size: 22px;
-            font-weight: 500;
-        }
-        
-        .profile-info p {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        .profile-actions {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .edit-profile-btn, .upload-artwork-btn {
-            background-color: #465B4B;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
 
-        .edit-profile-btn a {
-          color: white;
-          text-decoration: none;
-        }
+    body {
+      color: #333;
+    }
 
-        .upload-artwork-btn a{
-          color: white;
-          text-decoration: none;
-        }
-        
-        /* Artworks section */
-        .artworks-section {
-            margin-top: 60px;
-        }
-        
-        .artworks-section h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        
-        .no-artworks {
-            display: none; /* Hide the no artworks message */
-            text-align: center;
-            padding: 60px 0;
-            color: #666;
-            font-size: 18px;
-        }
-        
-        /* Artwork cards styles */
-        .artwork-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 50px;
-        }
-        
-        .artwork-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease-in-out;
-        }
-        
-        .artwork-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .artwork-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-        }
-        
-        .artwork-details {
-            padding: 20px;
-        }
-        
-        .artwork-title {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        
-        .artwork-description {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        
-        .artwork-meta {
-            display: flex;
-            justify-content: space-between;
-            color: #999;
-            font-size: 14px;
-        }
+    a {
+      text-decoration: none;
+      color: #000;
+    }
 
-        .footer {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          padding-top: 50px;
-        }
+    a:hover {
+      color: rgb(168, 168, 168);
+    }
 
-        .footer .footer-bottom {
-          width: 50%;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          padding: 30px 0 30px 0;
-          border-top: double 10px #f7f7f7;
-          font-size: 14px;
-          margin-left: 35rem;
-        }
-        .footer .footer-bottom .container {
-          display: flex;
-          flex-wrap: wrap;
-        }
-        .footer .footer-bottom .copyright {
-          display: inline-block;
-        }
-        .footer .footer-bottom .creation {
-          margin-left: auto;
-          display: inline-block;
-        }
-        .footer .footer-bottom .creation a {
-          display: inline-block;
-          text-decoration: underline;
-        }
-        .footer .footer-bottom .creation a:hover {
-          text-decoration: none;
-        }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 0.5px solid #000;
+      background-color: #fff;
+      position: relative;
+      flex-wrap: wrap;
+    }
 
-        /* Messages styling */
-    .messages {
-        margin-top: 1rem;
+    .navbar-heading {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .site-menu {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-menu ul li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    .site-menu ul li a::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 2px;
+      background: black;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+    }
+
+    .site-menu ul li a:hover::after {
+      width: 100%;
+    }
+
+    .navbar-button a {
+      padding: 0.5rem 1rem;
+      background-color: rgb(102, 102, 102);
+      color: #fff;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .navbar-button a:hover {
+      background-color: rgb(168, 168, 168);
+      color: #fff;
+    }
+
+    .social-media-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .social-icon {
+      font-size: 1.5rem;
+      color: #000000;
+      transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: rgb(255, 0, 0);
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      margin-top: 7rem;
+      font-size: 30px;
+      font-weight: 500;
+    }
+
+    /* Styling for h3 */
+    h3 {
+      font-size: 10px;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: 1px;
+      font-size: 1.3rem;
+    }
+
+    .profile-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+
+    .profile-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1px solid #eee;
+      flex-shrink: 0;
+    }
+
+    .profile-info h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .profile-info p {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .artwork-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 20px 60px;
+    }
+
+    .artwork-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .artwork-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .artwork-image {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .artwork-card h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .artwork-card p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .view-button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: rgb(102, 102, 102);
+      color: #fff;
+      border-radius: 5px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .view-button:hover {
+      background-color: rgb(168, 168, 168);
+      color: #fff;
+    }
+
+    .footer {
+      background-color: #fff;
+      padding-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #000;
+      line-height: 1.2;
+    }
+
+    .footer a {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      margin-left: auto;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #000;
+      transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .site-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 2rem;
+        background-color: white;
+        flex-direction: column;
+        width: 12rem;
         padding: 1rem;
-        border-radius: 0.375rem;
-        background-color: #f8f9fa;
-        text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        border: 1px solid #ccc;
+        z-index: 100;
+      }
+
+      .site-menu ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .site-menu.active {
+        display: flex;
+      }
+
+      .navbar-heading {
+        margin-left: 10rem;
+        font-size: 1.5rem;
+      }
+
+      .artwork-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 0 15px 40px;
+      }
+
+      .artwork-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      .footer {
+        padding-top: 18rem;
+        line-height: 0.5;
+      }
     }
 
-    .messages h2 {
-        color: #4a5568;
-        font-size: 0.95rem;
-        margin: 0;
+    @media (max-width: 480px) {
+      .artwork-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .artwork-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .artwork-card h2 {
+        font-size: 16px;
+      }
     }
 
-    .btn-dark {
-        display: inline-block;
-        padding: 8px 16px;
-        background: #465B4B;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
-        text-align: center;
-        text-decoration: none;
-      }
+  </style>
 
-      .btn-dark a {
-        color: white;
-        text-decoration: none;
-      }
-
-      .btn-dark:hover {
-        background: #384B3D;
-      }
-
-
-
-    </style>
 </head>
 <body>
-    <nav>
-        <div class="logo-img">
-            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
-        </div>
-
-        <div class="nav-links">
-            <a href="{% url 'user_index' %}">Home</a>
-            <a href="{% url 'user_artists' %}">Artists</a>
-            <a href="{% url 'user_galleries' %}">Galleries</a>
-            <a href="{% url 'user_artworks' %}">Artworks</a>
-            <a href="{% url 'user_events' %}">Events & Exhibitions</a>
-        </div>
-        <div class="nav-right">
-            <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
-            <a class="sign-out-btn" href="{% url 'user_sign_out' %}">Sign Out</a>
-        </div>
-    </nav>
-    
-    <div class="main-container">
-        
-        <div class="profile-card">
-            <div class="profile-container">
-                {% if artist.profile_picture %}
-                    <img src="{{artist.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
-                {% else %}
-                    <img src="" alt="Default Profile Picture" class="profile-picture">
-                {% endif %}
-                
-                <div class="profile-info">
-                    <h2>{{artist.first_name}} {{artist.last_name}}</h2>
-                    <p>{{artist.email}}</p>
-                    <p>{{artist.residence}}</p>
-                    <p>{{artist.bio}}</p>
-                </div>
-            </div>
-        </div>
-
-        
-        <div class="artworks-section">
-
-            <h1>{{artist.first_name}}'s Catalogue</h1>
-
-            <div class="artwork-grid">
-                {% if artworks %}
-                    {% for artwork in artworks %}
-                        <div class="artwork-card">
-                            {% if artwork.artwork_image %}
-                            <img src="{{ artwork.artwork_image.url }}" alt="Artwork" class="artwork-image">
-                            {% else %}
-                            <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork" class="artwork-image">
-                            {% endif %}
-                            <div class="artwork-details">
-                                <h3 class="artwork-title">{{ artwork.title }}</h3>
-                                <p class="artwork-description">{{ artwork.description }}</p>
-
-                                <div class="artwork-meta">
-                                    <span>{{ artwork.media }}</span>                                
-                                </div> 
-
-                                <div class="artwork-meta">
-                                    <span> Kshs. {{ artwork.price }}</span>        
-                                </div>
-
-                                <div class="artwork-meta">
-                                    <span>{{ artwork.year }}</span>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn-dark">
-                                <a href="{% url 'artwork_view' artwork.id %}">View</a>
-                            </button>
-
-                        </div>
-                    {% endfor %}
-
-                {% endif %}
-                
-              </div>
-              
-        </div>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="social-media-container">
+      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
     </div>
 
-    <div class="messages">
-        {% for message in messages %}
-            <h2>{{message}}</h2>
-        {% endfor %}
+    <h1 class="navbar-heading">02</h1>
+
+    <div class="hamburger" id="hamburger-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
 
-    <footer class="footer">
-      <div class="footer-bottom">
-        <div class="container"> <span class="copyright">© 2025 | For This Little Thing Of Ours </span> <span class="creation"> Created By <a href="#"> Joseph Barasa</a></span> </div>
-        <!-- end container -->
+    <div class="site-menu" id="site-menu">
+      <ul>
+        <li><a href="{% url 'user_index' %}">Home</a></li>
+        <li><a href="{% url 'user_artists' %}">Artists</a></li>
+        <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+        <li><a href="{% url 'user_artworks' %}">Artworks</a></li>
+        <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+        <li><a href="{% url 'user_about' %}">About</a></li>
+      </ul>
+      <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+      <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+
+  <div class="main-container">
+    <div class="profile-card">
+      <div class="profile-container">
+        {% if artist.profile_picture %}
+          <img src="{{ artist.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+        {% else %}
+          <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="profile-picture">
+        {% endif %}
+        <div class="profile-info">
+          <h2>{{ artist.first_name }} {{ artist.last_name }}</h2>
+          <p>{{ artist.email }}</p>
+          <p>{{ artist.residence }}</p>
+          <p>{{ artist.bio }}</p>
+        </div>
       </div>
-      <!-- end footer-bottom -->
-    </footer>
+    </div>
+
+    <h3>{{artist.first_name}}'s Creative Portfolio</h3>
+
+    <div class="artwork-grid">
+      {% if artworks %}
+        {% for artwork in artworks %}
+          <div class="artwork-card">
+            {% if artwork.artwork_image %}
+              <img src="{{ artwork.artwork_image.url }}" alt="{{artwork.title}}" class="artwork-image">
+            {% else %}
+              <img src="{% static 'images/default_profile.png' %}" alt="Default Artwork" class="artwork-image">
+            {% endif %}
+            <h2>{{ artwork.title }}</h2>
+            <p>{{ artwork.year }}</p>
+            <a href="{% url 'artwork_view' artwork.id %}" class="view-button">View</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="text-align:center;">You caught us. {{artist.first_name}} is working on getting the pieces ready for you.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Messages -->
+
+  {% for message in messages %} <h4 style="text-align: center; color: green;">{{ message }}</h4>
+  {% endfor %}
+
+  <!-- Footer -->
+
+  <footer class="footer">
+    <p>© 2025 | Digital Art Repository By <a href="#">Joseph Barasa</a></p>
+  </footer>
+
+  <!-- JS -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("hamburger-toggle");
+      const menu = document.getElementById("site-menu");
+      toggle.addEventListener("click", function () {
+        menu.classList.toggle("active");
+      });
+    });
+  </script>
 
 </body>
 </html>

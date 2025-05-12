@@ -1,324 +1,351 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Event Ticket Booking</title>
-    <script src="https://kit.fontawesome.com/79e89cef59.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.7;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Art Event Ticket Booking</title>
 
-        .container {
-            max-width: 800px;
-            margin:  auto;
-            padding: 20px;
-        }
+  <script src="https://kit.fontawesome.com/79e89cef59.js" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
 
-        .event-details {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: rgb(102, 102, 102);
+      line-height: 1.7;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-        .event-poster img {
-            width: 150px; 
-            height: 150px; 
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      flex: 1;
+    }
 
-        .event-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #465B4B;
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
+    .event-details {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
 
-        .event-date {
-            font-size: 1.1rem;
-            color: black;
-            margin-bottom: 10px;
-        }
+    .event-poster img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .event-price {
-            font-size: 1.0rem;
-            font-weight: 100;
-            color: #465B4B;
-            margin-bottom: 25px;
-        }
+    .event-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: rgb(102, 102, 102);
+      margin-bottom: 15px;
+    }
 
-        .event-description {
-            font-size: 1.1rem;
-            color: black;
-            margin-bottom: 30px;
-        }
+    .event-date,
+    .event-description,
+    .event-price {
+      font-size: 1.1rem;
+      color: black;
+      margin-bottom: 15px;
+    }
 
-        .back-button, .pay-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
 
-        .back-button {
-            background-color: #465B4B;
-            color: white;
-            margin-right: 15px;
-            text-decoration: none;
-        }
+    .back-button, .pay-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      color: white;
+      background-color: rgb(102, 102, 102);
+    }
 
-        .back-button:hover {
-            background-color: #465B4B;
-            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-        }
+    .back-button:hover,
+    .pay-button:hover {
+      box-shadow: 0 3px 7px rgb(168, 168, 168);
+    }
 
-        .pay-now-btn {
-            background-color: #465B4B;
-            color: white;
-        }
+    .loading-animation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-left: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-        .pay-now-btn:hover {
-            background-color: #465B4B;
-            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-        }
+    .loading-animation.active {
+      opacity: 1;
+    }
 
-        .loading-animation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-left: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+    a {
+      text-decoration: none;
+      color: #000;
+    }
 
-        .loading-animation.active {
-            opacity: 1;
-        }
+    a:hover {
+      color: rgb(168, 168, 168);
+    }
 
-        /* Navigation Styles */
-        .main-navigation {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 0.5px solid rgb(102, 102, 102);
+      background-color: #fff;
+      flex-wrap: wrap;
+    }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            height: 70px;
-        }
+    .navbar-heading {
+      margin: 0;
+      font-size: 1.5rem;
+    }
 
-        .logo-img img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
+    .site-menu {
+      display: flex;
+      gap: 1.5rem;
+    }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+    .site-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
 
-        .nav-item {
-            color: #555;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
+    .site-menu ul li a {
+      font-weight: 500;
+      position: relative;
+    }
 
-        .nav-item:hover {
-            color: #444;
-        }
+    .site-menu ul li a::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 2px;
+      background: black;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+    }
 
-        .nav-item.active {
-            color: #444;
-            font-weight: 600;
-        }
+    .site-menu ul li a:hover::after {
+      width: 100%;
+    }
 
-        .nav-auth {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+    .navbar-button a {
+      padding: 0.5rem 1rem;
+      background-color: rgb(102, 102, 102);
+      color: #fff;
+      border-radius: 25px;
+      font-weight: 600;
+    }
 
-        .sign-out-btn {
-            background-color: #465B4B;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
+    .navbar-button a:hover {
+      background-color: rgb(168, 168, 168);
+    }
 
-        .sign-out-btn:hover {
-            background-color: #465B4B;
-        }
+    .social-media-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-        /* Responsive Navigation */
-        @media (max-width: 992px) {
-            .nav-container {
-                flex-wrap: wrap;
-                height: auto;
-                padding: 15px 20px;
-            }
+    .social-icon {
+      font-size: 1.5rem;
+      color: #000000;
+      transition: color 0.3s ease;
+    }
 
-            .nav-links {
-                order: 3;
-                flex-basis: 100%;
-                flex-direction: column;
-                display: none;
-                margin-top: 15px;
-            }
+    .social-icon:hover {
+      color: rgb(255, 0, 0);
+    }
 
-            .nav-links.show {
-                display: flex;
-            }
+    .footer {
+      background-color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #000;
+      padding: 1.5rem;
+      border-top: 1px solid #ccc;
+    }
 
-            .nav-item {
-                padding: 12px 0;
-                border-top: 1px solid #eee;
-            }
+    .footer a {
+      color: #000;
+      text-decoration: underline;
+    }
 
-            .nav-auth {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-        }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      margin-left: auto;
+    }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #000;
+      transition: all 0.3s ease;
+    }
 
-            .event-details {
-                padding: 20px;
-            }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
 
-            .event-title {
-                font-size: 1.8rem;
-            }
+      .site-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 2rem;
+        background-color: white;
+        flex-direction: column;
+        width: 12rem;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        border: 1px solid #ccc;
+        z-index: 100;
+      }
 
-            .event-date, .event-price, .event-description {
-                font-size: 1rem;
-            }
+      .site-menu ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
 
-            .back-button, .pay-button {
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
+      .site-menu.active {
+        display: flex;
+      }
+
+      .navbar-heading {
+        margin-left: 8rem;
+        font-size: 1.5rem;
+      }
+
+      .back-button,
+      .pay-button {
+        flex: 1 1 100%;
+        justify-content: center;
+        width: 80px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="main-navigation">
-        <div class="nav-container">
-            <div class="logo-img">
-                <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
-            </div>
-            <ul class="nav-links">
-                <li><a href="{% url 'user_index' %}" class="nav-item">Home</a></li>
-                <li><a href="{% url 'user_artists' %}" class="nav-item">Artists</a></li>
-                <li><a href="{% url 'user_artworks' %}" class="nav-item">Artworks</a></li>
-                <li><a href="{% url 'user_galleries' %}" class="nav-item">Galleries</a></li>
-                <li><a href="{% url 'user_events' %}" class="nav-item">Events & Exhibitions</a></li>
-            </ul>
-            <div class="nav-auth">
-                <a href="{% url 'user_dashboard' %}" class="nav-item">User Profile</a>
-                <a href="{% url 'user_sign_out' %}" class="sign-out-btn">Sign Out</a>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        {% if event %}
-        <div class="event-details">
-            {% if event.poster_image %}
-            <div class="event-poster">
-                <img src="{{ event.poster_image.url }}" alt="{{ event.title }} Poster">
-            <div class="event-poster">
-            {% else %}
-            <div class="event-poster">
-                <img src="event-poster.jpg" alt="Event Poster">
-            </div>
-            {% endif %}
-            <h1 class="event-title">{{event.title}}</h1>
-            <p class="event-date">{{event.date_of_event}}</p>
-            <p class="event-description">{{event.venue}}</p>
-            <p class="event-price">Kshs. {{event.ticket_price}}</p>
-            <p class="event-description">{{event.event_description}}</p>
-            <div class="actions">
 
-                <a href="{% url 'user_events' %}" class="back-button">
-                    <i class="fas fa-arrow-left"></i> Back to Events
-                </a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="social-media-container">
+      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+    </div>
 
-                <a href="{% url 'ticket_payment' event.id %}" class="back-button">
-                    <i class="fas fa-arrow-left"></i> Pay Now
-                </a>
-            </div>
-        </div>
-        {% else %}
-        <div class="event-details">
-            <h1 class="event-title">No Event Found</h1>
-            <p class="event-description">Sorry, we couldn't find the event you're looking for.</p>
-            <a href="{% url 'user_events' %}" class="back-button">
-                <i class="fas fa-arrow-left"></i> Back to Events
-            </a>
-        </div>
-        {% endif %}
+    <h1 class="navbar-heading">02</h1>
 
-    <script>
-        const payButton = document.querySelector('.pay-button');
-        const loadingAnimation = document.querySelector('.loading-animation');
+    <div class="hamburger" id="hamburger-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
 
-        payButton.addEventListener('click', function() {
-            loadingAnimation.classList.add('active');
-            setTimeout(function() {
-                alert('Payment successful! Your tickets have been sent to your email.');
-                loadingAnimation.classList.remove('active');
-            }, 2000);
-        });
+    <div class="site-menu" id="site-menu">
+      <ul>
+        <li><a href="{% url 'user_index' %}">Home</a></li>
+        <li><a href="{% url 'user_artists' %}">Artists</a></li>
+        <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+        <li><a href="{% url 'user_artworks' %}">Artworks</a></li>
+        <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+        <li><a href="{% url 'user_about' %}">About</a></li>
+      </ul>
+      <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+      <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
+    </div>
+  </nav>
 
-        document.querySelector('.back-button').addEventListener('click', function() {
-            window.history.back();
-        });
-    </script>
+  <!-- Main Content -->
+  <div class="container">
+    {% if event %}
+    <div class="event-details">
+      {% if event.poster_image %}
+      <div class="event-poster">
+        <img src="{{ event.poster_image.url }}" alt="{{ event.title }} Poster">
+      </div>
+      {% else %}
+      <div class="event-poster">
+        <img src="event-poster.jpg" alt="Event Poster">
+      </div>
+      {% endif %}
+
+      <h1 class="event-title">{{ event.title }}</h1>
+      <p class="event-date">{{ event.date_of_event }}</p>
+      <p class="event-description">{{ event.venue }}</p>
+      <p class="event-price">Kshs. {{ event.ticket_price }}</p>
+      <p class="event-description">{{ event.event_description }}</p>
+
+      <div class="actions">
+        <a href="{% url 'user_events' %}" class="back-button"><i class="fas fa-arrow-left"></i>Events</a>
+        <a href="{% url 'ticket_payment' event.id %}" class="pay-button"> Pay </a>
+      </div>
+    </div>
+    {% else %}
+    <div class="event-details">
+      <h1 class="event-title">No Event Found</h1>
+      <p class="event-description">Sorry, we couldn't find the event you're looking for.</p>
+      <a href="{% url 'user_events' %}" class="back-button"><i class="fas fa-arrow-left"></i> Back to Events</a>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 | Digital Art Repository By <a href="#">Joseph Barasa</a></p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("hamburger-toggle");
+      const menu = document.getElementById("site-menu");
+
+      toggle.addEventListener("click", function () {
+        menu.classList.toggle("active");
+      });
+    });
+  </script>
 </body>
 </html>

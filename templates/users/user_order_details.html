@@ -5,7 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Art Product Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
+
     <style>
         /* Reset and base styles */
         * {
@@ -21,290 +25,384 @@
             line-height: 1.6;
         }
 
-        /* Navbar styles */
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        a:hover {
+            color: #888;
+        }
+        
+        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
-            background-color: #f8f8f8;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            position: relative;
+            flex-wrap: wrap;
         }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        
+        .navbar-heading {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .site-menu {
             display: flex;
-            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        
+        .site-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .site-menu ul li a {
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .site-menu ul li a::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+        }
+        
+        .site-menu ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .navbar-button a {
+            padding: 0.75rem 1.5rem;
+            background-color: rgb(102, 102, 102);
+            color: #fff;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .navbar-button a:hover {
+            background-color: rgb(102, 102, 102);
+            color: #fff;
+        }
+        
+        /* Social Media Icons */
+        .social-media-container {
+            display: flex;
             align-items: center;
+            gap: 1.5rem;
         }
- /* Navigation styles */
- nav {
-    display: flex;
-    position: sticky;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-links {
-    display: flex;
-    gap: 30px;
-}
-
-.logo-img img {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.nav-links a:hover {
-    color: #465B4B;
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.profile-link {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
-
-.sign-out-btn {
-    background-color: #465B4B;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-    text-decoration: none;
-}
-
-.sign-out-btn:hover {
-    background-color: #3c4c3f;
-}
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+        
+        .social-icon {
+            font-size: 1.5rem;
+            color: #000000;
+            transition: color 0.3s ease;
         }
+        
+        .social-icon:hover {
+            color: rgb(255, 0, 0);
+        }
+        
 
         /* Product layout */
         .product-page {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 3rem;
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-            padding: 30px;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-top: 2rem;
         }
 
         /* Left column - Artwork section */
         .artwork-section {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 1.5rem;
         }
 
         .artwork-container {
             width: 100%;
             aspect-ratio: 1/1;
             background-color: #f5f5f5;
-            border-radius: 8px;
+            border-radius: 0.75rem;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.08);
+            border: 1px solid #ddd; /* Added border */
         }
 
         .artwork-container img {
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
+            transition: transform 0.2s ease; /* Added smooth transition */
+        }
+
+        .artwork-container img:hover {
+            transform: scale(1.05);  /* Slight scale on hover */
         }
 
         .product-details {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 0.75rem;
         }
 
         .product-details h1 {
-            font-size: 1.8rem;
+            font-size: 2.25rem;
             font-weight: 600;
-            color: #333;
+            color: #222;
+            margin-bottom: 0.5rem;
         }
 
         .detail-row {
             display: flex;
             align-items: center;
+            justify-content: space-between; /* Added space between label and value */
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;  /* Added subtle border */
         }
 
         .detail-label {
             font-weight: 500;
-            width: 100px;
-            color: #666;
+            color: #555;
+            width: 40%;        /* Adjusted width of label */
+            padding-right: 1rem;
+            text-align: left;
         }
 
         .detail-value {
             color: #333;
+            font-size: 1.1rem;
+            flex: 1;             /* Let value take up remaining space */
+            text-align: left;
         }
 
         .footer-box {
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 1.5rem;
+            padding: 1rem;
             background-color: #f9f9f9;
-            border-radius: 8px;
+            border-radius: 0.75rem;
             font-size: 0.9rem;
             color: #666;
+            border: 1px solid #ddd;
         }
 
         /* Right column - Order and payment section */
         .order-section {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 1.5rem;
         }
 
         .order-box {
             background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.08);
+            border: 1px solid #ddd;
         }
 
         .order-header {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
             border-bottom: 1px solid #e0e0e0;
+            color: #222;
         }
 
         .order-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 0.75rem;
         }
 
         .order-item {
-            padding: 10px 0;
+            padding: 0.75rem 0;
             border-bottom: 1px dashed #e0e0e0;
+            display: flex;          /* Use flexbox for item layout */
+            justify-content: space-between; /* Space between label and value */
+            align-items: center;
+        }
+
+        .order-item strong {
+            color: #444;
         }
 
         .payment-box {
-            margin-top: 20px;
+            margin-top: 1.5rem;
         }
 
         /* Buttons */
         .btn {
             display: inline-block;
-            padding: 12px 24px;
+            padding: 0.8rem 1.6rem;
             font-weight: 500;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 0.5rem;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn-primary {
-            background-color: #465B4B;
+            background-color: rgb(102, 102, 102);
             color: white;
         }
 
         .btn-primary:hover {
-            background-color: #465B4B;
+            background-color: rgb(102, 102, 102);
         }
 
         .btn-outline {
             background-color: transparent;
-            border: 1px solid #465B4B;
-            color: #465B4B;
+            border: 2px solid rgb(102, 102, 102);
+            color: rgb(125, 125, 125);
         }
 
         .btn-outline:hover {
             background-color: #f0f7fc;
+            color: rgb(125, 125, 125);
         }
 
         /* Form styles */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 1.25rem;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
             font-weight: 500;
+            color: #444;
+            font-size: 1rem;
         }
 
         input, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 0.75rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 0.5rem;
             font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #465B4B;
+            box-shadow: 0 0 0 2px rgba(70, 91, 75, 0.15);
         }
 
         /* Related items */
         .related-items {
-            margin-top: 15px;
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .related-items .tag {
             display: inline-block;
-            padding: 5px 10px;
+            padding: 0.3rem 0.75rem;
             background-color: #eef2f7;
-            border-radius: 4px;
-            margin-right: 8px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
             color: #555;
+            border: 1px solid #ddd;
+        }
+        .related-items .tag:hover{
+            background-color: #dee2e6;
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            margin-left: auto;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: all 0.3s ease;
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .product-page {
                 grid-template-columns: 1fr;
+                margin-top: 1rem;
+                padding: 1rem;
             }
 
             .container {
                 padding: 10px;
-                margin: 20px auto;
+                margin: 0 auto;
             }
 
-            .nav-links {
-                gap: 15px;
+            .hamburger {
+                display: flex;
             }
             
-            nav {
-                padding: 15px 20px;
-                flex-wrap: wrap;
+            .site-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 2rem;
+                background-color: white;
+                flex-direction: column;
+                width: 12rem;
+                padding: 1rem;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+                border: 1px solid #ccc;
+                z-index: 100;
             }
+            
+            .site-menu ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .site-menu.active {
+                display: flex;
+            }
+            
+            .navbar-button {
+                margin-top: 1rem;
+            }
+            
+            .navbar-heading {
+                margin-left: 0;
+                font-size: 1.25rem;
+            }
+           .product-details h1{
+             font-size: 1.75rem
+           }
 
         }
     </style>
@@ -312,23 +410,35 @@
 
 <body>
 
-    <nav>
-        <div class="logo-img">
-            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
+    <nav class="navbar">
+
+        <div class="social-media-container">
+            <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
         </div>
 
-        <div class="nav-links">
-            <a href="{% url 'user_index' %}">Home</a>
-            <a href="{% url 'user_artists' %}">Artists</a>
-            <a href="{% url 'user_galleries' %}">Galleries</a>
-            <a href="{% url 'user_artworks' %}">Artworks</a>
-            <a href="{% url 'user_events' %}">Events & Exhibitions</a>
+        <h1 class="navbar-heading">02</h1>
+
+        <div class="hamburger" id="hamburger-toggle">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-        <div class="nav-right">
-            <a href="{% url 'user_dashboard' %}" class="profile-link">User Profile</a>
-            <a class="sign-out-btn" href="{% url 'user_sign_out' %}">Sign Out</a>
+
+        <div class="site-menu" id="site-menu">
+            <ul>
+                <li><a href="{% url 'user_index' %}">Home</a></li>
+                <li><a href="{% url 'user_artists' %}">Artists</a></li>
+                <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+                <li><a href="{% url 'user_artworks' %}">Artworks</a></li>
+                <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+                <li><a href="{% url 'user_about' %}">About</a></li>
+            </ul>
+            <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+            <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
         </div>
+
     </nav>
+
 
     <div class="container">
         <div class="product-page">
@@ -353,17 +463,17 @@
                     </div>
                     
                     <div class="detail-row">
-                        <span class="detail-label">Medium :</span>
+                        <span class="detail-label">Medium:</span>
                         <span class="detail-value">{{artwork.media}}</span>
                     </div>
                     
                     <div class="detail-row">
-                        <span class="detail-label">Price :</span>
+                        <span class="detail-label">Price:</span>
                         <span class="detail-value">Kshs.{{artwork.price}}</span>
                     </div>
 
                     <div class="detail-row">
-                        <span class="detail-label">Artist :</span>
+                        <span class="detail-label">Artist:</span>
                         <span class="detail-value"><a href="{% url 'user_artist_profile_display' artist.id %}">{{artwork.artist.first_name}} {{artwork.artist.last_name}}</a></span>
                     </div>
                     
@@ -388,10 +498,9 @@
                     <h2 class="order-header">For Deliveries</h2>
                     
                     <form method="POST" action="{% url 'user_order_details' artwork.id %}" 
-                        data-artwork-id="{{ artwork.id }}" 
-                        data-artwork-title="{{ artwork.title }}" 
-                        data-artwork-price="{{ artwork.price }}">
-
+                            data-artwork-id="{{ artwork.id }}" 
+                            data-artwork-title="{{ artwork.title }}" 
+                            data-artwork-price="{{ artwork.price }}">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="from">From</label>
@@ -410,14 +519,15 @@
                         
                         <div class="order-list">
                             <div class="order-item">
-                                <strong>Artwork :</strong> {{ artwork.title }}
+                                <strong>Artwork:</strong> 
+                                <span>{{ artwork.title }}</span>
                             </div>
                             <div class="order-item">
-                                <strong>Price :</strong> Kshs. {{ artwork.price }}
+                                <strong>Price:</strong>
+                                 <span>Kshs. {{ artwork.price }}</span>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary payment-btn">Make Payment</button>
-
                     </form>
                     
                 </div>
@@ -434,5 +544,15 @@
             </div>
         </div>
     </div>
+    
+    <script>
+    const hamburgerToggle = document.getElementById('hamburger-toggle');
+    const siteMenu = document.getElementById('site-menu');
+
+    hamburgerToggle.addEventListener('click', () => {
+      siteMenu.classList.toggle('active');
+    });
+    </script>
+
 </body>
 </html>

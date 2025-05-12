@@ -2,17 +2,100 @@
 {% load static %}
 
 {% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
 
-	  <header class="page-header" data-background="images/page-header.jpg">
-	  	<div class="inner">
-		  	<h1>About Us</h1>
-		  </div>
-		  <!-- end inner -->
-	  </header>
-	  <!-- end page-header -->
+    .header-container {
+        background-color: #fff;
+    }
 
+    header.page-header {
+        padding: 5rem 2rem;
+        text-align: center;
+        position: relative;
+        height: auto;
+        color: black;
+        background-color: white;
+    }
+
+    header.page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: white;
+        z-index: 0;
+    }
+
+    header.page-header .inner {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .page-header .inner h1 {
+        font-size: 2.5rem;
+        margin-top: 0.1rem;
+        font-weight: 700;
+    }
+
+    .page-header .inner p {
+        font-size: 1.05rem;
+        margin-top: 1.5rem;
+        line-height: 1.8;
+        color: #333;
+        text-align: center;
+    }
+
+    .page-header .inner p strong {
+        color: #000;
+    }
+
+    .page-header .inner p small {
+        display: block;
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        font-style: italic;
+        letter-spacing: 0.5px;
+        color: #555;
+    }
+
+    @media (max-width: 768px) {
+
+        .page-header .inner h1 {
+            font-size: 1.8rem;
+        }
+
+        .page-header .inner p {
+            font-size: 1rem;
+            text-align: left;
+        }
+    }
+</style>
+
+<!-- Header -->
+<div class="header-container">
+    <header class="page-header">
+        <div class="inner">
+            <h1>Shaping The Future Of Art</h1>
+            <p>
+                This <strong>Digital Art Repository</strong> serves as a living archive, preserving creativity,
+                amplifying voices, and bridging the gap between artists and audiences in the digital age.
+                It offers a centralized platform where visual stories can be stored, shared,
+                and celebrated beyond the limits of time and geography. For emerging and established artists alike, 
+                it provides visibility, validation, and a pathway to global recognition. It also acts as a cultural mirror, 
+                documenting the evolving narratives, identities, and expressions of society. 
+                In essence, this art repository is not just a collection, it is a catalyst for connection, 
+                education, and enduring artistic legacy.
+                <small><strong>FOR THIS LITTLE THING OF OURS</strong></small>
+            </p>
+        </div>
+
+    </header>
+</div>
 {% endblock %}
-
-</body>
-
-
