@@ -65,6 +65,10 @@
         color: #555;
     }
 
+    .thankyou-message {
+        text-align: center;
+    }
+
     @media (max-width: 768px) {
 
         .page-header .inner h1 {
@@ -97,5 +101,10 @@
         </div>
 
     </header>
+
+    <div class="thankyou-message">
+        <small>Thankyou {{user.first_name}}</small>
+    </div>
+
 </div>
 {% endblock %}

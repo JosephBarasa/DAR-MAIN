@@ -99,11 +99,11 @@ def gallery_artworks(request):
 
 def gallery_dashboard(request):
     gallery = request.user
-    event = Events.objects.filter(gallery=request.user)
+    events = Events.objects.filter(gallery=request.user)
     artwork_submissions = ArtworkSubmission.objects.filter(gallery=gallery, 
                                                            status='PENDING')
     return render(request, 'gallery/gallery_dashboard.html', 
-                  {'event': event, 'gallery': gallery,
+                  {'events': events, 'gallery': gallery,
                    'artwork_submissions': artwork_submissions})
 
 

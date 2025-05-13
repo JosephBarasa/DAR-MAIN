@@ -333,6 +333,12 @@
 
 </head>
 <body>
+
+  <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:rgb(63, 105, 63); margin-top: 1rem;">{{ message }}</h4>
+  {% endfor %}
+  
   <!-- Navbar -->
   <nav class="navbar">
     <div class="social-media-container">
@@ -401,11 +407,6 @@
       {% endif %}
     </div>
   </div>
-
-  <!-- Messages -->
-
-  {% for message in messages %} <h4 style="text-align: center; color: green;">{{ message }}</h4>
-  {% endfor %}
 
   <!-- Footer -->
 

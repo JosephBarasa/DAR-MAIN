@@ -1,51 +1,115 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Artists Management System</title>
+    <title>Gallery Dashboard</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
+
     <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        
         body {
-            color: #333;
-        }
-        
-        /* Header styles */
-        header {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            color: #000;
+          }
+      
+          a {
+            text-decoration: none;
+            color: #000;
+          }
+      
+          a:hover {
+            color: rgb(168, 168, 168);
+          }
+      
+          /* Navbar */
+          .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 1rem 2rem;
+            border-bottom: 0.5px solid #000;
             background-color: #fff;
-        }
-        
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .sign-out-btn {
-            background-color: #3c4c3f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
+            position: relative;
+            flex-wrap: wrap;
+          }
+      
+          .navbar-heading {
+            margin: 0;
+            font-size: 1.5rem;
+          }
+      
+          .site-menu {
+            display: flex;
+            gap: 1.5rem;
+          }
+      
+          .site-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+          }
+      
+          .site-menu ul li a {
             font-weight: 500;
-        }
-
-        .sign-out-btn a {
-          color: white;
-          text-decoration: none;
-        }
+            position: relative;
+          }
+      
+          .site-menu ul li a::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+          }
+      
+          .site-menu ul li a:hover::after {
+            width: 100%;
+          }
+      
+          .navbar-button a {
+            padding: 0.5rem 1rem;
+            background-color: rgb(102, 102, 102);
+            color: #fff;
+            border-radius: 25px;
+            font-weight: 600;
+          }
+      
+          .navbar-button a:hover {
+            background-color: rgb(168, 168, 168);
+            color: #fff;
+          }
+      
+          /* Social Media Icons */
+          .social-media-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+          }
+      
+          .social-icon {
+            font-size: 1.5rem;
+            color: #000000;
+            transition: color 0.3s ease;
+          }
+      
+          .social-icon:hover {
+            color: rgb(255, 0, 0);
+          }
+      
         
         /* Main content styles */
         .main-container {
@@ -69,6 +133,7 @@
             padding: 40px;
             max-width: 800px;
             margin: 0 auto 60px;
+            position: relative;
         }
         
         .profile-container {
@@ -109,7 +174,7 @@
         }
         
         .edit-profile-btn, .upload-artwork-btn {
-            background-color: #465B4B;
+            background-color: rgb(102, 102, 102);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -128,244 +193,155 @@
           text-decoration: none;
         }
         
-        /* Artworks section */
-        .artworks-section {
+        /* event section */
+        .event-section {
             margin-top: 60px;
         }
         
-        .artworks-section h2 {
+        .event-section h2 {
             font-size: 24px;
             margin-bottom: 30px;
             font-weight: 500;
         }
         
-        .no-artworks {
+        .no-event {
             display: none; /* Hide the no artworks message */
             text-align: center;
             padding: 60px 0;
-            color: #666;
+            color:  rgb(102, 102, 102);
             font-size: 18px;
         }
         
-        /* Artwork cards styles */
-        .artwork-grid {
+        /* Events cards styles */
+        .event-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
         
-        .artwork-card {
+        .event-card {
             background-color: white;
             border-radius: 8px;
-            overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s ease-in-out;
         }
         
-        .artwork-card:hover {
+        .event-card:hover {
             transform: translateY(-5px);
         }
         
-        .artwork-image {
+        .event-image {
             width: 100%;
             height: 220px;
             object-fit: cover;
         }
         
-        .artwork-details {
+        .event-details {
             padding: 20px;
         }
         
-        .artwork-title {
+        .event-title {
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 8px;
         }
         
-        .artwork-description {
+        .event-description {
             color: #666;
             font-size: 14px;
             margin-bottom: 15px;
             line-height: 1.4;
         }
         
-        .artwork-meta {
+        .event-meta {
             display: flex;
             justify-content: space-between;
             color: #999;
             font-size: 14px;
         }
 
-        .artist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 20px 60px;
-        }
-        .artist-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        .artist-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .artist-image {
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-        .artist-card h2 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-        .footer {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          padding-top: 50px;
-        }
-
-        .footer .footer-bottom {
-          width: 50%;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          padding: 30px 0 30px 0;
-          border-top: double 10px #f7f7f7;
-          font-size: 14px;
-          margin-left: 35rem;
-        }
-        .footer .footer-bottom .container {
-          display: flex;
-          flex-wrap: wrap;
-        }
-        .footer .footer-bottom .copyright {
-          display: inline-block;
-        }
-        .footer .footer-bottom .creation {
-          margin-left: auto;
-          display: inline-block;
-        }
-        .footer .footer-bottom .creation a {
-          display: inline-block;
-          text-decoration: underline;
-        }
-        .footer .footer-bottom .creation a:hover {
-          text-decoration: none;
-        }
-
-        /* Navigation Styles */
-    .main-navigation {
-        width: 100%;
-        background-color: #ffffff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-  
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        height: 70px;
-      }
-  
-      .logo a {
-        font-size: 24px;
-        font-weight: 700;
-        color: #333;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-  
-      .logo a:hover {
-        color: #444;
-      }
-  
-      .nav-links {
-        display: flex;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-  
-      .nav-item {
-        color: #555;
-        text-decoration: none;
-        padding: 10px 15px;
-        font-size: 16px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        display: inline-block;
-      }
-  
-      .nav-item:hover {
-        color: #444;
-      }
-  
-      .nav-item.active {
-        color: #444;
-        font-weight: 600;
-      }
-  
-      .nav-auth {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-  
-      .sign-out-btn {
-        background-color: #444;
-        color: white;
-        padding: 8px 15px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-      }
-  
-      .sign-out-btn:hover {
-        background-color: #444;
-      }
-
-
-        /* Messages styling */
-    .messages {
-        margin-top: 1rem;
-        padding: 1rem;
-        border-radius: 0.375rem;
-        background-color: #f8f9fa;
+        /* Footer */
+    .footer {
+        background-color: #fff;
+        padding-top: 4rem;
         text-align: center;
-    }
+        font-size: 0.9rem;
+        color: #000;
+        line-height: 1.2;
+      }
+  
+      .footer a {
+        color: #000;
+        text-decoration: underline;
+      }
+  
+      /* Hamburger menu */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        margin-left: auto;
+      }
+  
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: #000;
+        transition: all 0.3s ease;
+      }
 
-    .messages h2 {
-        color: #4a5568;
-        font-size: 0.95rem;
-        margin: 0;
-    }
+    /* Hamburger menu styles */
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
 
-    /* Sidebar base */
+.hamburger-icon {
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 25px;
+}
+
+.hamburger-icon .bar {
+    height: 3px;
+    width: 100%;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown menu styles */
+.gallery-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+.gallery-dropdown a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.gallery-dropdown a:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* Sidebar base */
 .sidebar {
-    height: 50%;         
+    height: 30%;         
     width: 0;                /* Hidden by default */  
     position: fixed;         /* Stay in place */  
     z-index: 1001;           /* On top */  
@@ -398,21 +374,20 @@
     top: 10px;
     right: 20px;
     font-size: 36px;
-    color:rgb(133, 40, 12);
   }
   
   /* Hamburger icon */
 .sidebar-hamburger {
-    position: absolute;
-    top: 16px;       
+    position: absolute; 
+    top: 16px;          
     right: 16px;        
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 28px;
     height: 22px;
     cursor: pointer;
-    flex-direction: column;
-    justify-content: space-around;
-    z-index: 1002;      /* Above other elements in the card */
+    z-index: 1002;      
   }
   
   .sidebar-hamburger .bar {
@@ -423,98 +398,103 @@
     transition: 0.4s;
   } 
 
-    /* Responsive Navigation */
-    @media (max-width: 992px) {
-        .nav-container {
-          flex-wrap: wrap;
-          height: auto;
-          padding: 15px 20px;
-        }
-  
-        .nav-links {
-          order: 3;
-          flex-basis: 100%;
-          flex-direction: column;
-          display: none;
-          margin-top: 15px;
-        }
-  
-        .nav-links.show {
-          display: flex;
-        }
-  
-        .nav-item {
-          padding: 12px 0;
-          border-top: 1px solid #eee;
-        }
-  
-        .nav-auth {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-        }
-      }
+  /* RESPONSIVE STYLES */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
 
-      @media (max-width: 768px) {
-        .artist-grid {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 0 15px 40px;
-        }
-        .artist-image {
-            width: 150px;
-            height: 150px;
-        }
+    .site-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 2rem;
+      background-color: white;
+      flex-direction: column;
+      width: 12rem;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #ccc;
+      z-index: 100;
     }
-    @media (max-width: 480px) {
-        .artist-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .artist-image {
-            width: 120px;
-            height: 120px;
-        }
-        .artist-card h2 {
-            font-size: 16px;
-        }
-        .page-header h1 {
-            font-size: 28px;
-        }
-        .page-header p {
-            font-size: 16px;
-        }
+
+    .site-menu ul {
+      flex-direction: column;
+      gap: 1rem;
     }
+
+    .site-menu.active {
+      display: flex;
+    }
+
+    .navbar-button {
+      margin-top: 1rem;
+    }
+
+    .navbar-heading {
+      margin-left: 10rem;
+      font-size: 1.5rem;
+    }
+
+     /* Footer */
+  .footer {
+    background-color: #fff;
+    padding-top: 18rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #000;
+    line-height: 0.5;
+  }
+  }
 
 
     </style>
+
 </head>
 <body>
-    <header>
-              <!-- Navigation Menu -->
-        <nav class="main-navigation">
-            <div class="nav-container">
-            <div class="logo">
-                <a href="/">Art Repository</a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="{% url 'gallery_index' %}" class="nav-item">Home</a></li>
-                <li><a href="{% url 'gallery_artists' %}" class="nav-item">Artists</a></li>
-                <li><a href="{% url 'gallery_artworks' %}" class="nav-item active">Artworks</a></li>
-            </ul>
-            <div class="nav-auth">
-                <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Profile</a>
-                <a href="{% url 'gallery_sign_out' %}" class="sign-out-btn">Sign Out</a>
-            </div>
-            </div>
-        </nav>
-
-    </header>
     
+    <!-- Navbar -->
+  <nav class="navbar">
+
+    <div class="social-media-container">
+      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <h1 class="navbar-heading">02</h1>
+
+    <div class="hamburger" id="hamburger-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="site-menu" id="site-menu">
+      <ul>
+        <li><a href="{% url 'gallery_index' %}">Home</a></li>
+        <li><a href="{% url 'gallery_artists' %}">Artists</a></li>
+        <li><a href="{% url 'gallery_artworks' %}">Artworks</a></li>
+      </ul>
+
+      <a href="{% url 'gallery_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+
+      <div class="navbar-button"><a href="{% url 'gallery_sign_out' %}">Sign Out</a></div>
+
+    </div>
+    </nav>
+
     <div class="main-container">
+        <h1>Manage Your Digital Gallery</h1>
         
         <div class="profile-card">
             <div class="profile-container">
+
+                <!-- Sidebar trigger placed here in markup -->
+                <div class="sidebar-hamburger" onclick="openSidebar()">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+
                 {% if user.profile_picture %}
                     <img src="{{user.profile_picture.url}}" alt="Default Profile Picture" class="profile-picture">
                 {% else %}
@@ -527,18 +507,16 @@
                     <p>{{user.residence}}</p>
                     <p>{{user.bio}}</p>
                     
-                    {% if user.role == 'gallery_admin' %}
                     <!-- Sidebar container -->
                     <div id="profileSidebar" class="sidebar">
                         <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
                         <a href="{% url 'gallery_profile_edit' %}">Edit Profile</a>
-                        <a href="{% url 'gallery_event_upload' %}">Post Event</a>
+                        <a href="{% url 'gallery_event_upload' %}">Upload Event</a>
 
                         {% if artwork_submissions %}
-                        
-                        <a href="{% url 'artwork_submissions' %}" style="color:red">You Have <strong>New</strong> Approval Requests</a>
+                        <a href="{% url 'artwork_submissions' %}" style="color:red;">New Approvals</a>
                         {% else %}
-                        <a href="">No Artist Submissions</a>
+                        <a>No Approvals</a>
                         {% endif %}
 
                     </div>
@@ -549,58 +527,71 @@
                         <div class="bar"></div>
                         <div class="bar"></div>
                     </div>
-                    {% endif %}
 
                 </div>
             </div>
         </div>
 
         
-    <h1>Events & Exhibitions</h1>
+        <div class="artworks-section">
 
-    <div class="artist-grid">
+            <h2>Upcoming Events</h2>
 
-        {% if event %}
+            <div class="event-grid">
+                {% if events %}
+                    {% for event in events %}
+                        <div class="event-card">
+                            {% if event.poster_image %}
+                            <img src="{{ event.poster_image.url }}" alt="Event" class="event-image">
+                            {% else %}
+                            <img src="{% static 'images/default_artwork.png' %}" alt="Event" class="event-image">
+                            {% endif %}
+                            <div class="artwork-details">
+                                <h3 class="artwork-title">{{ event.event_title }}</h3>
+                                <p class="artwork-description">{{ event.description }}</p>
 
-            {% for event in event %}
+                                <div class="artwork-meta">
+                                    <span>{{ event.date_of_event }}</span>                                
+                                </div> 
 
-                <div class="artist-card">
+                                <div class="artwork-meta">
+                                    <span> Kshs. {{ event.ticket_price }}</span>        
+                                </div>
 
-                    {% if event.poster_image %}
-                        <img src="{{ event.poster_image.url }}" alt="{{ artist.username }}'s Profile Picture" class="artist-image">
-                    {% else %}
-                        <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
-                    {% endif %}
-                    <h2>{{ event.event_title }}</h2>
-                    <p>{{ event.date_of_event }}</p>
-                    <p>{{ event.event_description }}</p>
-                    <p>Kshs.{{ event.ticket_price }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
 
-                </div>
-
-            {% endfor %}
-
-        {% else %}
-            <p>There are no events currently in the system.</p>
-        {% endif %}
-
+                {% endif %}
+                
+              </div>
+              
+        </div>
     </div>
 
-    </div>
+    <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:green;">{{ message }}</h4>
+{% endfor %}
 
-    <div class="messages">
-        {% for message in messages %}
-            <h2>{{message}}</h2>
-        {% endfor %}
-    </div>
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 | Digital Art Repository By <a href="#">Joseph Barasa</a></p>
+</footer>
 
-    <footer class="footer">
-      <div class="footer-bottom">
-        <div class="container"> <span class="copyright">© 2025 JB | Visual Artists Management System </span> <span class="creation">Created by <a href="#"> Joseph Barasa</a></span> </div>
-        <!-- end container -->
-      </div>
-      <!-- end footer-bottom -->
-    </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("hamburger-toggle");
+      const menu = document.getElementById("site-menu");
+  
+      toggle.addEventListener("click", function () {
+        menu.classList.toggle("active");
+      });
+    });
+  </script>
+
+
+    <!-- SIDEBAR -->
 
     <script>
         // Open sidebar: set width to 250px
@@ -624,6 +615,8 @@
     }
   });
       </script>
+      
+    
 
 </body>
 </html>

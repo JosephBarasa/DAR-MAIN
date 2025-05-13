@@ -19,48 +19,97 @@
 <body>
 
 <style>
-     a {
-        text-decoration: none;
-        color: #000;
-      }
-  
-      a:hover {
-        color: rgb(168, 168, 168);
-      }
-  
-      /* Navbar */
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        border-bottom: 0.5px solid #000;
-        background-color: #fff;
-        position: relative;
-        flex-wrap: wrap;
-      }
-  
-      .navbar-heading {
-        margin: 0;
-        font-size: 1.5rem;
-      }
-  
-      /* Social Media Icons */
-      .social-media-container {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-      }
-  
-      .social-icon {
-        font-size: 1.5rem;
-        color: #000000;
-        transition: color 0.3s ease;
-      }
-  
-      .social-icon:hover {
-        color: rgb(255, 0, 0);
-      }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
+    color: #000;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  a:hover {
+    color: rgb(168, 168, 168);
+  }
+
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 0.5px solid #000;
+    background-color: #fff;
+    position: relative;
+  }
+
+  .site-menu {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .site-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-menu ul li a {
+    font-weight: 500;
+    position: relative;
+  }
+
+  .site-menu ul li a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: width 0.3s;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+  }
+
+  .site-menu ul li a:hover::after {
+    width: 100%;
+  }
+
+  .navbar-button a {
+    padding: 0.5rem 1rem;
+    background-color: rgb(102, 102, 102);
+    color: #fff;
+    border-radius: 25px;
+    font-weight: 600;
+  }
+
+  .navbar-button a:hover {
+    background-color: rgb(168, 168, 168);
+    color: #fff;
+  }
+
+  /* Social Media Icons */
+  .social-media-container {
+    margin-top: 0.1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .social-icon {
+    font-size: 1.5rem;
+    color: #000000;
+    transition: color 0.3s ease;
+  }
+
+  .social-icon:hover {
+    color: rgb(255, 0, 0);
+  }
 
     /* Form styles */
     .register {
@@ -116,21 +165,6 @@
         background-color: rgb(168, 168, 168);
     }
 
-    /* Messages styling */
-    .messages {
-        margin-top: 1rem;
-        padding: 1rem;
-        border-radius: 0.375rem;
-        background-color: #f8f9fa;
-        text-align: center;
-    }
-
-    .messages h2 {
-        color: #4a5568;
-        font-size: 0.95rem;
-        margin: 0;
-    }
-
     /* Row styling */
     .row {
         display: flex;
@@ -144,7 +178,7 @@
     .form-title {
         text-align: center;
         margin-bottom: 2rem;
-        color: #465B4B;
+        color:  rgb(102, 102, 102);
         font-size: 1.5rem;
         font-weight: bold;
     }
@@ -173,50 +207,144 @@
 
     /* Footer */
     .footer {
+      background-color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #000;
+      line-height: 0.3;
+    }
+
+    .footer a {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* Hamburger menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #000;
+      transition: all 0.3s ease;
+    }
+
+      
+     /* RESPONSIVE STYLES */
+
+    @media (max-width: 768px) {
+      .site-menu {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 100%;
+        left: 1rem;
+        right: 0;
+        padding: 0.5rem;
+        border-top: 1px solid #000;
+        z-index: 10;
+        width: 5rem;
+        height: 14rem;
+      }
+
+      .site-menu ul {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .site-menu.active {
+        display: flex;
+      }
+
+      .navbar-heading {
+        font-size: medium;
+      }
+
+      .navbar-button {
+        display: block;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.34rem;
+        border-radius: 20px;
+      }
+
+      .navbar-button a {
+        font-weight: 600;
+        color: #fff;
+        background-color: #000;
+      }
+
+      .navbar-button a:hover {
+        background-color: white;
+        color: black;
+      }
+
+      .hamburger {
+        display: flex;
+        position: absolute;
+        bottom: 0.2rem; 
+        right: 3.4rem; 
+      }
+
+      /* footer */
+      .footer {
+        margin-top: 3rem;
         background-color: #fff;
-        padding-top: 4rem;
         text-align: center;
         font-size: 0.9rem;
         color: #000;
-        line-height: 1.2;
+        line-height: 0.1;
       }
-  
+
       .footer a {
         color: #000;
         text-decoration: underline;
       }
-      
-      /* RESPONSIVE STYLES */
-      @media (max-width: 768px) {
-  
-        .navbar-heading {
-          margin-left: 10rem;
-          font-size: 1.5rem;
-        }
-  
-         /* Footer */
-      .footer {
-        background-color: #fff;
-        padding-top: 18rem;
-        text-align: center;
-        font-size: 0.9rem;
-        color: #000;
-        line-height: 0.5;
-      }
-      }
+    }
 
 </style>
 
 <!-- Navbar -->
 <nav class="navbar">
 
-    <div class="social-media-container">
-      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-    </div>
+  <div class="social-media-container">
+    <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+  </div>
 
-    <h1 class="navbar-heading">02</h1>
+  <h1 class="navbar-heading">02</h1>
 
-  </nav>
+  <div class="hamburger" id="hamburger-toggle">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="site-menu" id="site-menu">
+    <ul>
+      <li><a href="{% url 'home_index' %}">Home</a></li>
+      <li><a href="{% url 'home_artists' %}">Artists</a></li>
+      <li><a href="{% url 'home_galleries' %}">Galleries</a></li>
+      <li><a href="{% url 'home_artworks' %}">Artworks</a></li>
+      <li><a href="{% url 'home_events' %}">Events & Exhibitions</a></li>
+      <li><a href="{% url 'home_about' %}">About</a></li>
+    </ul>
+  </div>
+
+  <div class="navbar-button"><a href="{% url 'user_sign_in' %}">Join Our Community</a></div>
+</nav>
+
+<!-- Messages -->
+{% for message in messages %}
+<h4 style="text-align: center; color:rgb(63, 105, 63); margin-top: 1rem;">{{ message }}</h4>
+{% endfor %}
 
 <div class="register">
     <div class="form-title">Gallery Sign In</div>

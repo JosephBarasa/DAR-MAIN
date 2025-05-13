@@ -36,4 +36,6 @@ urlpatterns = [
          name='get_event_ticket'),
     path('ticket_payment/<int:event_id>/', views.ticket_payment, 
          name='ticket_payment'),
+    path('installment_purchase/<int:artwork_id>/', views.installment_purchase,
+         name='installment_purchase'),
 ]

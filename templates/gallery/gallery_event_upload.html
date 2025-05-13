@@ -1,58 +1,115 @@
+{% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Artists Management System</title>
+  <title>Upload Event</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
+
   <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    
     body {
-      background-color: #f5f5f5;
-      color: #333;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #000;
     }
-    
-    /* Navigation styles */
-    nav {
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    a:hover {
+      color: rgb(168, 168, 168);
+    }
+
+    /* Navbar */
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
+      padding: 1rem 2rem;
+      border-bottom: 0.5px solid #000;
       background-color: #fff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: relative;
+      flex-wrap: wrap;
     }
-    
-    .logo {
-      font-weight: bold;
-      font-size: 18px;
+
+    .navbar-heading {
+      margin: 0;
+      font-size: 1.5rem;
     }
-    
-    .nav-right {
+
+    .site-menu {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-menu ul li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    .site-menu ul li a::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 2px;
+      background: black;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+    }
+
+    .site-menu ul li a:hover::after {
+      width: 100%;
+    }
+
+    .navbar-button a {
+      padding: 0.5rem 1rem;
+      background-color: rgb(102, 102, 102);
+      color: #fff;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .navbar-button a:hover {
+      background-color: rgb(168, 168, 168);
+      color: #fff;
+    }
+
+    /* Social Media Icons */
+    .social-media-container {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 1.5rem;
+    }
+
+    .social-icon {
+      font-size: 1.5rem;
+      color: #000000;
+      transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: rgb(255, 0, 0);
     }
     
-    .sign-out-btn {
-      background-color: #3c4c3f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-    
-    .sign-out-btn a {
-      color: white;
-      text-decoration: none;
-    }
     
     /* Main content styles */
     .main-container {
@@ -119,7 +176,7 @@
     }
     
     .image-upload-btn {
-      background-color: #3c4c3f;
+      background-color: rgb(102, 102, 102);
       color: white;
       border: none;
       padding: 8px 16px;
@@ -131,7 +188,7 @@
     }
     
     .image-upload-btn:hover {
-      background-color: #2e3a30;
+      background-color: rgb(168, 168, 168);
     }
     
     .profile-details-section {
@@ -165,7 +222,7 @@
     }
     
     .update-profile-btn {
-      background-color: #465B4B;
+      background-color: rgb(102, 102, 102);
       color: white;
       border: none;
       padding: 12px 24px;
@@ -177,103 +234,46 @@
     }
     
     .update-profile-btn:hover {
-      background-color: #465B4B;
+      background-color: rgb(168, 168, 168);
     }
 
-    /* Navigation Styles */
-    .main-navigation {
-        width: 100%;
-        background-color: #ffffff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-  
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        height: 70px;
-      }
-  
-      .logo a {
-        font-size: 24px;
-        font-weight: 700;
-        color: #333;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-  
-      .logo a:hover {
-        color: #444;
-      }
-  
-      .nav-links {
-        display: flex;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-  
-      .nav-item {
-        color: #555;
-        text-decoration: none;
-        padding: 10px 15px;
-        font-size: 16px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        display: inline-block;
-      }
-  
-      .nav-item:hover {
-        color: #444;
-      }
-  
-      .nav-item.active {
-        color: #444;
-        font-weight: 600;
-      }
-  
-      .nav-auth {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-  
-      .sign-out-btn {
-        background-color: #444;
-        color: white;
-        padding: 8px 15px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-      }
-  
-      .sign-out-btn:hover {
-        background-color: #444;
-      }
-    
-    /* Footer styles */
-    footer {
-      background-color: white;
-      padding: 20px 40px;
+     /* Footer */
+     .footer {
+      background-color: #fff;
+      padding-top: 4rem;
       text-align: center;
-      color: #666;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 14px;
+      font-size: 0.9rem;
+      color: #000;
+      line-height: 1.2;
     }
-    
-    /* Responsive styles */
+
+    .footer a {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* Hamburger menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      margin-left: auto;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #000;
+      transition: all 0.3s ease;
+    }
 
       /* Responsive Navigation */
-    @media (max-width: 992px) {
+    @media (max-width: 768px) {
+
+      .hamburger {
+        display: flex;
+      }
 
         .profile-form {
             grid-template-columns: 1fr;
@@ -283,56 +283,81 @@
             margin-bottom: 20px;
           }
 
-        .nav-container {
-          flex-wrap: wrap;
-          height: auto;
-          padding: 15px 20px;
+          .site-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 2rem;
+            background-color: white;
+            flex-direction: column;
+            width: 12rem;
+            padding: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            border: 1px solid #ccc;
+            z-index: 100;
+          }
+      
+          .site-menu ul {
+            flex-direction: column;
+            gap: 1rem;
+          }
+      
+          .site-menu.active {
+            display: flex;
+          }
+      
+          .navbar-button {
+            margin-top: 1rem;
+          }
+      
+          .navbar-heading {
+            margin-left: 10rem;
+            font-size: 1.5rem;
+          }
+      
+           /* Footer */
+        .footer {
+          background-color: #fff;
+          padding-top: 18rem;
+          text-align: center;
+          font-size: 0.9rem;
+          color: #000;
+          line-height: 0.5;
         }
-  
-        .nav-links {
-          order: 3;
-          flex-basis: 100%;
-          flex-direction: column;
-          display: none;
-          margin-top: 15px;
-        }
-  
-        .nav-links.show {
-          display: flex;
-        }
-  
-        .nav-item {
-          padding: 12px 0;
-          border-top: 1px solid #eee;
-        }
-  
-        .nav-auth {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-        }
+
       }
 
   </style>
 </head>
 <body>
-          <!-- Navigation Menu -->
-          <nav class="main-navigation">
-            <div class="nav-container">
-            <div class="logo">
-                <a href="/">Art Repository</a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="{% url 'gallery_index' %}" class="nav-item">Home</a></li>
-                <li><a href="{% url 'gallery_artists' %}" class="nav-item">Artists</a></li>
-                <li><a href="{% url 'gallery_artworks' %}" class="nav-item active">Artworks</a></li>
-            </ul>
-            <div class="nav-auth">
-                <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Profile</a>
-                <a href="{% url 'gallery_sign_out' %}" class="sign-out-btn">Sign Out</a>
-            </div>
-            </div>
-        </nav> 
+         <!-- Navbar -->
+  <nav class="navbar">
+
+    <div class="social-media-container">
+      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <h1 class="navbar-heading">02</h1>
+
+    <div class="hamburger" id="hamburger-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="site-menu" id="site-menu">
+      <ul>
+        <li><a href="{% url 'gallery_index' %}">Home</a></li>
+        <li><a href="{% url 'gallery_artists' %}">Artists</a></li>
+        <li><a href="{% url 'gallery_artworks' %}">Artworks</a></li>
+      </ul>
+
+      <a href="{% url 'gallery_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+
+      <div class="navbar-button"><a href="{% url 'gallery_sign_out' %}">Sign Out</a></div>
+
+    </div>
+    </nav>
   
   <div class="main-container">
     <div class="edit-profile-card">
@@ -388,9 +413,26 @@
     </div>
   </div>
   
-  <footer>
-    © 2025 JB | Visual Artists Management System  <span>Created by <a href="#"> Joseph Barasa</a></span> 
-  </footer>
+  <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:green;">{{ message }}</h4>
+{% endfor %}
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 | Digital Art Repository By <a href="#">Joseph Barasa</a></p>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("hamburger-toggle");
+    const menu = document.getElementById("site-menu");
+
+    toggle.addEventListener("click", function () {
+      menu.classList.toggle("active");
+    });
+  });
+</script>
   
   <script>
     // Handle image preview

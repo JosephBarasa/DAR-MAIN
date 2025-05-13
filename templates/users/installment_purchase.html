@@ -1,0 +1,40 @@
+{% extends 'users/users_base.html' %}
+
+{% block content%}
+
+<style>
+
+    .you-caught-us {
+        width: 70%;
+        margin-left: 10%;
+    }
+
+    .you-caught-us h3 {
+        font-weight: 900;
+        font-size: 70px;
+    }
+
+    .you-caught-us span {
+        color: rgba(32, 31, 31, 0.725);
+    }
+
+    /* responsiveness */
+    @media (max-width: 768px) {
+        .you-caught-us {
+            width: 70%;
+            margin-left: 10%;
+        }
+    
+        .you-caught-us h3 {
+            font-weight: 750;
+            font-size: 45px;
+        }
+    }
+
+</style>
+
+<div class="you-caught-us">
+    <h3>You caught us. We are working on making the <span>Installment Purchasing</span> a fun experience for you.</h3>
+</div>
+
+{% endblock %}

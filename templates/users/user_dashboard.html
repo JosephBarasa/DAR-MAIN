@@ -180,7 +180,7 @@
             margin-top: 20px;
         }
         
-        .edit-profile-btn, .upload-artwork-btn {
+        .edit-profile-btn {
             background-color: rgb(102, 102, 102);
             color: white;
             border: none;
@@ -191,7 +191,7 @@
             transition: background-color 0.2s ease;
         }
 
-        .edit-profile-btn:hover, .upload-artwork-btn:hover {
+        .edit-profile-btn:hover {
             background-color: #3c4c3f;
         }
 
@@ -200,11 +200,6 @@
             text-decoration: none;
         }
 
-        .upload-artwork-btn a {
-            color: white;
-            text-decoration: none;
-        }
-        
         /* Dashboard cards  */
         .dashboard-cards {
             display: grid;
@@ -298,20 +293,9 @@
             flex-grow: 1;
         }
         
-        /* Messages styling */
-        .messages {
-            margin: 1rem auto;
-            padding: 1rem;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            text-align: center;
-            max-width: 800px;
-        }
-
-        .messages h2 {
-            color: #011b05;
-            font-size: 0.95rem;
-            margin: 0;
+        .messages h3 {
+            color: green;
+            margin-bottom: 1rem;
         }
 
         /* Hamburger menu */
@@ -459,11 +443,16 @@
                 <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
                 <li><a href="{% url 'user_about' %}">About</a></li>
             </ul>
-            <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+            <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: rgb(102, 102, 102);"></i></a>
             <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
         </div>
 
     </nav>
+
+    <!-- Messages -->
+    {% for message in messages %}
+    <h4 style="text-align: center; color:rgb(63, 105, 63); margin-top: 1rem;">{{ message }}</h4>
+    {% endfor %}
     
     <div class="main-container">
         <div class="profile-card">
@@ -536,8 +525,8 @@
                             <div class="item-details">By {{cart_item.artwork.artist.first_name}} {{cart_item.artwork.artist.last_name}}</div>
                             <div class="item-price">Kshs.{{cart_item.artwork.price}}</div>
 
-                            <button class="edit-profile-btn"><a href="{% url 'remove_cart_item' cart_item.artwork.id %}">Remove</a></button>
                             <button class="edit-profile-btn"><a href="{% url 'user_order_details' cart_item.artwork.id %}">Purchase</a></button>
+                            <a href="{% url 'remove_cart_item' cart_item.artwork.id %}"><i class="fa-solid fa-trash fa-2xl" style="color: rgb(102, 102, 102); margin-left: 5rem;"></i></a>
 
                         </div>
                     </li>
@@ -548,10 +537,6 @@
                 {% endif %}
             </div>
         </div>
-    </div>
-
-    <div class="messages">
-        <h2>Your profile has been successfully updated!</h2>
     </div>
 
     <footer class="footer">

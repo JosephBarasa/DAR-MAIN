@@ -363,6 +363,11 @@
     <div class="navbar-button"><a href="{% url 'user_sign_in' %}">Join Our Community</a></div>
   </nav>
 
+  <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:rgb(63, 105, 63); margin-top: 1rem;">{{ message }}</h4>
+  {% endfor %}
+
   <!-- Header -->
   <div class="header-container">
     <header class="page-header">
@@ -383,11 +388,6 @@
       </div>
     </header>
   </div>
-
-  <!-- Messages -->
-  {% for message in messages %}
-  <h4 style="text-align: center; color:green;">{{ message }}</h4>
-{% endfor %}
 
 
   <!-- Footer -->

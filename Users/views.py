@@ -434,3 +434,13 @@ def send_ticket_email(ticket):
     
     # send
     email.send(fail_silently=False)
+    
+    
+# INSTALLMENT_PURCHASE
+@login_required
+def installment_purchase(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    return render(request, 'users/installment_purchase.html', 
+                  {'artwork': artwork})
+
+

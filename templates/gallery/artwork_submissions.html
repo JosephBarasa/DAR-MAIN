@@ -1,24 +1,115 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Artwork Submissions</title>
-  <style>
-    /* — Reset & Base — */
-    * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { color:#333; background:#f9f9f9; }
-    a { text-decoration:none; color:inherit; }
 
-    /* — Header / Nav — */
-    header { margin-bottom:20px; }
-    nav.main-navigation { background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.1); position:sticky; top:0; z-index:1000; }
-    .nav-container { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:10px 20px; }
-    .nav-links { display:flex; gap:20px; }
-    .nav-links a { padding:8px 12px; font-weight:500; transition:background .2s; }
-    .nav-links a:hover { background:rgba(70,91,75,0.1); border-radius:4px; }
-    .nav-auth a.sign-out-btn { background:#465B4B; color:#fff; padding:8px 15px; border-radius:4px; }
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #000;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    a:hover {
+      color: rgb(168, 168, 168);
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 0.5px solid #000;
+      background-color: #fff;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .navbar-heading {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .site-menu {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-menu ul li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    .site-menu ul li a::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 2px;
+      background: black;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+    }
+
+    .site-menu ul li a:hover::after {
+      width: 100%;
+    }
+
+    .navbar-button a {
+      padding: 0.5rem 1rem;
+      background-color: rgb(102, 102, 102);
+      color: #fff;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .navbar-button a:hover {
+      background-color: rgb(168, 168, 168);
+      color: #fff;
+    }
+
+    /* Social Media Icons */
+    .social-media-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .social-icon {
+      font-size: 1.5rem;
+      color: #000000;
+      transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: rgb(255, 0, 0);
+    }
+
 
     /* — Main Container — */
     .main-container { max-width: 800px; margin:20px auto; padding:0 20px; }
@@ -31,7 +122,7 @@
       align-items: center;
       background:#fff;
       border-radius:8px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+      box-shadow:0 2px 8px rgb(102, 102, 102);
       margin-bottom:20px;
       overflow:hidden;
     }
@@ -54,7 +145,7 @@
       padding:15px 20px;
     }
     .submission-actions button {
-      background:#465B4B;
+      background:rgb(102, 102, 102);
       color:#fff;
       border:none;
       padding:10px 16px;
@@ -63,50 +154,176 @@
       font-size:14px;
       transition:background .2s;
     }
+
+    .submission-actions button a {
+      color:white;
+    }
+    
     .submission-actions button:hover {
-      background:#3c4c3f;
+      background:rgb(168, 168, 168);
     }
 
     /* — Empty State — */
     .empty-state {
       text-align:center;
-      color:#666;
+      color:rgb(102, 102, 102);
       padding:40px 0;
       background:#fff;
       border-radius:8px;
       box-shadow:0 2px 8px rgba(0,0,0,0.05);
     }
 
-    /* — Footer — */
-    .footer { margin-top:40px; text-align:center; font-size:14px; color:#777; }
-    .footer a { color:#465B4B; text-decoration:underline; }
+    /* Footer */
+    .footer {
+      background-color: #fff;
+      padding-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #000;
+      line-height: 1.2;
+    }
+
+    .footer a {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* Hamburger menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      margin-left: auto;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #000;
+      transition: all 0.3s ease;
+    }
+
+  /* Hamburger menu styles */
+.hamburger-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.hamburger-icon {
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 25px;
+}
+
+.hamburger-icon .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
 
     /* — Responsive — */
-    @media (max-width:600px) {
-      .submission-card { flex-direction:column; text-align:center; }
-      .submission-card img { width:100%; height:auto; }
-      .submission-actions { width:100%; }
+    @media (max-width:768px) {
+      .submission-card { 
+        flex-direction:column; 
+        text-align:center;
+        height: 50%; 
+      }
+
+      .submission-card img { 
+        width:50%; 
+        height:auto; 
+        border-radius: 45%;
+      }
+      .submission-actions { 
+        width:100%; 
+      }
+
+      .hamburger {
+        display: flex;
+      }
+  
+      .site-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 2rem;
+        background-color: white;
+        flex-direction: column;
+        width: 12rem;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        border: 1px solid #ccc;
+        z-index: 100;
+      }
+  
+      .site-menu ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+  
+      .site-menu.active {
+        display: flex;
+      }
+  
+      .navbar-button {
+        margin-top: 1rem;
+      }
+  
+      .navbar-heading {
+        margin-left: 10rem;
+        font-size: 1.5rem;
+      }
+  
+       /* Footer */
+    .footer {
+      background-color: #fff;
+      padding-top: 18rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #000;
+      line-height: 0.5;
+    }
+
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <nav class="main-navigation">
-      <div class="nav-container">
-        <div class="logo"><a href="/">Art Repository</a></div>
-        <div class="nav-links">
-          <a href="{% url 'gallery_index' %}">Home</a>
-          <a href="{% url 'gallery_artists' %}">Artists</a>
-          <a href="{% url 'gallery_artworks' %}">Artworks</a>
-        </div>
-        <div class="nav-auth">
-          <a href="{% url 'gallery_dashboard' %}" class="nav-item">Gallery Dashboard</a>
-          <a href="{% url 'gallery_sign_out' %}" class="sign-out-btn">Sign Out</a>
-        </div>
-      </div>
+  <!-- Navbar -->
+  <nav class="navbar">
+
+    <div class="social-media-container">
+      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <h1 class="navbar-heading">02</h1>
+
+    <div class="hamburger" id="hamburger-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="site-menu" id="site-menu">
+      <ul>
+        <li><a href="{% url 'gallery_index' %}">Home</a></li>
+        <li><a href="{% url 'gallery_artists' %}">Artists</a></li>
+        <li><a href="{% url 'gallery_artworks' %}">Artworks</a></li>
+      </ul>
+
+      <a href="{% url 'gallery_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+
+      <div class="navbar-button"><a href="{% url 'gallery_sign_out' %}">Sign Out</a></div>
+
+    </div>
     </nav>
-  </header>
 
   <div class="main-container">
     <h3 style="color:rgb(173, 16, 16)">Artist Submissions</h3>
@@ -138,17 +355,26 @@
       </div>
     {% endif %}
 
-    {% if messages %}
-    {% for message in messages %}
-    <p style="color: rgb(7, 62, 7);">{{message}}</p>
-    {% endfor %}
-    {% endif %}
+      <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:green;">{{ message }}</h4>
+{% endfor %}
 
-  </div>
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 | Digital Art Repository By <a href="#">Joseph Barasa</a></p>
+</footer>
 
-  <footer class="footer">
-    © 2025 JB | Visual Artists Management System — Created by <a href="#">Joseph Barasa</a>
-  </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("hamburger-toggle");
+      const menu = document.getElementById("site-menu");
+  
+      toggle.addEventListener("click", function () {
+        menu.classList.toggle("active");
+      });
+    });
+  </script>
 
 </body>
 </html>

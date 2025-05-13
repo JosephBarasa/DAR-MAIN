@@ -1,3 +1,5 @@
+{% extends 'home/home_base.html' %}
+
 {% block content %}
 
 <style>
@@ -11,7 +13,7 @@
     .form-label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #4a5568;
+        color:  rgb(102, 102, 102);
         font-size: 0.95rem;
         font-weight: 500;
     }
@@ -28,13 +30,13 @@
 
     .form-control:focus {
         outline: none;
-        border-color: #465B4B;
+        border-color:  rgb(102, 102, 102);
     }
 
     .btn-register {
         width: 40%;
         padding: 0.75rem;
-        background-color:  #465B4B;
+        background-color:   rgb(102, 102, 102);
         color: white;
         border: none;
         border-radius: 0.375rem;
@@ -51,22 +53,7 @@
       }
 
     .btn-register:hover {
-        background-color: #465B4B;
-    }
-
-    /* Messages styling */
-    .messages {
-        margin-top: 1rem;
-        padding: 1rem;
-        border-radius: 0.375rem;
-        background-color: #f8f9fa;
-        text-align: center;
-    }
-
-    .messages h2 {
-        color: #4a5568;
-        font-size: 0.95rem;
-        margin: 0;
+        background-color: rgb(168, 168, 168);
     }
 
     /* Row styling */
@@ -82,7 +69,7 @@
     .form-title {
         text-align: center;
         margin-bottom: 2rem;
-        color: #465B4B;
+        color:  rgb(102, 102, 102);
         font-size: 1.5rem;
         font-weight: bold;
     }
@@ -90,11 +77,15 @@
     .back-button {
         font-size: 1rem;
         cursor: pointer;
-        background-color: #384B3D;
+        background-color:  rgb(102, 102, 102);
         border-radius: 0.375rem;
         padding: 0.75rem;
         width: 40%;
         margin-left: 7rem;
+    }
+
+    .back-button:hover {
+        background-color: rgb(168, 168, 168);
     }
 
     .back-button a{
@@ -102,6 +93,10 @@
         text-decoration: none;
     }
 
+    .back-button a:hover {
+        color: white;
+    }
+    
     .no-account {
         margin-left: 5rem;
     }

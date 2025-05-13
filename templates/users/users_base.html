@@ -227,12 +227,13 @@
   </nav>
 
   {% block content %}
-  {% endblock %}
 
-  <!-- Messages -->
-  {% for message in messages %}
+    <!-- Messages -->
+    {% for message in messages %}
     <h4 style="text-align: center; color:green;">{{ message }}</h4>
   {% endfor %}
+  
+  {% endblock %}
 
   <!-- Footer -->
   <footer class="footer">
