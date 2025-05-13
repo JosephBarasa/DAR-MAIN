@@ -2,182 +2,115 @@
 {% load static %}
 
 {% block content %}
+    <style>
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-  }
-
-  .page-header {
-    padding: 60px 0;
-    background-color: #f9f9f9;
-    margin-bottom: 20px;
-  }
-
-  .page-header h1 {
-    font-size: 32px;
-    color: #333;
-  }
-
-  .artwork-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-    background-color: white;
-  }
-
-  .artwork-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-top: 20px;
-  }
-
-  .artwork-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .artwork-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  }
-
-  .artwork-image {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-  }
-
-  .artwork-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .artwork-card:hover .artwork-image img {
-    transform: scale(1.05);
-  }
-
-  .artwork-details {
-    padding: 20px;
-  }
-
-  .artwork-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-  }
-
-  .artwork-description {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .artwork-meta {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 15px;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-  }
-
-  .meta-item {
-    flex: 1;
-    min-width: 33%;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 8px;
-  }
-
-  .meta-label {
-    font-weight: bold;
-    display: block;
-    color: #999;
-    font-size: 12px;
-    margin-bottom: 3px;
-  }
-
-  .no-artworks {
-    text-align: center;
-    padding: 60px;
-    color: #777;
-    font-size: 16px;
-  }
-
-  @media (max-width: 992px) {
-    .artwork-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 576px) {
-    .artwork-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
-<header class="page-header" data-background="images/page-header.jpg">
-  <div class="inner">
-    <h1>Your Gallery's Artworks On Display</h1>
-  </div>
-  <!-- end inner -->
-</header>
-
-<div class="artwork-container">
-  {% if gallery_artworks %}
-    <div class="artwork-grid">
-      {% for gallery_artwork in gallery_artworks %}
-        <div class="artwork-card">
-          <div class="artwork-image">
-            {% if gallery_artwork.artwork.artwork_image %}
-              <img src="{{ gallery_artwork.artwork.artwork_image.url }}" alt="{{ gallery_artwork.artwork.title }}">
-            {% else %}
-              <img src="{% static 'images/default_artwork.png' %}" alt="Default Artwork">
-            {% endif %}
-          </div>
-          <div class="artwork-details">
-            <h3 class="artwork-title">{{ gallery_artwork.artwork.title }}</h3>
-            <p class="artwork-description">{{ gallery_artwork.artwork.description }}</p>
+        .artwork-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        
+        .artwork-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .artwork-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .artwork-image {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        
+        .artwork-card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .artwork-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 0 15px 40px;
+            }
             
-            <div class="artwork-meta">
-              <div class="meta-item">
-                <span class="meta-label">Price</span>
-                Kshs.{{ gallery_artwork.artwork.price }}
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Year</span>
-                {{ gallery_artwork.artwork.year }}
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Medium</span>
-                {{ gallery_artwork.artwork.media }}
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="no-artworks">
-      <p>You have not posted any artworks yet, check your dashboard for new submission requests from artists.</p>
-    </div>
-  {% endif %}
-</div>
+            .artwork-image {
+                width: 150px;
+                height: 150px;
+            artwork
+        
+        @media (max-width: 480px) {
+            .artwork-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .artwork-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .artwork-card h2 {
+                font-size: 16px;
+            }
+            
+            .page-header h1 {
+                font-size: 28px;
+            }
+            
+            .page-header p {
+                font-size: 16px;
+            }
+        }
+        
+    </style>
 
+    <header class="page-header" data-background="images/page-header.jpg">
+        <div class="inner">
+            <h1>Gallery Collection</h1>
+        </div>
+    </header>
+
+    <div class="artwork-grid">
+        {% if gallery_artworks %}
+
+            {% for artwork in gallery_artworks %}
+                <div class="artwork-card">
+                    {% if artwork.artwork.artwork_image %}
+                        <img src="{{ artwork.artwork.artwork_image.url }}" alt="{{artwork.title}}'s Image" class="artwork-image">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="Default Artwork Image" class="artwork-image">
+                    {% endif %}
+
+                    <h4>{{artwork.artwork.title}}</h4>
+
+                    <p>{{artwork.artist.first_name}} {{artwork.artist.last_name}}</p>
+                    <p>{{artwork.artwork.year}}</p>
+                    
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <p>You are yet to accept artwork requests. Check your dashboard for notifications.</p>
+        {% endif %}
+    </div>
+    
 {% endblock %}

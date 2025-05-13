@@ -3,86 +3,113 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artist Dashboard</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
+
     <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        
         body {
-            color: #333;
-        }
-        
-        /* Navigation styles */
-        nav {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            color: #000;
+          }
+      
+          a {
+            text-decoration: none;
+            color: #000;
+          }
+      
+          a:hover {
+            color: rgb(168, 168, 168);
+          }
+      
+          /* Navbar */
+          .navbar {
             display: flex;
-            position: sticky;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
+            padding: 1rem 2rem;
+            border-bottom: 0.5px solid #000;
             background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            top: 0;
-            z-index: 1000;
-        }
-  
-        .nav-links {
+            position: relative;
+            flex-wrap: wrap;
+          }
+      
+          .navbar-heading {
+            margin: 0;
+            font-size: 1.5rem;
+          }
+      
+          .site-menu {
             display: flex;
-            gap: 30px;
-        }
-
-        .logo-img img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
+            gap: 1.5rem;
+          }
       
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
+          .site-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+          }
+      
+          .site-menu ul li a {
             font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        
-        .nav-links a:hover {
-            color: #465B4B;
-        }
+            position: relative;
+          }
       
-        .nav-right {
+          .site-menu ul li a::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+          }
+      
+          .site-menu ul li a:hover::after {
+            width: 100%;
+          }
+      
+          .navbar-button a {
+            padding: 0.5rem 1rem;
+            background-color: rgb(102, 102, 102);
+            color: #fff;
+            border-radius: 25px;
+            font-weight: 600;
+          }
+      
+          .navbar-button a:hover {
+            background-color: rgb(168, 168, 168);
+            color: #fff;
+          }
+      
+          /* Social Media Icons */
+          .social-media-container {
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
+            gap: 1.5rem;
+          }
       
-        .profile-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
+          .social-icon {
+            font-size: 1.5rem;
+            color: #000000;
+            transition: color 0.3s ease;
+          }
       
-        .sign-out-btn {
-            background-color: #465B4B;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s ease;
-            text-decoration: none;
-        }
-
-        .sign-out-btn:hover {
-            background-color: #3c4c3f;
-        }
+          .social-icon:hover {
+            color: rgb(255, 0, 0);
+          }
+      
         
         /* Main content styles */
         .main-container {
@@ -147,7 +174,7 @@
         }
         
         .edit-profile-btn, .upload-artwork-btn {
-            background-color: #465B4B;
+            background-color: rgb(102, 102, 102);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -181,7 +208,7 @@
             display: none; /* Hide the no artworks message */
             text-align: center;
             padding: 60px 0;
-            color: #666;
+            color:  rgb(102, 102, 102);
             font-size: 18px;
         }
         
@@ -233,41 +260,36 @@
             font-size: 14px;
         }
 
-        .footer {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          padding-top: 50px;
-        }
-
-        .footer .footer-bottom {
-          width: 50%;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          padding: 30px 0 30px 0;
-          border-top: double 10px #f7f7f7;
-          font-size: 14px;
-          margin-left: 35rem;
-        }
-        .footer .footer-bottom .container {
-          display: flex;
-          flex-wrap: wrap;
-        }
-        .footer .footer-bottom .copyright {
-          display: inline-block;
-        }
-        .footer .footer-bottom .creation {
-          margin-left: auto;
-          display: inline-block;
-        }
-        .footer .footer-bottom .creation a {
-          display: inline-block;
-          text-decoration: underline;
-        }
-        .footer .footer-bottom .creation a:hover {
-          text-decoration: none;
-        }
+        /* Footer */
+    .footer {
+        background-color: #fff;
+        padding-top: 4rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #000;
+        line-height: 1.2;
+      }
+  
+      .footer a {
+        color: #000;
+        text-decoration: underline;
+      }
+  
+      /* Hamburger menu */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        margin-left: auto;
+      }
+  
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: #000;
+        transition: all 0.3s ease;
+      }
 
         /* Messages styling */
     .messages {
@@ -279,7 +301,7 @@
     }
 
     .messages h2 {
-        color: #4a5568;
+        color:  rgb(102, 102, 102);
         font-size: 0.95rem;
         margin: 0;
     }
@@ -391,29 +413,92 @@
     transition: 0.4s;
   } 
 
+  /* RESPONSIVE STYLES */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+
+    .site-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 2rem;
+      background-color: white;
+      flex-direction: column;
+      width: 12rem;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #ccc;
+      z-index: 100;
+    }
+
+    .site-menu ul {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .site-menu.active {
+      display: flex;
+    }
+
+    .navbar-button {
+      margin-top: 1rem;
+    }
+
+    .navbar-heading {
+      margin-left: 10rem;
+      font-size: 1.5rem;
+    }
+
+     /* Footer */
+  .footer {
+    background-color: #fff;
+    padding-top: 18rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #000;
+    line-height: 0.5;
+  }
+  }
+
+
     </style>
 
 </head>
 <body>
     
-    <nav>
-        <div class="logo-img">
-            <img id="kenyan-flag" src="https://flagcdn.com/w40/ke.png" alt="Kenyan Flag"> 
-        </div>
+    <!-- Navbar -->
+  <nav class="navbar">
 
-        <div class="nav-links">
-            <a href="{% url 'artist_index' %}">Home</a>
-            <a href="{% url 'artist_artists' %}">Artists</a>
-            <a href="{% url 'artist_galleries' %}">Galleries</a>
-            <a href="{% url 'artist_artworks' %}">Artworks</a>
-            <a href="{% url 'artist_events' %}">Events & Exhibitions</a>
-        </div>
-        <div class="nav-right">
-            <a href="{% url 'artist_dashboard' %}" class="profile-link">Artist Profile</a>
-            <a class="sign-out-btn" href="{% url 'artist_sign_out' %}">Sign Out</a>
-        </div>
+    <div class="social-media-container">
+      <a href="https://www.instagram.com/_jose.ph.__/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <h1 class="navbar-heading">02</h1>
+
+    <div class="hamburger" id="hamburger-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="site-menu" id="site-menu">
+      <ul>
+        <li><a href="{% url 'artist_index' %}">Home</a></li>
+        <li><a href="{% url 'artist_artists' %}">Artists</a></li>
+        <li><a href="{% url 'artist_galleries' %}">Galleries</a></li>
+        <li><a href="{% url 'artist_artworks' %}">Artworks</a></li>
+        <li><a href="{% url 'artist_events' %}">Events & Exhibitions</a></li>
+      </ul>
+
+      <a href="{% url 'artist_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+
+      <div class="navbar-button"><a href="{% url 'artist_sign_out' %}">Sign Out</a></div>
+
+    </div>
     </nav>
-    
+
     <div class="main-container">
         <h1>Manage Your Artist Profile</h1>
         
@@ -537,19 +622,26 @@
         </div>
     </div>
 
-    <div class="messages">
-        {% for message in messages %}
-            <h2>{{message}}</h2>
-        {% endfor %}
-    </div>
+    <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:green;">{{ message }}</h4>
+{% endfor %}
 
-    <footer class="footer">
-      <div class="footer-bottom">
-        <div class="container"> <span class="copyright">© 2025 JB | For This Little Thing Of Ours </span>  <span class="creation"> : <a href="#"> Joseph Barasa</a></span> </div>
-        <!-- end container -->
-      </div>
-      <!-- end footer-bottom -->
-    </footer>
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 | Digital Art Repository By <a href="#">Joseph Barasa</a></p>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("hamburger-toggle");
+      const menu = document.getElementById("site-menu");
+  
+      toggle.addEventListener("click", function () {
+        menu.classList.toggle("active");
+      });
+    });
+  </script>
 
     <!-- Function to toggle the display of the gallery dropdown menu -->
 
