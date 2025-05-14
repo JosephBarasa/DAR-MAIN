@@ -1,17 +1,16 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gallery Home Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanaa Mdogo Mdogo</title>
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="icon" href="{% static 'images/HD-wallpaper-flag-of-kenya-grunge-art-rhombus-grunge-texture-kenya-flag-africa-national-symbols-kenya-creative-art.jpg' %}" type="image/x-icon">
 
   <style>
-    
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,33 +108,61 @@
       color: rgb(255, 0, 0);
     }
 
-    /* Header */
-    .header-container {
-      background-color: #fff;
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
     }
-
-    header.page-header {
-      padding: 5rem 2rem;
-      text-align: center;
-      position: relative;
-      height: 20rem;
-      color: black;
-      background-color: white;
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
-
-    header.page-header .inner {
-      position: relative;
-      z-index: 2;
+    .section {
+      flex: 1;
+      min-width: 280px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background: #f9f9f9;
     }
-
-    .page-header .inner h1 {
-      font-size: 6rem;
-      margin-top: 0.1rem;
+    .section h3 {
+      margin-top: 0;
     }
-
-    .page-header .inner p {
-      font-size: 1.2rem;
-      color: black;
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label, input, select {
+      display: block;
+      width: 100%;
+      margin-top: 5px;
+    }
+    input, select, button {
+      padding: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+    button {
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+    .table-section {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
     }
 
     /* Footer */
@@ -169,8 +196,25 @@
       transition: all 0.3s ease;
     }
 
-    /* RESPONSIVE STYLES */
+    .you-caught-us {
+        width: 70%;
+        margin-left: 10%;
+    }
+
+    .you-caught-us h3 {
+        font-weight: 900;
+        font-size: 70px;
+    }
+
+    .you-caught-us span {
+        color: rgba(32, 31, 31, 0.725);
+    }
+
     @media (max-width: 768px) {
+      .flex-row {
+        flex-direction: column;
+      }
+
       .hamburger {
         display: flex;
       }
@@ -207,18 +251,15 @@
         font-size: 1.5rem;
       }
 
-      header.page-header {
-        padding: 3rem 1rem;
-        height: auto;
-      }
-
-      .page-header .inner h1 {
-        font-size: 2.5rem;
-      }
-
-      .page-header .inner p {
-        font-size: 1rem;
-      }
+      .you-caught-us {
+            width: 70%;
+            margin-left: 10%;
+        }
+    
+        .you-caught-us h3 {
+            font-weight: 750;
+            font-size: 45px;
+        }
 
        /* Footer */
     .footer {
@@ -229,13 +270,15 @@
       color: #000;
       line-height: 0.5;
     }
+
     }
   </style>
+
 </head>
 
 <body>
 
-  <!-- Navbar -->
+    <!-- Navbar -->
   <nav class="navbar">
 
     <div class="social-media-container">
@@ -252,33 +295,108 @@
 
     <div class="site-menu" id="site-menu">
       <ul>
-        <li><a href="{% url 'gallery_index' %}">Home</a></li>
-        <li><a href="{% url 'gallery_artists' %}">Artists</a></li>
-        <li><a href="{% url 'gallery_artworks' %}">Artworks</a></li>
-
+        <li><a href="{% url 'user_index' %}">Home</a></li>
+        <li><a href="{% url 'user_artists' %}">Artists</a></li>
+        <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
+        <li><a href="{% url 'user_artworks' %}">Artworks</a></li>
+        <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+        <li><a href="{% url 'user_blog' %}">Blog</a></li>
+        <li><a href="{% url 'user_about' %}">About</a></li>
       </ul>
-      
-      <a href="{% url 'gallery_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
-      <div class="navbar-button"><a href="{% url 'gallery_sign_out' %}">Sign Out</a></div>
+      <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+      <div class="navbar-button"><a href="{% url 'user_sign_out' %}">Sign Out</a></div>
     </div>
 
   </nav>
 
-  <!-- Header -->
-  <div class="header-container">
-    <header class="page-header">
-      <div class="inner">
-        <h1>Stay on top of art interactions and sales</h1>
-        <p>Welcome "{{user.username}}". Looking to spotlight fresh talent? Check out the 
-          <a style="text-decoration:underline;" href="{% url 'gallery_dashboard' %}">Artist Requests</a> tab!</p>
-      </div>
-    </header>
-  </div>
-
   <!-- Messages -->
-  {% for message in messages %}
+    {% for message in messages %}
     <h4 style="text-align: center; color:green;">{{ message }}</h4>
   {% endfor %}
+
+  {% if artwork %}
+
+  <div class="container">
+    <h2>Sanaa Mdogo Mdogo</h2><div class="flex-row">
+  <div class="section">
+    <h3>Artwork</h3>
+    <p><strong>Title:</strong> Artwork Title</p>
+    <p><strong>Year:</strong> 2025</p>
+    <p><strong>Price:</strong> 1000 Ksh</p>
+    <p><strong>Media:</strong> Mixed Media</p>
+  </div>
+
+  <div class="section">
+    <h3>Terms</h3>
+    <form>
+      <div class="form-group">
+        <label for="installment">Installment Amount</label>
+        <input type="number" id="installment" placeholder="100+">
+      </div>
+      <div class="form-group">
+        <label for="duration">Duration</label>
+        <select id="duration">
+          <option value="30">30 Days</option>
+          <option value="60">60 Days</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="down-payment">Down Payment (optional)</label>
+        <input type="number" id="down-payment" placeholder="e.g. 200">
+      </div>
+      <div class="form-group">
+        <label for="service-rate">Service Rate</label>
+          <option value="2.5">2.5%</option>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h3>Payment</h3>
+    <p><strong>Total Amount Due:</strong> Ksh XXXX</p>
+    <p><strong>Your Balance Is:</strong> Ksh XXXX</p>
+  </div>
+</div>
+
+<div class="table-section">
+  <h3>Agreements</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Artwork Title</th>
+        <th>Down Payment</th>
+        <th>Installment Amount</th>
+        <th>Duration</th>
+        <th>Service Rate</th>
+        <th>Service Amount</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Sample Artwork</td>
+        <td>200</td>
+        <td>100</td>
+        <td>30 Days</td>
+        <td>2.5%</td>
+        <td>25</td>
+        <td>1125</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+
+<div class="you-caught-us">
+    <h3>You caught us. We are working on making <span>Installment Purchasing</span> a fun experience for you.</h3>
+</div>
+
+{% endif %}
+
 
   <!-- Footer -->
   <footer class="footer">
@@ -296,6 +414,6 @@
       });
     });
   </script>
-  
+
 </body>
 </html>

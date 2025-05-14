@@ -482,6 +482,11 @@
     </div>
     </nav>
 
+     <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:green;">{{ message }}</h4>
+  {% endfor %}
+
     <div class="main-container">
         <h1>Manage Your Digital Gallery</h1>
         
@@ -568,11 +573,6 @@
               
         </div>
     </div>
-
-    <!-- Messages -->
-  {% for message in messages %}
-  <h4 style="text-align: center; color:green;">{{ message }}</h4>
-{% endfor %}
 
 <!-- Footer -->
 <footer class="footer">

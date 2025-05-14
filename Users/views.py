@@ -193,8 +193,8 @@ def user_about(request):
     return render(request, 'users/user_about.html')
 
 
-def user_contact(request):
-    return render(request, 'users/user_contact.html')
+def user_blog(request):
+    return render(request, 'users/user_blog.html')
 
 
 def user_artist_profile_display(request, artist_id):
@@ -438,9 +438,8 @@ def send_ticket_email(ticket):
     
 # INSTALLMENT_PURCHASE
 @login_required
-def installment_purchase(request, artwork_id):
-    artwork = get_object_or_404(Artwork, id=artwork_id)
-    return render(request, 'users/installment_purchase.html', 
-                  {'artwork': artwork})
+def sanaa_mdogo_mdogo(request, artwork_id):
+    artworks = "art"
+    return render(request, 'users/sanaa_mdogo_mdogo.html', {'artworks': artworks})
 
 

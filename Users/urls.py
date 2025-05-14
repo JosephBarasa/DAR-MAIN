@@ -14,7 +14,7 @@ urlpatterns = [
     path('user_artworks/', views.user_artworks, name='user_artworks'),
     path('user_events/', views.user_events, name='user_events'),
     path('user_about/', views.user_about, name='user_about'),
-    path('user_contact/', views.user_contact, name='user_contact'),
+    path('user_blog/', views.user_blog, name='user_blog'),
     path('user_artist_profile_display/<int:artist_id>/',
          views.user_artist_profile_display, 
          name='user_artist_profile_display'),
@@ -36,6 +36,6 @@ urlpatterns = [
          name='get_event_ticket'),
     path('ticket_payment/<int:event_id>/', views.ticket_payment, 
          name='ticket_payment'),
-    path('installment_purchase/<int:artwork_id>/', views.installment_purchase,
-         name='installment_purchase'),
+    path('sanaa_mdogo_mdogo/<int:artwork_id>/', views.sanaa_mdogo_mdogo,
+         name='sanaa_mdogo_mdogo'),
 ]

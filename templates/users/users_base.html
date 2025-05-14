@@ -218,6 +218,7 @@
         <li><a href="{% url 'user_galleries' %}">Galleries</a></li>
         <li><a href="{% url 'user_artworks' %}">Artworks</a></li>
         <li><a href="{% url 'user_events' %}">Events & Exhibitions</a></li>
+        <li><a href="{% url 'user_blog' %}">Blog</a></li>
         <li><a href="{% url 'user_about' %}">About</a></li>
       </ul>
       <a href="{% url 'user_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
@@ -226,12 +227,12 @@
 
   </nav>
 
-  {% block content %}
-
-    <!-- Messages -->
+  <!-- Messages -->
     {% for message in messages %}
     <h4 style="text-align: center; color:green;">{{ message }}</h4>
   {% endfor %}
+
+  {% block content %}
   
   {% endblock %}
 
