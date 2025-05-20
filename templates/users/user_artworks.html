@@ -1,126 +1,271 @@
 {% extends 'users/users_base.html' %}
-
 {% load static %}
-
-<body>
 
 {% block content %}
 
-    <style>
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1rem 2rem;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ddd;
+    }
 
-        .inner h1 {
-            margin-left: 4rem;
+    .header {
+        flex: 1;
+    }
+
+    .header h1 {
+        margin-left: 4rem;
+    }
+
+    .filter {
+        position: relative;
+        margin-right: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter a#filterToggle {
+        cursor: pointer;
+        background-color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        color: #333;
+        transition: background-color 0.3s;
+    }
+
+    .filter a#filterToggle:hover {
+        background-color: #eee;
+    }
+
+    .filter-options {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        position: absolute;
+        top: 110%;
+        left: 0;
+        z-index: 10;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        min-width: 180px;
+    }
+
+    .filter-options.show {
+        display: flex;
+    }
+
+    .filter-options a,
+    .filter-options p {
+        margin: 0.3rem 0;
+        font-size: 14px;
+        color: #333;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .filter-options a:hover,
+    .filter-options p:hover {
+        background-color: #f0f0f0;
+    }
+
+    .artwork-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 5rem;
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 20px 60px;
+    }
+
+    .artwork-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .artwork-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .artwork-image {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 15px;
+    }
+
+    .artwork-card h2 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header h1 {
+            margin-left: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .filter {
+            margin-left: 1rem;
+            margin-top: 1rem;
         }
 
         .artwork-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 5rem;
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 20px 60px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 15px 40px;
         }
-        
-        .artwork-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .artwork-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
+
         .artwork-image {
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 15px;
+            width: 150px;
+            height: 150px;
         }
-        
+    }
+
+    @media (max-width: 480px) {
+        .artwork-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .artwork-image {
+            width: 120px;
+            height: 120px;
+        }
+
         .artwork-card h2 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 5px;
-            text-align: center;
+            font-size: 16px;
         }
-        
-        @media (max-width: 768px) {
-            .artwork-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 20px;
-                padding: 0 15px 40px;
-            }
-            
-            .artwork-image {
-                width: 150px;
-                height: 150px;
-            }
+    }
+</style>
 
-            .inner h1 {
-                margin-left: 4rem;
-                font-size: 1.5rem;
-            }
+<header class="page-header">
+    <div class="header">
+        <h1>Art Collection</h1>
+    </div>
 
-        }
-        
-        @media (max-width: 480px) {
-            .artwork-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-            }
-            
-            .artwork-image {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .artwork-card h2 {
-                font-size: 16px;
-            }
-        }
-    </style>
+    <div class="filter">
+        <a id="filterToggle" href="#"><span>Filter:</span></a>
 
-    <body>
-
-        <header class="page-header">
-            <div class="inner">
-              <h1>Art Collection</h1>
-            </div>
-        </header>
-
-        <div class="artwork-grid">
-            {% if artworks %}
-                {% for artwork in artworks %}
-                    <div class="artwork-card">
-                        {% if artwork.artwork_image %}
-                            <img src="{{ artwork.artwork_image.url }}" alt="{{artwork.username}}'s Profile Picture" class="artwork-image">
-                        {% else %}
-                            <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artwork-image">
-                        {% endif %}
-
-                        <h2>{{artwork.title}}</h2>
-                        <p><small><em>{{artwork.artist.first_name}} {{artwork.artist.last_name}}</em></small></p>
-                        <p>{{artwork.year}}</p>
-
-                        <div class="navbar-button"><a href="{% url 'artwork_view' artwork.id %}">View</a></div>
-                        
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>You caught us here. We are working on getting you Art artworks you'll like.</p>
-            {% endif %}
+        <div id="filterOptions" class="filter-options">
+            <a href="#" data-category="Painting" class="filter-option">Paintings</a>
+            <p data-category="Pencil Art" class="filter-option">Pencil Art</p>
+            <p data-category="Bottle Art" class="filter-option">Bottle Art</p>
+            <p data-category="Abstract" class="filter-option">Abstract</p>
+            <p data-category="Photography" class="filter-option">Photography</p>
         </div>
-    </body>
+    </div>
+</header>
+
+<div class="artwork-grid">
+    {% if artworks %}
+        {% for artwork in artworks %}
+            <div class="artwork-card">
+                {% if artwork.artwork_image %}
+                    <img src="{{ artwork.artwork_image.url }}" alt="{{ artwork.title }}" class="artwork-image">
+                {% else %}
+                    <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artwork-image">
+                {% endif %}
+
+                <h2>{{ artwork.title }}</h2>
+                <p><small><em>{{ artwork.artist.first_name }} {{ artwork.artist.last_name }}</em></small></p>
+                <p>{{ artwork.year }}</p>
+
+                <div class="navbar-button"><a href="{% url 'artwork_view' artwork.id %}">View</a></div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No artworks available.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.getElementById('filterToggle').addEventListener('click', function (e) {
+        e.preventDefault();
+        const options = document.getElementById('filterOptions');
+        options.classList.toggle('show');
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    document.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', function (e) {
+            e.preventDefault();
+            const category = this.dataset.category;
+
+            document.querySelector('#filterToggle span').innerText = `Filter: ${category}`;
+            document.getElementById('filterOptions').classList.remove('show');
+
+            fetch("/usersregister/filter-artworks/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                body: JSON.stringify({ category: category })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const grid = document.querySelector('.artwork-grid');
+                grid.innerHTML = '';
+
+                if (data.artworks.length > 0) {
+                    data.artworks.forEach(artwork => {
+                        const card = `
+                            <div class="artwork-card">
+                                <img src="${artwork.image_url}" alt="${artwork.title}" class="artwork-image">
+                                <h2>${artwork.title}</h2>
+                                <p><small><em>${artwork.artist_name}</em></small></p>
+                                <p>${artwork.year}</p>
+                                <div class="navbar-button"><a href="${artwork.view_url}">View</a></div>
+                            </div>
+                        `;
+                        grid.innerHTML += card;
+                    });
+                } else {
+                    grid.innerHTML = "<p>No artworks found in this category.</p>";
+                }
+            });
+        });
+    });
+</script>
 
 {% endblock %}
-
-</body>

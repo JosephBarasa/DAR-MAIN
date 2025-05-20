@@ -6,8 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
 from Artworks.models import Artwork, Cart, CartItem, Order, MpesaPayment
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
 from django.conf import settings
 from .mpesa import MpesaClient
 import json
@@ -16,6 +17,7 @@ from Galleries.models import Events, Tickets
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from .pdf import generate_ticket_pdf
+from django.urls import reverse
 
 # USER SIGN UP
 
@@ -177,6 +179,33 @@ def user_artworks(request):
     return render(request, 'users/user_artworks.html', 
                   {'artworks': artworks})
 
+# filter artworks
+
+@csrf_protect
+@require_POST
+def filter_artworks(request):
+    try:
+        data = json.loads(request.body)
+        category = data.get('category')
+
+        artworks = Artwork.objects.filter(category__iexact=category)
+
+        artwork_data = [
+            {
+                'id': art.id,
+                'title': art.title,
+                'artist_name': f"{art.artist.first_name} {art.artist.last_name}",
+                'year': art.year,
+                'image_url': art.artwork_image.url if art.artwork_image else '/static/images/default_profile.png',
+                'view_url': reverse('artwork_view', args=[art.id])
+            }
+            for art in artworks
+        ]
+
+        return JsonResponse({'artworks': artwork_data})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
 
 # events and event tickets
 def user_events(request):
@@ -317,7 +346,6 @@ def mpesa_payment(request, order_id):
         return render(request, 'users/mpesa_payment.html', {'order': order})
 
 
-@csrf_exempt
 def mpesa_callback(request):
     """Handle the M-Pesa callback"""
     if request.method == 'POST':

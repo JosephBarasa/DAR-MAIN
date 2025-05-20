@@ -12,6 +12,7 @@ urlpatterns = [
     path('user_artists/', views.user_artists, name='user_artists'),
     path('user_galleries/', views.user_galleries, name='user_galleries'),
     path('user_artworks/', views.user_artworks, name='user_artworks'),
+    path('filter-artworks/', views.filter_artworks, name='filter_artworks'),
     path('user_events/', views.user_events, name='user_events'),
     path('user_about/', views.user_about, name='user_about'),
     path('user_blog/', views.user_blog, name='user_blog'),

@@ -224,7 +224,9 @@ def artwork_edit(request, artwork_id):
         artwork.media = request.POST.get('media', artwork.media)
         artwork.year = request.POST.get('year', artwork.year)
         artwork.price = request.POST.get('price', artwork.price)
-        artwork.description = request.POST.get('description', artwork.description)
+        artwork.description = request.POST.get('description', 
+                                               artwork.description)
+        artwork.category = request.POST.get('category', artwork.category)
         
         if 'artwork_image' in request.FILES:
             artwork.artwork_image = request.FILES['artwork_image']
@@ -277,6 +279,14 @@ def artist_events(request):
     events = Events.objects.all()
     return render(request, 'artists/artist_events.html', 
                   {'events': events})
+
+
+def artist_blog(request):
+    return render(request, 'artists/artist_blog.html')
+
+
+def artist_about(request):
+    return render(request, 'artists/artist_about.html')
 
 
 def artist_profile_display(request, artist_id):

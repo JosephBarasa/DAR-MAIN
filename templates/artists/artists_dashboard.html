@@ -492,12 +492,17 @@
         <li><a href="{% url 'artist_events' %}">Events & Exhibitions</a></li>
       </ul>
 
-      <a href="{% url 'artist_dashboard' %}"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+      <a href="{% url 'artist_dashboard' %}">Artist DashBoard</a>
 
       <div class="navbar-button"><a href="{% url 'artist_sign_out' %}">Sign Out</a></div>
 
     </div>
     </nav>
+
+    <!-- Messages -->
+  {% for message in messages %}
+  <h4 style="text-align: center; color:green;">{{ message }}</h4>
+  {% endfor %}
 
     <div class="main-container">
         <h1>Manage Your Artist Profile</h1>
@@ -621,11 +626,6 @@
               
         </div>
     </div>
-
-    <!-- Messages -->
-  {% for message in messages %}
-  <h4 style="text-align: center; color:green;">{{ message }}</h4>
-{% endfor %}
 
 <!-- Footer -->
 <footer class="footer">

@@ -16,6 +16,8 @@ urlpatterns = [
     path('artist_galleries/', views.artist_galleries, name='artist_galleries'),
     path('artist_artworks/', views.artist_artworks, name='artist_artworks'),
     path('artist_events/', views.artist_events, name='artist_events'),
+    path('artist_blog/', views.artist_blog, name='artist_blog'),
+    path('artist_about/', views.artist_about, name='artist_about'),
     path('artist_profile_display/<int:artist_id>/',
          views.artist_profile_display, name='artist_profile_display'),
     path('submit_artwork_to_gallery/<int:artwork_id>/<int:gallery_id>/', 
