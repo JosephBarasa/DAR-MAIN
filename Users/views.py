@@ -205,6 +205,32 @@ def filter_artworks(request):
         return JsonResponse({'artworks': artwork_data})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+ 
+
+@login_required
+def like_artwork(request):
+    if request.method == "POST":
+        artwork_id = request.POST.get("artwork_id")
+        if not artwork_id:
+            return JsonResponse({"error": "No artwork ID provided."}, status=400)
+
+        artwork = get_object_or_404(Artwork, id=artwork_id)
+
+        if request.user in artwork.liked_by.all():
+            artwork.liked_by.remove(request.user)
+            liked = False
+        else:
+            artwork.liked_by.add(request.user)
+            liked = True
+
+        return JsonResponse({
+            "liked": liked,
+            "like_count": artwork.liked_by.count()
+        })
+        
+        print("Like artwork view called")
+
+    return JsonResponse({"error": "Invalid request method."}, status=400)
 
 
 # events and event tickets

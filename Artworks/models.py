@@ -13,6 +13,9 @@ class Artwork(models.Model):
     year = models.IntegerField(default=0000)
     media = models.CharField(max_length=50, null=True)
     category = models.CharField(max_length=10, null=True)
+    liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                      related_name='liked_artworks', 
+                                      blank=True)
 
     def __str__(self):
         return self.title

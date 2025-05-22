@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
 <style>
     .page-header {
         display: flex;
@@ -119,6 +118,24 @@
         text-align: center;
     }
 
+    .interaction-icons {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .interaction-icons .icon {
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .interaction-icons .icon:hover {
+        color: #000;
+    }
+
     @media (max-width: 768px) {
         .page-header {
             flex-direction: column;
@@ -173,7 +190,8 @@
         <a id="filterToggle" href="#"><span>Filter:</span></a>
 
         <div id="filterOptions" class="filter-options">
-            <a href="#" data-category="Painting" class="filter-option">Paintings</a>
+            <p data-all="true" class="filter-option">All</p>
+            <p data-category="Painting" class="filter-option">Paintings</p>
             <p data-category="Pencil Art" class="filter-option">Pencil Art</p>
             <p data-category="Bottle Art" class="filter-option">Bottle Art</p>
             <p data-category="Abstract" class="filter-option">Abstract</p>
@@ -185,18 +203,24 @@
 <div class="artwork-grid">
     {% if artworks %}
         {% for artwork in artworks %}
-            <div class="artwork-card">
+            <div class="artwork-card" data-artwork-id="{{ artwork.id }}">
                 {% if artwork.artwork_image %}
                     <img src="{{ artwork.artwork_image.url }}" alt="{{ artwork.title }}" class="artwork-image">
                 {% else %}
                     <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artwork-image">
                 {% endif %}
-
                 <h2>{{ artwork.title }}</h2>
                 <p><small><em>{{ artwork.artist.first_name }} {{ artwork.artist.last_name }}</em></small></p>
                 <p>{{ artwork.year }}</p>
-
                 <div class="navbar-button"><a href="{% url 'artwork_view' artwork.id %}">View</a></div>
+                <div class="interaction-icons">
+                    <span class="icon like-btn {% if user in artwork.liked_by.all %}liked{% endif %}">
+                        <i class="{% if user in artwork.liked_by.all %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+                        <span class="like-count">{{ artwork.liked_by.count }}</span>
+                    </span>
+                    <span class="icon comment">💬</span>
+                    <span class="icon share">🔗</span>
+                </div>
             </div>
         {% endfor %}
     {% else %}
@@ -229,8 +253,13 @@
     document.querySelectorAll('.filter-option').forEach(option => {
         option.addEventListener('click', function (e) {
             e.preventDefault();
-            const category = this.dataset.category;
+            const isAll = this.dataset.all === "true";
+            if (isAll) {
+                window.location.href = "{% url 'user_artworks' %}";
+                return;
+            }
 
+            const category = this.dataset.category;
             document.querySelector('#filterToggle span').innerText = `Filter: ${category}`;
             document.getElementById('filterOptions').classList.remove('show');
 
@@ -250,14 +279,18 @@
                 if (data.artworks.length > 0) {
                     data.artworks.forEach(artwork => {
                         const card = `
-                            <div class="artwork-card">
+                            <div class="artwork-card" data-artwork-id="${artwork.id}">
                                 <img src="${artwork.image_url}" alt="${artwork.title}" class="artwork-image">
                                 <h2>${artwork.title}</h2>
                                 <p><small><em>${artwork.artist_name}</em></small></p>
                                 <p>${artwork.year}</p>
                                 <div class="navbar-button"><a href="${artwork.view_url}">View</a></div>
-                            </div>
-                        `;
+                                <div class="interaction-icons">
+                                    <span class="icon like-btn"><i class="fa-regular fa-heart"></i><span class="like-count">${artwork.like_count}</span></span>
+                                    <span class="icon comment">💬</span>
+                                    <span class="icon share">🔗</span>
+                                </div>
+                            </div>`;
                         grid.innerHTML += card;
                     });
                 } else {
@@ -266,6 +299,35 @@
             });
         });
     });
-</script>
 
+    document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const card = this.closest('.artwork-card');
+            const artworkId = card.getAttribute('data-artwork-id');
+            const csrftoken = getCookie('csrftoken');
+            const likeCountSpan = this.querySelector('.like-count');
+            const heartIcon = this.querySelector('i');
+
+            fetch("/usersregister/like_artwork/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrftoken
+                },
+                body: `artwork_id=${artworkId}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.liked) {
+                    heartIcon.classList.replace('fa-regular', 'fa-solid');
+                    this.classList.add('liked');
+                } else {
+                    heartIcon.classList.replace('fa-solid', 'fa-regular');
+                    this.classList.remove('liked');
+                }
+                likeCountSpan.textContent = data.like_count;
+            });
+        });
+    });
+</script>
 {% endblock %}
