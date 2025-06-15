@@ -29,3 +29,6 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site_header = "VAMS Admin"
+admin.site.site_title = "VAMS Dashboard"
+admin.site.index_title = "Welcome to the Visual Artists Management System"

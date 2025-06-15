@@ -138,6 +138,32 @@
       color: black;
     }
 
+    .circle-image-container {
+      display: flex;
+      justify-content: center;
+      gap: 10rem;
+      margin-top: 3.5rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      z-index: 2;
+      position: relative;
+    }
+
+    .circle {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 40%;
+      overflow: hidden;
+      border: 0.1rem solid black;
+      box-shadow: none;
+    }
+
+    .circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     /* Footer */
     .footer {
       background-color: #fff;
@@ -219,6 +245,31 @@
       .page-header .inner p {
         font-size: 1rem;
       }
+       /* Adjust Circle Images for Small Screens */
+      .circle-image-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem; 
+        margin-top: 5rem;
+        flex-wrap: wrap;
+        z-index: 2;
+        position: relative;
+      }
+
+      .circle {
+        width: 7rem; 
+        height: 7rem;  
+        border-radius: 40%;
+        overflow: hidden;
+        border: 0.2rem solid black;
+        box-shadow: none;
+      }
+
+      .circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
        /* Footer */
     .footer {
@@ -281,6 +332,21 @@
       </div>
     </header>
   </div>
+
+  <!-- <div class="trending-artworks">
+    <h3>Trending Artworks</h3>
+    <div class="circle circle-image-container">
+      <div class="circle"><img src="{% static 'images/download (1).jpeg' %}" alt="art"></div>
+    </div>
+    <p>Title</p>
+  </div>
+
+  <div class="trending-artists">
+    <h3>Trending Artists</h3>
+    <div class="circle-image-container">
+
+    </div>
+  </div> -->
 
   <!-- Footer -->
   <footer class="footer">

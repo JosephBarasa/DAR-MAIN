@@ -361,19 +361,9 @@
             <p class="no-account">Don't have an account? <a href="{% url 'artist_sign_up' %}">Sign Up</a></p>
             <button type="submit" class="btn back-button"><a href="{% url 'home_index' %}">Back</a></button>
 
-            <div class="messages">
-                {% for message in messages %}
-                    <h2>{{message}}</h2>
-                {% endfor %}
-            </div>
         </div>
     </form>
 </div>
-
-<!-- Messages -->
-{% for message in messages %}
-<h4 style="text-align: center; color:green;">{{ message }}</h4>
-{% endfor %}
 
 <!-- Footer -->
 <footer class="footer">

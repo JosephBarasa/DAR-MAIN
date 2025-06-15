@@ -107,7 +107,7 @@
                             <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="artist-image">
                         {% endif %}
 
-                        <h2>{{artist.first_name}} {{artist.last_name}}</h2>
+                        <h2><a href="{% url 'artist_profile_display' artist.id %}"> {{artist.first_name}} {{artist.last_name}}</a></h2>
                         <p>{{artist.residence}}</p>
                         <p>{{artist.bio}}</p>
                         

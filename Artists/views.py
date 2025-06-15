@@ -295,5 +295,12 @@ def artist_profile_display(request, artist_id):
     return render(request, 'artists/artist_profile_display.html',
                   {'artist': artist, 'artworks': artworks})
     
+
+def artist_gallery_profile_display(request, gallery_id):
+    gallery = get_object_or_404(CustomUser, id=gallery_id, role='gallery_admin')
+    events = Events.objects.filter(gallery=gallery)
+    return render(request, 'artists/gallery_profile_display.html',
+                  {'gallery': gallery, 'events': events})
+    
     
 

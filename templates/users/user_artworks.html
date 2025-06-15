@@ -218,8 +218,6 @@
                         <i class="{% if user in artwork.liked_by.all %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
                         <span class="like-count">{{ artwork.liked_by.count }}</span>
                     </span>
-                    <span class="icon comment">💬</span>
-                    <span class="icon share">🔗</span>
                 </div>
             </div>
         {% endfor %}

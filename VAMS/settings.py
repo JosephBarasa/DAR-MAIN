@@ -75,8 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'VAMS.wsgi.application'
 
-
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -158,3 +156,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'josephbarasa622@gmail.com'
 EMAIL_HOST_PASSWORD = 'lsnu weyt bbfd vrbp'
 DEFAULT_FROM_EMAIL = 'josephbarasa622@gmail.com'
+
+# custom admin
+ADMIN_SITE_HEADER = "VAMS Admin"
+ADMIN_SITE_TITLE = "VAMS Dashboard"
+ADMIN_INDEX_TITLE = "Welcome tO the Visual Artists Management System"

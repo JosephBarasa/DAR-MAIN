@@ -93,25 +93,6 @@
         color: #555;
     }
 
-    .messages {
-        margin-top: 1rem;
-        padding: 1rem;
-        border-radius: 0.375rem;
-        background-color: #f8f9fa;
-        text-align: center;
-        transition: background-color 0.2s;
-    }
-
-    .messages:hover {
-        background-color: #e8e8e8;
-    }
-
-    .messages h2 {
-        color: black;
-        font-size: 0.95rem;
-        margin: 0;
-    }
-
     /* Row styling */
     .row {
         display: flex;
@@ -152,11 +133,6 @@
             <button type="button" class="btn back-button"><a href="{% url 'home_index' %}">Back</a></button>
             <p class="no-account"><a href="{% url 'home_index' %}">Sign In As Artist or Gallery</a></p>
 
-            <div class="messages">
-                {% for message in messages %}
-                    <h2>{{ message }}</h2>
-                {% endfor %}
-            </div>
         </div>
     </form>
 </div>

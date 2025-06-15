@@ -181,6 +181,7 @@ def user_artworks(request):
 
 # filter artworks
 
+
 @csrf_protect
 @require_POST
 def filter_artworks(request):
@@ -206,6 +207,8 @@ def filter_artworks(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
  
+
+# artwork likes system
 
 @login_required
 def like_artwork(request):
@@ -259,7 +262,7 @@ def user_artist_profile_display(request, artist_id):
                   {'artist': artist, 'artworks': artworks})
 
 
-def user_gallery_dashboard_display(request, gallery_id):
+def user_gallery_profile_display(request, gallery_id):
     gallery = get_object_or_404(CustomUser, id=gallery_id,
                                 role='gallery_admin')
     events = Events.objects.filter(gallery=gallery)
@@ -447,7 +450,7 @@ def ticket_payment(request, event_id):
             return render(request, 'users/ticket_payment_pending.html', {'event': event, 'ticket': ticket})
         else:
             messages.error(request, f"Payment request failed : {response.get('ResponseDescription', 'Unknown error')}")
-            return redirect('ticket_payment', event.event.id)
+            return redirect('ticket_payment', event.id)
     
     else:
         return render(request, 'users/ticket_payment.html', {'event': event})
