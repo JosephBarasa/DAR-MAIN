@@ -1,4 +1,4 @@
-# UTILITY TO BUILD THE EMAIL PDF IN MEMEORY
+# UTILITY TO BUILD THE EMAIL PDF IN MEMORY
 
 import io
 from reportlab.lib.pagesizes import A4

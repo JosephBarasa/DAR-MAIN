@@ -4,6 +4,8 @@ import datetime
 from django.conf import settings
 import json
 
+
+# M-Pesa Client for handling STK Push transactions
 class MpesaClient:
     def __init__(self):
         self.consumer_key = settings.MPESA_CONSUMER_KEY
@@ -18,6 +20,7 @@ class MpesaClient:
         self.auth_url = f"{self.base_url}/oauth/v1/generate?grant_type=client_credentials"
         self.stk_push_url = f"{self.base_url}/mpesa/stkpush/v1/processrequest"
     
+    # Get OAuth access token from M-Pesa API
     def get_auth_token(self):
         auth = base64.b64encode(f"{self.consumer_key}:{self.consumer_secret}".encode()).decode("utf-8")
         headers = {
@@ -30,6 +33,7 @@ class MpesaClient:
         except Exception as e:
             return None
     
+    # Generate encoded password using shortcode, passkey, and timestamp
     def generate_password(self):
         timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         password_str = f"{self.shortcode}{self.passkey}{timestamp}"
@@ -39,6 +43,7 @@ class MpesaClient:
             "password": password
         }
     
+    # Initiate STK Push request
     def stk_push(self, phone_number, amount, account_reference, transaction_desc):
         token = self.get_auth_token()
         if not token:

@@ -10,6 +10,8 @@ from Artists.models import ArtworkSubmission
 from django.conf.global_settings import AUTH_USER_MODEL
 from django.contrib.auth import get_user_model
 from Galleries.models import Events
+from Artworks.models import MpesaPayment
+from django.http.response import HttpResponse
 
 User = get_user_model()
 
@@ -95,11 +97,19 @@ def artist_dashboard(request):
     gallery = CustomUser.objects.filter(role='gallery_admin')
     artwork_approvals = ArtworkSubmission.objects.filter(status='accepted', 
                                                          artist=request.user)
+
+    # Filter payments for this artist’s artworks via Order
+    sales = MpesaPayment.objects.filter(
+        order__artwork__artist=request.user,
+        status='PENDING'
+    ).select_related('order__artwork', 'order__user')
+    
     return render(request, 'artists/artists_dashboard.html', {
         'user': request.user,
         'artworks': artworks,
         'gallery': gallery,
         'artwork_approvals': artwork_approvals,
+        'sales': sales,
     })
 
 
